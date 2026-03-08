@@ -7,7 +7,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/auth/google', [AuthController::class, 'redirectGoogle'])->name('google.login');
+Route::get('/auth/google/callback', [AuthController::class, 'handleGoogleCallback']);
+
 Route::middleware(['guest'])->group(function () {
     Route::get('/login', [AuthController::class, 'login'])->name('login');
-    Route::post('/login', [AuthController::class, 'loginProcess']);
 });

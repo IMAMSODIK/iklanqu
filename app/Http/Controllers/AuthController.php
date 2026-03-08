@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Laravel\Socialite\Socialite;
 
 class AuthController extends Controller
 {
@@ -20,24 +22,46 @@ class AuthController extends Controller
         }
     }
 
-    public function loginProcess(Request $request)
+    public function redirectGoogle()
     {
         try {
-            $request->validate([
-                'email' => 'required|email',
-                'password' => 'required'
-            ]);
 
-            $credentials = $request->only('email', 'password');
-            if (Auth::attempt($credentials)) {
-                $request->session()->regenerate();
-                return redirect()->intended('/dashboard')
-                    ->with('success', 'Login berhasil');
+            return Socialite::driver('google')->redirect();
+
+        } catch (\Exception $e) {
+
+            return redirect('/login')->with('error','Gagal menghubungkan ke Google');
+        }
+    }
+
+
+    public function handleGoogleCallback()
+    {
+        try {
+
+            $googleUser = Socialite::driver('google')->user();
+
+            $user = User::where('email', $googleUser->email)->first();
+
+            if (!$user) {
+
+                $user = User::create([
+                    'name' => $googleUser->name,
+                    'email' => $googleUser->email,
+                    'google_id' => $googleUser->id,
+                    'role' => 'user',
+                    'password' => bcrypt(rand(100000,999999))
+                ]);
+
             }
 
-            return back()->with('error', 'Email atau password salah');
+            Auth::login($user);
+
+            return redirect('/dashboard');
+
         } catch (\Exception $e) {
-            return back()->with('error', 'Terjadi kesalahan sistem: ' . $e->getMessage());
+
+            return redirect('/login')->with('error','Login Google gagal');
         }
     }
 }
