@@ -748,7 +748,7 @@
             
             <!-- Tombol tengah - BUAT IKLAN (aktif default) -->
             <button class="nav-item middle-item active" data-page="buat">
-                <span class="nav-icon">+</span>
+                <span class="nav-icon">📋</span>
                 <span>Buat</span>
             </button>
             
@@ -761,9 +761,6 @@
                 <span>Akun</span>
             </button>
         </div>
-        
-        <!-- Home indicator -->
-        <div class="home-bar"></div>
     </div>
 
     <script>
