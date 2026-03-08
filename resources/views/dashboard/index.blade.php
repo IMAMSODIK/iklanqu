@@ -45,10 +45,14 @@
 
         /* Status bar - dengan safe area padding */
         .status-bar {
+            justify-content: center;
+            /* tengah horizontal */
+            align-items: center;
+            /* tengah vertikal */
+            text-align: center;
             background: white;
             padding: env(safe-area-inset-top, 16px) 24px 8px 24px;
             padding: max(env(safe-area-inset-top, 16px), 16px) 24px 8px 24px;
-            display: flex;
             justify-content: space-between;
             font-size: 15px;
             font-weight: 600;
@@ -575,8 +579,7 @@
     <div class="app-container">
         <!-- Status bar -->
         <div class="status-bar">
-            <span>9:41</span>
-            <span>📶 🔋 100%</span>
+            <img src="{{ asset('landing_assets/images/logo/logo.png') }}" alt="logo" style="border-radius: 14px">
         </div>
 
         <!-- Area konten -->
@@ -662,8 +665,8 @@
                 </div>
 
                 <div class="create-ad-card">
-                    <h3>✨ Iklan Instan</h3>
-                    <p>Buat iklan dalam 1 menit, jangkau ribuan audiens</p>
+                    <h3>Iklan Cepat, Hasil Tepat dan Biaya Murah</h3>
+                    <p>Pasarkan Produk dan Jasa Anda Bersama Kami. Dengan iklanqu.id, Biaya Murah, Iklan Cepat dan Hasil Tepat <br><b>iklanqu.id</b> <i>The Best Partner For Your Bussines</i></p>
                     <button class="create-ad-button" onclick="alert('Mulai membuat iklan')">
                         <span>+</span> Buat Iklan Sekarang
                     </button>
