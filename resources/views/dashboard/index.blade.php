@@ -287,13 +287,13 @@
         }
 
         .nav-item span {
-            font-size: 11px;
+            font-size: 22px;
             font-weight: 500;
             white-space: nowrap;
         }
 
         .nav-icon {
-            font-size: 22px;
+            font-size: 44px;
             transition: transform 0.2s;
         }
 
@@ -317,7 +317,7 @@
         }
 
         .nav-item.middle-item .nav-icon {
-            font-size: 28px;
+            font-size: 56px;
         }
 
         .nav-item.middle-item span {
@@ -414,7 +414,7 @@
             }
 
             .nav-item span {
-                font-size: 10px;
+                font-size: 20px;
             }
 
             .nav-item.middle-item {
@@ -442,7 +442,7 @@
             }
 
             .nav-item.middle-item .nav-icon {
-                font-size: 24px;
+                font-size: 48px;
             }
 
             .home-bar {
