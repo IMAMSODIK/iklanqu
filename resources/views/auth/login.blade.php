@@ -186,7 +186,7 @@
         }
 
         .login-header .material-icons {
-            font-size: 3rem;
+            font-size: 1.5rem;
             color: #4285f4;
             background: #e8f0fe;
             padding: 0.8rem;
