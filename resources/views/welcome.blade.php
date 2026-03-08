@@ -345,7 +345,7 @@
                                     <br>
                                     iklanqu.id The Best Partner of Your Bussines
                                 </p>
-                                <a data-animation="slideInRight" data-duration="2s" data-delay=".9s" href="about.html"
+                                <a data-animation="slideInRight" data-duration="2s" data-delay=".9s" href="/login"
                                     class="btn-one mt-60">Mulai Beriklan! <i
                                         class="fa-regular fa-arrow-right-long"></i></a>
                             </div>
@@ -432,14 +432,14 @@
                         <h2 class="wow fadeInLeft" data-wow-delay="200ms" data-wow-duration="1500ms">Excellent It
                             Services</h2>
                     </div>
-                    <a href="service.html" class="btn-one wow fadeInUp" data-wow-delay="200ms"
+                    <a href="/login" class="btn-one wow fadeInUp" data-wow-delay="200ms"
                         data-wow-duration="1500ms">Semua Layanan<i class="fa-regular fa-arrow-right-long"></i></a>
                 </div>
                 <div class="row g-4">
                     <div class="col-xl-4 col-lg-6 col-md-6 wow fadeInUp" data-wow-delay="00ms"
                         data-wow-duration="1500ms">
                         <div class="blog__item">
-                            <a href="blog-details.html" class="blog__image d-block image">
+                            <a href="/login" class="blog__image d-block image">
                                 <img src="https://www.hd-focus.com/Content/uploads/2019571566/201912231612029743107.jpg"
                                     alt="image">
                             </a>
@@ -461,7 +461,7 @@
                                         </a>
                                     </li>
                                 </ul>
-                                <h3><a href="blog-details.html" class="primary-hover">Beriklan diPapan Iklan 55 Inci</a>
+                                <h3><a href="/login" class="primary-hover">Beriklan diPapan Iklan 55 Inci</a>
                                 </h3>
                                 <div class="price">Rp 20.000 / Hari / Lokasi</div>
                                 <a class="mt-25 read-more-btn" href="/login">Pesan Sekarang <i
@@ -472,7 +472,7 @@
                     <div class="col-xl-4 col-lg-6 col-md-6 wow fadeInUp" data-wow-delay="200ms"
                         data-wow-duration="1500ms">
                         <div class="blog__item">
-                            <a href="blog-details.html" class="blog__image image d-block">
+                            <a href="/login" class="blog__image image d-block">
                                 <img src="https://www.jnsnext.com/wp-content/uploads/2019/03/image1.png" alt="image">
                             </a>
                             <div class="blog__content">
@@ -493,10 +493,10 @@
                                         </a>
                                     </li>
                                 </ul>
-                                <h3><a href="blog-details.html" class="primary-hover">Pembuatan Konten Iklan Digital</a>
+                                <h3><a href="/login" class="primary-hover">Pembuatan Konten Iklan Digital</a>
                                 </h3>
                                 <div class="price">Mulai dari Rp 500.000</div>
-                                <a class="mt-25 read-more-btn" href="blog-details.html">Pesan Sekarang <i
+                                <a class="mt-25 read-more-btn" href="/login">Pesan Sekarang <i
                                         class="fa-regular fa-arrow-right-long"></i></a>
                             </div>
                         </div>
@@ -504,7 +504,7 @@
                     <div class="col-xl-4 col-lg-6 col-md-6 wow fadeInUp" data-wow-delay="400ms"
                         data-wow-duration="1500ms">
                         <div class="blog__item">
-                            <a href="blog-details.html" class="blog__image image d-block">
+                            <a href="/login" class="blog__image image d-block">
                                 <img src="https://www.hd-focus.com/Content/uploads/2019571566/201912231612029743107.jpg"
                                     alt="image">
                             </a>
@@ -529,10 +529,10 @@
                                     </li>
 
                                 </ul>
-                                <h3><a href="blog-details.html" class="primary-hover">Sewa Papan Iklan 55 Inci</a>
+                                <h3><a href="/login" class="primary-hover">Sewa Papan Iklan 55 Inci</a>
                                 </h3>
                                 <div class="price">Rp 750.000 / Hari</div>
-                                <a class="mt-25 read-more-btn" href="blog-details.html">Pesan Sekarang <i
+                                <a class="mt-25 read-more-btn" href="/login">Pesan Sekarang <i
                                         class="fa-regular fa-arrow-right-long"></i></a>
                             </div>
                         </div>
