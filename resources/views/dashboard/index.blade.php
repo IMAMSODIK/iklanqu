@@ -414,7 +414,7 @@
             }
 
             .nav-item span {
-                font-size: 20px;
+                font-size: 15px;
             }
 
             .nav-item.middle-item {
@@ -425,6 +425,9 @@
 
         /* Landscape mode */
         @media (max-height: 600px) and (orientation: landscape) {
+            .nav-item span {
+                font-size: 20px;
+            }
             .status-bar {
                 padding-top: env(safe-area-inset-top, 8px);
                 padding-bottom: 4px;
@@ -476,6 +479,10 @@
 
             .nav-item {
                 max-width: 80px;
+            }
+
+            .nav-item span {
+                font-size: 20px;
             }
         }
 
