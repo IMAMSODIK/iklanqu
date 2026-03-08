@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Aplikasi Iklan - Responsive Bottom Navigation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Aplikasi Iklan - Full Screen Mobile</title>
     <style>
         * {
             margin: 0;
@@ -13,31 +13,36 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background: #f0f2f5;
+            background: #000; /* Hitam untuk safe area */
             min-height: 100vh;
+            min-height: -webkit-fill-available; /* Untuk iOS */
             display: flex;
             justify-content: center;
             align-items: center;
         }
 
-        /* Container utama yang responsif */
+        /* Container utama yang full screen di semua device */
         .app-container {
             width: 100%;
-            max-width: 1400px;
+            width: 100vw;
+            height: 100vh;
+            height: -webkit-fill-available; /* Khusus iOS */
             background: white;
-            border-radius: 32px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-            overflow: hidden;
             display: flex;
             flex-direction: column;
-            height: 90vh;
-            max-height: 900px;
+            overflow: hidden;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
         }
 
-        /* Status bar - tampil di semua device */
+        /* Status bar - dengan safe area padding */
         .status-bar {
             background: white;
-            padding: 16px 24px;
+            padding: env(safe-area-inset-top, 16px) 24px 8px 24px;
+            padding: max(env(safe-area-inset-top, 16px), 16px) 24px 8px 24px;
             display: flex;
             justify-content: space-between;
             font-size: 15px;
@@ -46,15 +51,19 @@
             border-bottom: 1px solid #eef2f6;
         }
 
-        /* Area konten utama - scrollable */
+        /* Area konten utama - scrollable, full sisa height */
         .content-area {
             flex: 1;
             overflow-y: auto;
+            overflow-x: hidden;
             padding: 24px;
+            padding: max(16px, env(safe-area-inset-left)) max(24px, env(safe-area-inset-right));
             background: #ffffff;
             scrollbar-width: thin;
+            -webkit-overflow-scrolling: touch; /* Smooth scrolling di iOS */
         }
 
+        /* Custom scrollbar */
         .content-area::-webkit-scrollbar {
             width: 6px;
         }
@@ -74,6 +83,7 @@
             animation: fadeIn 0.3s ease;
             max-width: 800px;
             margin: 0 auto;
+            width: 100%;
         }
 
         .page.active-page {
@@ -90,10 +100,11 @@
         }
 
         .page-title {
-            font-size: clamp(24px, 5vw, 32px);
+            font-size: clamp(24px, 7vw, 32px);
             font-weight: 700;
             color: #0f172a;
             margin-bottom: 8px;
+            line-height: 1.2;
         }
 
         .page-subtitle {
@@ -109,11 +120,6 @@
             margin-bottom: 20px;
             border: 1px solid #e9edf2;
             transition: transform 0.2s;
-        }
-
-        .card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
         }
 
         .card-item {
@@ -138,10 +144,12 @@
             justify-content: center;
             font-size: 24px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.02);
+            flex-shrink: 0;
         }
 
         .item-info {
             flex: 1;
+            min-width: 0; /* Untuk mencegah overflow */
         }
 
         .item-info h4 {
@@ -149,11 +157,17 @@
             font-weight: 600;
             color: #1e293b;
             margin-bottom: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .item-info p {
             font-size: 14px;
             color: #64748b;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .badge {
@@ -164,6 +178,7 @@
             font-size: 12px;
             font-weight: 600;
             white-space: nowrap;
+            flex-shrink: 0;
         }
 
         /* Khusus halaman buat iklan */
@@ -171,13 +186,13 @@
             background: linear-gradient(135deg, #2563eb, #1e40af);
             color: white;
             border-radius: 28px;
-            padding: clamp(24px, 5vw, 32px);
+            padding: clamp(24px, 6vw, 32px);
             text-align: center;
             margin: 20px 0 30px;
         }
 
         .create-ad-card h3 {
-            font-size: clamp(20px, 5vw, 28px);
+            font-size: clamp(20px, 6vw, 28px);
             font-weight: 700;
             margin-bottom: 12px;
         }
@@ -202,16 +217,17 @@
             cursor: pointer;
             box-shadow: 0 10px 20px -5px rgba(0,0,0,0.2);
             transition: transform 0.2s;
+            -webkit-tap-highlight-color: transparent;
         }
 
-        .create-ad-button:hover {
-            transform: scale(1.05);
+        .create-ad-button:active {
+            transform: scale(0.98);
         }
 
         .format-options {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 16px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
             margin: 20px 0;
         }
 
@@ -219,28 +235,28 @@
             background: white;
             border: 1px solid #e2e8f0;
             border-radius: 20px;
-            padding: 20px 12px;
+            padding: 16px 12px;
             text-align: center;
             transition: all 0.2s;
         }
 
-        .format-card:hover {
-            border-color: #2563eb;
-            box-shadow: 0 10px 20px -10px #2563eb30;
+        .format-card:active {
+            background: #f8fafc;
+            transform: scale(0.98);
         }
 
         .format-card .emoji {
-            font-size: 32px;
-            margin-bottom: 12px;
+            font-size: 28px;
+            margin-bottom: 8px;
         }
 
         .format-card h4 {
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 600;
             color: #1e293b;
         }
 
-        /* Bottom Navigation - RESPONSIF */
+        /* Bottom Navigation - dengan safe area */
         .bottom-nav {
             background: white;
             border-top: 1px solid #eef2f6;
@@ -248,6 +264,7 @@
             justify-content: space-around;
             align-items: center;
             padding: 8px 16px;
+            padding-bottom: max(8px, env(safe-area-inset-bottom, 8px));
             box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.03);
         }
 
@@ -265,7 +282,8 @@
             transition: all 0.2s ease;
             color: #64748b;
             gap: 4px;
-            max-width: 80px;
+            max-width: 70px;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .nav-item span {
@@ -279,8 +297,8 @@
             transition: transform 0.2s;
         }
 
-        .nav-item:hover .nav-icon {
-            transform: translateY(-2px);
+        .nav-item:active .nav-icon {
+            transform: scale(0.9);
         }
 
         /* Tombol tengah spesial */
@@ -294,7 +312,7 @@
             box-shadow: 0 10px 20px rgba(37, 99, 235, 0.35);
             border: 4px solid white;
             flex: 0 0 auto;
-            margin: 0 10px;
+            margin: 0 5px;
             max-width: 60px;
         }
 
@@ -304,6 +322,10 @@
 
         .nav-item.middle-item span {
             display: none;
+        }
+
+        .nav-item.middle-item:active {
+            transform: translateY(-14px) scale(0.95);
         }
 
         .nav-item.active {
@@ -324,47 +346,70 @@
             height: 5px;
             background: #cbd5e0;
             border-radius: 100px;
-            margin: 10px auto 8px;
+            margin: 8px auto;
+            margin-bottom: max(8px, env(safe-area-inset-bottom, 8px));
         }
 
         /* ========== RESPONSIVE BREAKPOINTS ========== */
 
-        /* Mobile (320px - 767px) */
+        /* Mobile first - semua ukuran */
         @media (max-width: 767px) {
-            .app-container {
-                height: 95vh;
-                border-radius: 24px;
-            }
-
             .status-bar {
-                padding: 12px 16px;
-                font-size: 14px;
+                padding-left: max(16px, env(safe-area-inset-left));
+                padding-right: max(16px, env(safe-area-inset-right));
+                padding-top: max(env(safe-area-inset-top, 12px), 12px);
+                padding-bottom: 8px;
             }
 
             .content-area {
                 padding: 16px;
+                padding-left: max(16px, env(safe-area-inset-left));
+                padding-right: max(16px, env(safe-area-inset-right));
             }
 
             .card {
                 padding: 16px;
+                border-radius: 20px;
             }
 
             .card-item {
-                padding: 12px 0;
+                padding: 14px 0;
+                gap: 14px;
             }
 
             .item-icon {
-                width: 44px;
-                height: 44px;
-                font-size: 20px;
+                width: 48px;
+                height: 48px;
+                font-size: 22px;
+                border-radius: 16px;
+            }
+
+            .item-info h4 {
+                font-size: 15px;
+            }
+
+            .item-info p {
+                font-size: 13px;
+            }
+
+            .badge {
+                padding: 4px 10px;
+                font-size: 11px;
             }
 
             .format-options {
-                grid-template-columns: 1fr 1fr;
-                gap: 12px;
+                gap: 10px;
             }
 
-            .nav-item:not(.middle-item) {
+            .format-card {
+                padding: 14px 8px;
+            }
+
+            .format-card .emoji {
+                font-size: 26px;
+            }
+
+            .nav-item {
                 max-width: 60px;
             }
 
@@ -373,28 +418,56 @@
             }
 
             .nav-item.middle-item {
-                height: 52px;
-                width: 52px;
+                height: 56px;
+                width: 56px;
             }
         }
 
-        /* Tablet (768px - 1023px) */
+        /* Landscape mode */
+        @media (max-height: 600px) and (orientation: landscape) {
+            .status-bar {
+                padding-top: env(safe-area-inset-top, 8px);
+                padding-bottom: 4px;
+            }
+
+            .bottom-nav {
+                padding: 4px 16px;
+                padding-bottom: max(4px, env(safe-area-inset-bottom, 4px));
+            }
+
+            .nav-item.middle-item {
+                transform: translateY(-10px);
+                height: 48px;
+                width: 48px;
+            }
+
+            .nav-item.middle-item .nav-icon {
+                font-size: 24px;
+            }
+
+            .home-bar {
+                display: none;
+            }
+
+            .content-area {
+                padding: 12px 16px;
+            }
+        }
+
+        /* Tablet */
         @media (min-width: 768px) and (max-width: 1023px) {
             .app-container {
-                height: 90vh;
-                max-width: 900px;
+                max-width: 100%;
             }
 
             .content-area {
                 padding: 28px;
+                padding-left: max(28px, env(safe-area-inset-left));
+                padding-right: max(28px, env(safe-area-inset-right));
             }
 
             .page {
                 max-width: 700px;
-            }
-
-            .card {
-                padding: 24px;
             }
 
             .format-options {
@@ -402,24 +475,25 @@
             }
 
             .nav-item {
-                max-width: 90px;
-            }
-
-            .nav-item span {
-                font-size: 12px;
-            }
-
-            .nav-item.middle-item {
-                height: 64px;
-                width: 64px;
+                max-width: 80px;
             }
         }
 
-        /* Desktop (1024px ke atas) */
+        /* Desktop */
         @media (min-width: 1024px) {
             .app-container {
-                height: 85vh;
                 max-width: 1200px;
+                height: 90vh;
+                border-radius: 32px;
+                box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+                position: relative;
+                margin: 20px auto;
+            }
+
+            body {
+                background: #f0f2f5;
+                align-items: center;
+                padding: 20px;
             }
 
             .content-area {
@@ -430,84 +504,32 @@
                 max-width: 900px;
             }
 
-            /* Bottom navigation lebih lebar untuk desktop */
-            .bottom-nav {
-                padding: 12px 24px;
-            }
-
             .nav-item {
-                max-width: 100px;
-                padding: 10px 0;
+                max-width: 90px;
             }
 
-            .nav-item span {
-                font-size: 13px;
-            }
-
-            .nav-icon {
-                font-size: 24px;
-            }
-
-            .nav-item.middle-item {
-                height: 68px;
-                width: 68px;
-                margin: 0 20px;
-            }
-
-            .nav-item.middle-item .nav-icon {
-                font-size: 32px;
-            }
-
-            /* Hover effects untuk desktop */
             .nav-item:hover:not(.middle-item) {
                 background: #f1f5f9;
                 color: #2563eb;
             }
-
-            .card:hover {
-                transform: translateY(-4px);
-                box-shadow: 0 20px 30px -10px rgba(0,0,0,0.15);
-            }
         }
 
-        /* Large Desktop (1400px ke atas) */
+        /* Large Desktop */
         @media (min-width: 1400px) {
             .app-container {
                 max-width: 1400px;
-                height: 80vh;
-            }
-
-            .content-area {
-                padding: 40px 60px;
             }
 
             .page {
                 max-width: 1000px;
             }
-
-            .nav-item {
-                max-width: 120px;
-            }
         }
 
-        /* Landscape mode untuk mobile */
-        @media (max-height: 600px) and (orientation: landscape) {
-            .app-container {
-                height: 98vh;
-            }
-
-            .bottom-nav {
-                padding: 4px 16px;
-            }
-
-            .nav-item.middle-item {
-                transform: translateY(-8px);
-                height: 48px;
-                width: 48px;
-            }
-
-            .home-bar {
-                display: none;
+        /* Untuk device dengan notch */
+        @supports (padding: max(0px)) {
+            .status-bar, .content-area, .bottom-nav {
+                padding-left: max(16px, env(safe-area-inset-left));
+                padding-right: max(16px, env(safe-area-inset-right));
             }
         }
     </style>
@@ -679,10 +701,10 @@
                     <div class="page-subtitle">Profil dan pengaturan</div>
                 </div>
                 <div class="card" style="display: flex; align-items: center; gap: 20px; background: #f1f4f9;">
-                    <div style="width: 64px; height: 64px; background: #2563eb; border-radius: 32px; display: flex; align-items: center; justify-content: center; color: white; font-size: 28px;">👤</div>
-                    <div>
-                        <h3 style="font-size: 18px;">Andi Saputra</h3>
-                        <p style="color: #475569;">andi@example.com</p>
+                    <div style="width: 64px; height: 64px; background: #2563eb; border-radius: 32px; display: flex; align-items: center; justify-content: center; color: white; font-size: 28px; flex-shrink: 0;">👤</div>
+                    <div style="min-width: 0; flex: 1;">
+                        <h3 style="font-size: 18px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Andi Saputra</h3>
+                        <p style="color: #475569; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">andi@example.com</p>
                     </div>
                 </div>
                 <div class="card">
@@ -767,6 +789,23 @@
                     if (pageId) switchPage(pageId);
                 });
             });
+
+            // Fix untuk iOS viewport height
+            function setAppHeight() {
+                const vh = window.innerHeight * 0.01;
+                document.documentElement.style.setProperty('--vh', `${vh}px`);
+                
+                const appContainer = document.querySelector('.app-container');
+                if (appContainer) {
+                    if (window.innerWidth < 1024) {
+                        appContainer.style.height = `${window.innerHeight}px`;
+                    }
+                }
+            }
+
+            window.addEventListener('resize', setAppHeight);
+            window.addEventListener('orientationchange', setAppHeight);
+            setAppHeight();
         });
     </script>
 </body>
