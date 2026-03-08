@@ -18,7 +18,6 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px;
         }
 
         /* Container utama yang responsif */
