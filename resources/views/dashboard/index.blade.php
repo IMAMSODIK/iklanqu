@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Aplikasi Iklan - Full Screen Mobile</title>
     <style>
         * {
@@ -13,9 +15,11 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background: #000; /* Hitam untuk safe area */
+            background: #000;
+            /* Hitam untuk safe area */
             min-height: 100vh;
-            min-height: -webkit-fill-available; /* Untuk iOS */
+            min-height: -webkit-fill-available;
+            /* Untuk iOS */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -26,7 +30,8 @@
             width: 100%;
             width: 100vw;
             height: 100vh;
-            height: -webkit-fill-available; /* Khusus iOS */
+            height: -webkit-fill-available;
+            /* Khusus iOS */
             background: white;
             display: flex;
             flex-direction: column;
@@ -60,7 +65,8 @@
             padding: max(16px, env(safe-area-inset-left)) max(24px, env(safe-area-inset-right));
             background: #ffffff;
             scrollbar-width: thin;
-            -webkit-overflow-scrolling: touch; /* Smooth scrolling di iOS */
+            -webkit-overflow-scrolling: touch;
+            /* Smooth scrolling di iOS */
         }
 
         /* Custom scrollbar */
@@ -91,8 +97,15 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0.5; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0.5;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .page-header {
@@ -143,13 +156,14 @@
             align-items: center;
             justify-content: center;
             font-size: 24px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.02);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.02);
             flex-shrink: 0;
         }
 
         .item-info {
             flex: 1;
-            min-width: 0; /* Untuk mencegah overflow */
+            min-width: 0;
+            /* Untuk mencegah overflow */
         }
 
         .item-info h4 {
@@ -215,7 +229,7 @@
             align-items: center;
             gap: 8px;
             cursor: pointer;
-            box-shadow: 0 10px 20px -5px rgba(0,0,0,0.2);
+            box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.2);
             transition: transform 0.2s;
             -webkit-tap-highlight-color: transparent;
         }
@@ -301,7 +315,26 @@
             transform: scale(0.9);
         }
 
-        /* Tombol tengah spesial */
+        .nav-item.middle-item .nav-icon {
+            font-size: 42px;
+            font-weight: 600;
+            line-height: 1;
+            display: block;
+            color: white;
+        }
+
+        .nav-item.middle-item .nav-text {
+            display: none;
+            /* Sembunyikan teks "Buat" di tombol tengah */
+        }
+
+
+        .nav-item.middle-item .nav-icon {
+            color: white !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+        }
+
         .nav-item.middle-item {
             background: linear-gradient(135deg, #2563eb, #1d4ed8);
             color: white;
@@ -314,14 +347,6 @@
             flex: 0 0 auto;
             margin: 0 5px;
             max-width: 60px;
-        }
-
-        .nav-item.middle-item .nav-icon {
-            font-size: 56px;
-        }
-
-        .nav-item.middle-item span {
-            display: none;
         }
 
         .nav-item.middle-item:active {
@@ -428,6 +453,7 @@
             .nav-item span {
                 font-size: 20px;
             }
+
             .status-bar {
                 padding-top: env(safe-area-inset-top, 8px);
                 padding-bottom: 4px;
@@ -534,13 +560,17 @@
 
         /* Untuk device dengan notch */
         @supports (padding: max(0px)) {
-            .status-bar, .content-area, .bottom-nav {
+
+            .status-bar,
+            .content-area,
+            .bottom-nav {
                 padding-left: max(16px, env(safe-area-inset-left));
                 padding-right: max(16px, env(safe-area-inset-right));
             }
         }
     </style>
 </head>
+
 <body>
     <div class="app-container">
         <!-- Status bar -->
@@ -630,7 +660,7 @@
                     <div class="page-title">Buat Iklan Baru</div>
                     <div class="page-subtitle">Mulai kampanye iklan Anda</div>
                 </div>
-                
+
                 <div class="create-ad-card">
                     <h3>✨ Iklan Instan</h3>
                     <p>Buat iklan dalam 1 menit, jangkau ribuan audiens</p>
@@ -660,7 +690,8 @@
                 </div>
 
                 <div style="background: #eef2ff; border-radius: 20px; padding: 16px; margin: 20px 0;">
-                    <p style="color: #1e40af; font-weight: 500;">💡 Tips: Iklan video memiliki engagement 40% lebih tinggi</p>
+                    <p style="color: #1e40af; font-weight: 500;">💡 Tips: Iklan video memiliki engagement 40% lebih
+                        tinggi</p>
                 </div>
             </div>
 
@@ -708,28 +739,40 @@
                     <div class="page-subtitle">Profil dan pengaturan</div>
                 </div>
                 <div class="card" style="display: flex; align-items: center; gap: 20px; background: #f1f4f9;">
-                    <div style="width: 64px; height: 64px; background: #2563eb; border-radius: 32px; display: flex; align-items: center; justify-content: center; color: white; font-size: 28px; flex-shrink: 0;">👤</div>
+                    <div
+                        style="width: 64px; height: 64px; background: #2563eb; border-radius: 32px; display: flex; align-items: center; justify-content: center; color: white; font-size: 28px; flex-shrink: 0;">
+                        👤</div>
                     <div style="min-width: 0; flex: 1;">
-                        <h3 style="font-size: 18px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Andi Saputra</h3>
-                        <p style="color: #475569; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">andi@example.com</p>
+                        <h3 style="font-size: 18px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                            Andi Saputra</h3>
+                        <p style="color: #475569; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                            andi@example.com</p>
                     </div>
                 </div>
                 <div class="card">
                     <div class="card-item">
                         <div class="item-icon">⚙️</div>
-                        <div class="item-info"><h4>Pengaturan Akun</h4></div>
+                        <div class="item-info">
+                            <h4>Pengaturan Akun</h4>
+                        </div>
                     </div>
                     <div class="card-item">
                         <div class="item-icon">🔔</div>
-                        <div class="item-info"><h4>Notifikasi</h4></div>
+                        <div class="item-info">
+                            <h4>Notifikasi</h4>
+                        </div>
                     </div>
                     <div class="card-item">
                         <div class="item-icon">💳</div>
-                        <div class="item-info"><h4>Metode Pembayaran</h4></div>
+                        <div class="item-info">
+                            <h4>Metode Pembayaran</h4>
+                        </div>
                     </div>
                     <div class="card-item">
                         <div class="item-icon">📞</div>
-                        <div class="item-info"><h4>Pusat Bantuan</h4></div>
+                        <div class="item-info">
+                            <h4>Pusat Bantuan</h4>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -745,13 +788,13 @@
                 <span class="nav-icon">📋</span>
                 <span>Riwayat</span>
             </button>
-            
+
             <!-- Tombol tengah - BUAT IKLAN (aktif default) -->
             <button class="nav-item middle-item active" data-page="buat">
-                <span class="nav-icon">📋</span>
-                <span>Buat</span>
+                <span class="nav-icon">+</span>
+                <span class="nav-text">Buat</span>
             </button>
-            
+
             <button class="nav-item" data-page="pantau">
                 <span class="nav-icon">📊</span>
                 <span>Pantau</span>
@@ -767,11 +810,11 @@
         document.addEventListener('DOMContentLoaded', function() {
             const navItems = document.querySelectorAll('.nav-item');
             const pages = document.querySelectorAll('.page');
-            
+
             // Set default ke halaman buat iklan
             pages.forEach(page => page.classList.remove('active-page'));
             document.getElementById('page-buat').classList.add('active-page');
-            
+
             navItems.forEach(item => item.classList.remove('active'));
             document.querySelector('.nav-item.middle-item').classList.add('active');
 
@@ -798,7 +841,7 @@
             function setAppHeight() {
                 const vh = window.innerHeight * 0.01;
                 document.documentElement.style.setProperty('--vh', `${vh}px`);
-                
+
                 const appContainer = document.querySelector('.app-container');
                 if (appContainer) {
                     if (window.innerWidth < 1024) {
@@ -813,4 +856,5 @@
         });
     </script>
 </body>
+
 </html>
