@@ -11,10 +11,16 @@ Route::get('/', function () {
 Route::get('/auth/google', [AuthController::class, 'redirectGoogle'])->name('google.login');
 Route::get('/auth/google/callback', [AuthController::class, 'handleGoogleCallback']);
 
+
+Route::get('/dashboard', [DashboardController::class, 'index']);
+
+
+
+
 Route::middleware(['guest'])->group(function () {
     Route::get('/login', [AuthController::class, 'login'])->name('login');
 });
 
-Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index']);
-});
+// Route::middleware(['auth'])->group(function () {
+//     Route::get('/dashboard', [DashboardController::class, 'index']);
+// });

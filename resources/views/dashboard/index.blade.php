@@ -1,121 +1,774 @@
+<!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Aplikasi Iklan - Responsive Bottom Navigation</title>
     <style>
-        .mobile-bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 70px;
-            background: #ffffff;
-            border-top: 1px solid #eee;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            z-index: 9999;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        .mobile-bottom-nav a {
-            text-decoration: none;
-        }
-
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            font-size: 11px;
-            color: #777;
-            transition: 0.3s;
-        }
-
-        .nav-item i {
-            font-size: 20px;
-            margin-bottom: 3px;
-        }
-
-        .nav-item.active {
-            color: #ff6a00;
-        }
-
-        .nav-item:hover {
-            color: #ff6a00;
-        }
-
-        /* tombol tengah */
-
-        .nav-center {
-            position: relative;
-            top: -28px;
-            width: 65px;
-            height: 65px;
-            background: #ff6a00;
-            border-radius: 50%;
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: #f0f2f5;
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            color: white !important;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
-            transition: 0.3s;
+            padding: 20px;
         }
 
-        .nav-center i {
-            font-size: 26px;
+        /* Container utama yang responsif */
+        .app-container {
+            width: 100%;
+            max-width: 1400px;
+            background: white;
+            border-radius: 32px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 90vh;
+            max-height: 900px;
         }
 
-        .nav-center:hover {
+        /* Status bar - tampil di semua device */
+        .status-bar {
+            background: white;
+            padding: 16px 24px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 15px;
+            font-weight: 600;
+            color: #1e293b;
+            border-bottom: 1px solid #eef2f6;
+        }
+
+        /* Area konten utama - scrollable */
+        .content-area {
+            flex: 1;
+            overflow-y: auto;
+            padding: 24px;
+            background: #ffffff;
+            scrollbar-width: thin;
+        }
+
+        .content-area::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .content-area::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+
+        .content-area::-webkit-scrollbar-thumb {
+            background: #94a3b8;
+            border-radius: 10px;
+        }
+
+        /* Styling halaman */
+        .page {
+            display: none;
+            animation: fadeIn 0.3s ease;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .page.active-page {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0.5; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .page-header {
+            margin-bottom: 28px;
+        }
+
+        .page-title {
+            font-size: clamp(24px, 5vw, 32px);
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 8px;
+        }
+
+        .page-subtitle {
+            color: #475569;
+            font-size: clamp(14px, 4vw, 16px);
+        }
+
+        /* Card styles */
+        .card {
+            background: #f8fafc;
+            border-radius: 24px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid #e9edf2;
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
+        }
+
+        .card-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 16px 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .card-item:last-child {
+            border-bottom: none;
+        }
+
+        .item-icon {
+            width: 52px;
+            height: 52px;
+            background: white;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.02);
+        }
+
+        .item-info {
+            flex: 1;
+        }
+
+        .item-info h4 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 4px;
+        }
+
+        .item-info p {
+            font-size: 14px;
+            color: #64748b;
+        }
+
+        .badge {
+            background: #e6f7e6;
+            padding: 4px 12px;
+            border-radius: 40px;
+            color: #0e7b0e;
+            font-size: 12px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        /* Khusus halaman buat iklan */
+        .create-ad-card {
+            background: linear-gradient(135deg, #2563eb, #1e40af);
+            color: white;
+            border-radius: 28px;
+            padding: clamp(24px, 5vw, 32px);
+            text-align: center;
+            margin: 20px 0 30px;
+        }
+
+        .create-ad-card h3 {
+            font-size: clamp(20px, 5vw, 28px);
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .create-ad-card p {
+            font-size: clamp(14px, 4vw, 16px);
+            opacity: 0.9;
+            margin-bottom: 24px;
+        }
+
+        .create-ad-button {
+            background: white;
+            color: #1e40af;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            box-shadow: 0 10px 20px -5px rgba(0,0,0,0.2);
+            transition: transform 0.2s;
+        }
+
+        .create-ad-button:hover {
             transform: scale(1.05);
         }
 
-        /* padding agar konten tidak tertutup navbar */
-
-        body {
-            padding-bottom: 80px;
+        .format-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 16px;
+            margin: 20px 0;
         }
 
-        /* sembunyikan di desktop */
+        .format-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 20px;
+            padding: 20px 12px;
+            text-align: center;
+            transition: all 0.2s;
+        }
 
-        @media (min-width: 768px) {
-            .mobile-bottom-nav {
+        .format-card:hover {
+            border-color: #2563eb;
+            box-shadow: 0 10px 20px -10px #2563eb30;
+        }
+
+        .format-card .emoji {
+            font-size: 32px;
+            margin-bottom: 12px;
+        }
+
+        .format-card h4 {
+            font-size: 15px;
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        /* Bottom Navigation - RESPONSIF */
+        .bottom-nav {
+            background: white;
+            border-top: 1px solid #eef2f6;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 8px 16px;
+            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.03);
+        }
+
+        .nav-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 0;
+            background: transparent;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: #64748b;
+            gap: 4px;
+            max-width: 80px;
+        }
+
+        .nav-item span {
+            font-size: 11px;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .nav-icon {
+            font-size: 22px;
+            transition: transform 0.2s;
+        }
+
+        .nav-item:hover .nav-icon {
+            transform: translateY(-2px);
+        }
+
+        /* Tombol tengah spesial */
+        .nav-item.middle-item {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            color: white;
+            transform: translateY(-16px);
+            height: 60px;
+            width: 60px;
+            border-radius: 30px;
+            box-shadow: 0 10px 20px rgba(37, 99, 235, 0.35);
+            border: 4px solid white;
+            flex: 0 0 auto;
+            margin: 0 10px;
+            max-width: 60px;
+        }
+
+        .nav-item.middle-item .nav-icon {
+            font-size: 28px;
+        }
+
+        .nav-item.middle-item span {
+            display: none;
+        }
+
+        .nav-item.active {
+            color: #2563eb;
+        }
+
+        .nav-item.active .nav-icon {
+            color: #2563eb;
+        }
+
+        .nav-item.middle-item.active {
+            background: linear-gradient(135deg, #1d4ed8, #1e3a8a);
+        }
+
+        /* Home indicator */
+        .home-bar {
+            width: 130px;
+            height: 5px;
+            background: #cbd5e0;
+            border-radius: 100px;
+            margin: 10px auto 8px;
+        }
+
+        /* ========== RESPONSIVE BREAKPOINTS ========== */
+
+        /* Mobile (320px - 767px) */
+        @media (max-width: 767px) {
+            .app-container {
+                height: 95vh;
+                border-radius: 24px;
+            }
+
+            .status-bar {
+                padding: 12px 16px;
+                font-size: 14px;
+            }
+
+            .content-area {
+                padding: 16px;
+            }
+
+            .card {
+                padding: 16px;
+            }
+
+            .card-item {
+                padding: 12px 0;
+            }
+
+            .item-icon {
+                width: 44px;
+                height: 44px;
+                font-size: 20px;
+            }
+
+            .format-options {
+                grid-template-columns: 1fr 1fr;
+                gap: 12px;
+            }
+
+            .nav-item:not(.middle-item) {
+                max-width: 60px;
+            }
+
+            .nav-item span {
+                font-size: 10px;
+            }
+
+            .nav-item.middle-item {
+                height: 52px;
+                width: 52px;
+            }
+        }
+
+        /* Tablet (768px - 1023px) */
+        @media (min-width: 768px) and (max-width: 1023px) {
+            .app-container {
+                height: 90vh;
+                max-width: 900px;
+            }
+
+            .content-area {
+                padding: 28px;
+            }
+
+            .page {
+                max-width: 700px;
+            }
+
+            .card {
+                padding: 24px;
+            }
+
+            .format-options {
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            .nav-item {
+                max-width: 90px;
+            }
+
+            .nav-item span {
+                font-size: 12px;
+            }
+
+            .nav-item.middle-item {
+                height: 64px;
+                width: 64px;
+            }
+        }
+
+        /* Desktop (1024px ke atas) */
+        @media (min-width: 1024px) {
+            .app-container {
+                height: 85vh;
+                max-width: 1200px;
+            }
+
+            .content-area {
+                padding: 32px 40px;
+            }
+
+            .page {
+                max-width: 900px;
+            }
+
+            /* Bottom navigation lebih lebar untuk desktop */
+            .bottom-nav {
+                padding: 12px 24px;
+            }
+
+            .nav-item {
+                max-width: 100px;
+                padding: 10px 0;
+            }
+
+            .nav-item span {
+                font-size: 13px;
+            }
+
+            .nav-icon {
+                font-size: 24px;
+            }
+
+            .nav-item.middle-item {
+                height: 68px;
+                width: 68px;
+                margin: 0 20px;
+            }
+
+            .nav-item.middle-item .nav-icon {
+                font-size: 32px;
+            }
+
+            /* Hover effects untuk desktop */
+            .nav-item:hover:not(.middle-item) {
+                background: #f1f5f9;
+                color: #2563eb;
+            }
+
+            .card:hover {
+                transform: translateY(-4px);
+                box-shadow: 0 20px 30px -10px rgba(0,0,0,0.15);
+            }
+        }
+
+        /* Large Desktop (1400px ke atas) */
+        @media (min-width: 1400px) {
+            .app-container {
+                max-width: 1400px;
+                height: 80vh;
+            }
+
+            .content-area {
+                padding: 40px 60px;
+            }
+
+            .page {
+                max-width: 1000px;
+            }
+
+            .nav-item {
+                max-width: 120px;
+            }
+        }
+
+        /* Landscape mode untuk mobile */
+        @media (max-height: 600px) and (orientation: landscape) {
+            .app-container {
+                height: 98vh;
+            }
+
+            .bottom-nav {
+                padding: 4px 16px;
+            }
+
+            .nav-item.middle-item {
+                transform: translateY(-8px);
+                height: 48px;
+                width: 48px;
+            }
+
+            .home-bar {
                 display: none;
             }
         }
     </style>
 </head>
-
 <body>
-    <div class="mobile-bottom-nav">
+    <div class="app-container">
+        <!-- Status bar -->
+        <div class="status-bar">
+            <span>9:41</span>
+            <span>📶 🔋 100%</span>
+        </div>
 
-        <a href="{{ url('/lokasi') }}" class="nav-item {{ request()->is('lokasi') ? 'active' : '' }}">
-            <i class="fa fa-map-marker"></i>
-            <span>Lokasi</span>
-        </a>
+        <!-- Area konten -->
+        <div class="content-area" id="content-area">
+            <!-- Halaman Daftar Lokasi -->
+            <div class="page" id="page-lokasi">
+                <div class="page-header">
+                    <div class="page-title">Daftar Lokasi</div>
+                    <div class="page-subtitle">Kelola lokasi pemasangan iklan</div>
+                </div>
+                <div class="card">
+                    <div class="card-item">
+                        <div class="item-icon">🏢</div>
+                        <div class="item-info">
+                            <h4>Mall Central Park</h4>
+                            <p>Jakarta Barat • 5 iklan aktif</p>
+                        </div>
+                    </div>
+                    <div class="card-item">
+                        <div class="item-icon">🏬</div>
+                        <div class="item-info">
+                            <h4>Stasiun MRT Bundaran HI</h4>
+                            <p>Jakarta Pusat • 3 iklan aktif</p>
+                        </div>
+                    </div>
+                    <div class="card-item">
+                        <div class="item-icon">🏪</div>
+                        <div class="item-info">
+                            <h4>Terminal Pulo Gebang</h4>
+                            <p>Jakarta Timur • 2 iklan aktif</p>
+                        </div>
+                    </div>
+                    <div class="card-item">
+                        <div class="item-icon">🛍️</div>
+                        <div class="item-info">
+                            <h4>Bandara Soekarno-Hatta</h4>
+                            <p>Tangerang • 4 iklan aktif</p>
+                        </div>
+                    </div>
+                </div>
+                <div style="color: #2563eb; font-weight: 500; padding: 8px 0;">+ Tambah lokasi baru</div>
+            </div>
 
-        <a href="{{ url('/riwayat-iklan') }}" class="nav-item {{ request()->is('riwayat-iklan') ? 'active' : '' }}">
-            <i class="fa fa-history"></i>
-            <span>Riwayat</span>
-        </a>
+            <!-- Halaman Riwayat Iklan -->
+            <div class="page" id="page-riwayat">
+                <div class="page-header">
+                    <div class="page-title">Riwayat Iklan</div>
+                    <div class="page-subtitle">Iklan yang sudah tayang</div>
+                </div>
+                <div class="card">
+                    <div class="card-item">
+                        <div class="item-icon">📺</div>
+                        <div class="item-info">
+                            <h4>Promo Produk Susu</h4>
+                            <p>12-18 Mar 2025 • 12.500 tayangan</p>
+                        </div>
+                        <span class="badge">Selesai</span>
+                    </div>
+                    <div class="card-item">
+                        <div class="item-icon">📱</div>
+                        <div class="item-info">
+                            <h4>Aplikasi Fintech</h4>
+                            <p>1-7 Mar 2025 • 8.230 tayangan</p>
+                        </div>
+                        <span class="badge">Selesai</span>
+                    </div>
+                    <div class="card-item">
+                        <div class="item-icon">🎮</div>
+                        <div class="item-info">
+                            <h4>Game Online</h4>
+                            <p>20-28 Feb 2025 • 15.100 tayangan</p>
+                        </div>
+                        <span class="badge">Selesai</span>
+                    </div>
+                </div>
+            </div>
 
-        <a href="{{ url('/buat-iklan') }}" class="nav-center {{ request()->is('buat-iklan') ? 'active' : '' }}">
-            <i class="fa fa-plus"></i>
-        </a>
+            <!-- Halaman Buat Iklan Baru (AKTIF DEFAULT) -->
+            <div class="page active-page" id="page-buat">
+                <div class="page-header">
+                    <div class="page-title">Buat Iklan Baru</div>
+                    <div class="page-subtitle">Mulai kampanye iklan Anda</div>
+                </div>
+                
+                <div class="create-ad-card">
+                    <h3>✨ Iklan Instan</h3>
+                    <p>Buat iklan dalam 1 menit, jangkau ribuan audiens</p>
+                    <button class="create-ad-button" onclick="alert('Mulai membuat iklan')">
+                        <span>+</span> Buat Iklan Sekarang
+                    </button>
+                </div>
 
-        <a href="{{ url('/pantau-iklan') }}" class="nav-item {{ request()->is('pantau-iklan') ? 'active' : '' }}">
-            <i class="fa fa-line-chart"></i>
-            <span>Pantau</span>
-        </a>
+                <div style="margin: 20px 0 12px; font-weight: 600; color: #1e293b;">Pilih format iklan:</div>
+                <div class="format-options">
+                    <div class="format-card">
+                        <div class="emoji">🖼️</div>
+                        <h4>Iklan Gambar</h4>
+                    </div>
+                    <div class="format-card">
+                        <div class="emoji">🎥</div>
+                        <h4>Iklan Video</h4>
+                    </div>
+                    <div class="format-card">
+                        <div class="emoji">📝</div>
+                        <h4>Iklan Teks</h4>
+                    </div>
+                    <div class="format-card">
+                        <div class="emoji">🔄</div>
+                        <h4>Karusel</h4>
+                    </div>
+                </div>
 
-        <a href="{{ url('/akun') }}" class="nav-item {{ request()->is('akun') ? 'active' : '' }}">
-            <i class="fa fa-user"></i>
-            <span>Akun</span>
-        </a>
+                <div style="background: #eef2ff; border-radius: 20px; padding: 16px; margin: 20px 0;">
+                    <p style="color: #1e40af; font-weight: 500;">💡 Tips: Iklan video memiliki engagement 40% lebih tinggi</p>
+                </div>
+            </div>
 
+            <!-- Halaman Pantau Iklan -->
+            <div class="page" id="page-pantau">
+                <div class="page-header">
+                    <div class="page-title">Pantau Iklan</div>
+                    <div class="page-subtitle">Kinerja iklan real-time</div>
+                </div>
+                <div class="card">
+                    <div class="card-item">
+                        <div class="item-icon">📊</div>
+                        <div class="item-info">
+                            <h4>Kampanye Ramadhan</h4>
+                            <p>Impresi: 45.200 • Klik: 2.340</p>
+                        </div>
+                        <span style="color: #2563eb; font-weight: 600;">5.2%</span>
+                    </div>
+                    <div class="card-item">
+                        <div class="item-icon">📈</div>
+                        <div class="item-info">
+                            <h4>Promo Akhir Pekan</h4>
+                            <p>Impresi: 28.900 • Klik: 1.456</p>
+                        </div>
+                        <span style="color: #2563eb; font-weight: 600;">5.0%</span>
+                    </div>
+                    <div class="card-item">
+                        <div class="item-icon">🔥</div>
+                        <div class="item-info">
+                            <h4>Produk Terbaru</h4>
+                            <p>Impresi: 67.800 • Klik: 4.120</p>
+                        </div>
+                        <span style="color: #10b981; font-weight: 600;">6.1%</span>
+                    </div>
+                </div>
+                <div class="card" style="background: white;">
+                    <p style="font-weight: 600;">Total pengeluaran bulan ini: Rp 2.450.000</p>
+                </div>
+            </div>
+
+            <!-- Halaman Akun -->
+            <div class="page" id="page-akun">
+                <div class="page-header">
+                    <div class="page-title">Akun</div>
+                    <div class="page-subtitle">Profil dan pengaturan</div>
+                </div>
+                <div class="card" style="display: flex; align-items: center; gap: 20px; background: #f1f4f9;">
+                    <div style="width: 64px; height: 64px; background: #2563eb; border-radius: 32px; display: flex; align-items: center; justify-content: center; color: white; font-size: 28px;">👤</div>
+                    <div>
+                        <h3 style="font-size: 18px;">Andi Saputra</h3>
+                        <p style="color: #475569;">andi@example.com</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-item">
+                        <div class="item-icon">⚙️</div>
+                        <div class="item-info"><h4>Pengaturan Akun</h4></div>
+                    </div>
+                    <div class="card-item">
+                        <div class="item-icon">🔔</div>
+                        <div class="item-info"><h4>Notifikasi</h4></div>
+                    </div>
+                    <div class="card-item">
+                        <div class="item-icon">💳</div>
+                        <div class="item-info"><h4>Metode Pembayaran</h4></div>
+                    </div>
+                    <div class="card-item">
+                        <div class="item-icon">📞</div>
+                        <div class="item-info"><h4>Pusat Bantuan</h4></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <button class="nav-item" data-page="lokasi">
+                <span class="nav-icon">📍</span>
+                <span>Lokasi</span>
+            </button>
+            <button class="nav-item" data-page="riwayat">
+                <span class="nav-icon">📋</span>
+                <span>Riwayat</span>
+            </button>
+            
+            <!-- Tombol tengah - BUAT IKLAN (aktif default) -->
+            <button class="nav-item middle-item active" data-page="buat">
+                <span class="nav-icon">+</span>
+                <span>Buat</span>
+            </button>
+            
+            <button class="nav-item" data-page="pantau">
+                <span class="nav-icon">📊</span>
+                <span>Pantau</span>
+            </button>
+            <button class="nav-item" data-page="akun">
+                <span class="nav-icon">👤</span>
+                <span>Akun</span>
+            </button>
+        </div>
+        
+        <!-- Home indicator -->
+        <div class="home-bar"></div>
     </div>
-</body>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const navItems = document.querySelectorAll('.nav-item');
+            const pages = document.querySelectorAll('.page');
+            
+            // Set default ke halaman buat iklan
+            pages.forEach(page => page.classList.remove('active-page'));
+            document.getElementById('page-buat').classList.add('active-page');
+            
+            navItems.forEach(item => item.classList.remove('active'));
+            document.querySelector('.nav-item.middle-item').classList.add('active');
+
+            // Fungsi switch halaman
+            function switchPage(pageId) {
+                pages.forEach(page => page.classList.remove('active-page'));
+                const targetPage = document.getElementById('page-' + pageId);
+                if (targetPage) targetPage.classList.add('active-page');
+
+                navItems.forEach(item => item.classList.remove('active'));
+                const activeNavItem = document.querySelector(`.nav-item[data-page="${pageId}"]`);
+                if (activeNavItem) activeNavItem.classList.add('active');
+            }
+
+            navItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const pageId = this.getAttribute('data-page');
+                    if (pageId) switchPage(pageId);
+                });
+            });
+        });
+    </script>
+</body>
 </html>
