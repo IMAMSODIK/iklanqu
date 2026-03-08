@@ -666,7 +666,7 @@
 
                 <div class="create-ad-card">
                     <h3>Iklan Cepat, Hasil Tepat dan Biaya Murah</h3>
-                    <p>Pasarkan Produk dan Jasa Anda Bersama Kami. Dengan iklanqu.id, Biaya Murah, Iklan Cepat dan Hasil Tepat. <br><b>iklanqu.id</b> <i>The Best Partner For Your Bussines</i></p>
+                    <p><b>iklanqu.id</b> <i>The Best Partner For Your Bussines</i></p>
                     <button class="create-ad-button" onclick="alert('Mulai membuat iklan')">
                         <span>+</span> Buat Iklan Sekarang
                     </button>
