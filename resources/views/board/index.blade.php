@@ -159,8 +159,11 @@
                                     <div class="col">
                                         <div class="mb-3">
                                             <label class="form-label" for="lokasi">Lokasi Board</label>
-                                            <input type="text" class="form-control input-air-primary" id="lokasi"
-                                                placeholder="Masukkan lokasi board">
+                                            <select class="form-control input-air-primary" id="lokasi">
+                                                @foreach ($lokasi as $l)
+                                                    <option value="{{$l->id}}">{{$l->nama}}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
