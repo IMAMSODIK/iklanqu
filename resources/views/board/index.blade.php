@@ -11,7 +11,7 @@
         <div class="page-title">
             <div class="row">
                 <div class="col-4">
-                    <h4>{{$pageTitle}}</h4>
+                    <h4>{{ $pageTitle }}</h4>
                 </div>
                 <div class="col-8 d-flex justify-content-end">
                     <button class="btn btn-primary" id="tambah-data" style="margin-right: 5px">
@@ -161,7 +161,7 @@
                                             <label class="form-label" for="lokasi">Lokasi Board</label>
                                             <select class="form-control input-air-primary" id="lokasi">
                                                 @foreach ($lokasi as $l)
-                                                    <option value="{{$l->id}}">{{$l->nama}}</option>
+                                                    <option value="{{ $l->id }}">{{ $l->nama }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -172,12 +172,13 @@
                                     <div class="col">
                                         <div class="mb-3">
                                             <label class="form-label" for="foto">Upload Foto Board</label>
-                                            <input type="file" class="form-control input-air-primary" id="foto"
-                                                accept="image/*">
-                                            <div class="mt-3">
-                                                <img id="preview-foto" src="#" alt="Photo Preview"
-                                                    class="img-thumbnail d-none" style="max-width: 150px;">
+                                            <div class="mb-3">
+                                                <label>Upload Foto</label>
+                                                <input type="file" id="photos" name="photos[]" multiple
+                                                    class="form-control" accept="image/*">
                                             </div>
+
+                                            <div class="row" id="preview-images"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -300,7 +301,7 @@
 @endsection
 
 @section('own_script')
-    <script src="{{ asset('own_assets/scripts/teacher.js') }}"></script>
+    <script src="{{ asset('own_assets/scripts/board.js') }}"></script>
     <script src="{{ asset('dashboard_assets/assets/js/range-slider/ion.rangeSlider.min.js') }}"></script>
     <script src="{{ asset('dashboard_assets/assets/js/range-slider/rangeslider-script.js') }}"></script>
     <script src="{{ asset('dashboard_assets/assets/js/touchspin/vendors.min.js') }}"></script>
@@ -310,14 +311,4 @@
     <script src="{{ asset('dashboard_assets/assets/js/select2/select2.full.min.js') }}"></script>
     <script src="{{ asset('dashboard_assets/assets/js/select2/select2-custom.js') }}"></script>
     <script src="{{ asset('dashboard_assets/assets/js/product-tab.js') }}"></script>
-    <script>
-        document.getElementById('foto').addEventListener('change', function(event) {
-            const [file] = event.target.files;
-            if (file) {
-                const preview = document.getElementById('preview-foto');
-                preview.src = URL.createObjectURL(file);
-                preview.classList.remove('d-none');
-            }
-        });
-    </script>
 @endsection

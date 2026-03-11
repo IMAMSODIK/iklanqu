@@ -123,131 +123,117 @@ function alertModal(status, message = null) {
     $("#alert").modal("show");
 }
 
-$("#foto").on("change", function () {
-    let file = this.files[0];
-    if (file) {
-        let reader = new FileReader();
-        reader.onload = function (e) {
-            $("#preview-foto")
-                .attr("src", e.target.result)
-                .removeClass("d-none");
-        };
-        reader.readAsDataURL(file);
-    } else {
-        $("#preview-foto").attr("src", "#").addClass("d-none");
-    }
-});
+$("#photos").on("change", function () {
 
-$("#edit_foto").on("change", function () {
-    let file = this.files[0];
-    if (file) {
-        let reader = new FileReader();
-        reader.onload = function (e) {
-            $("#preview-edit_foto")
-                .attr("src", e.target.result)
-                .removeClass("d-none");
-        };
-        reader.readAsDataURL(file);
-    } else {
-        $("#preview-edit_foto").attr("src", "#").addClass("d-none");
+    $("#preview-images").html("");
+
+    let files = this.files;
+
+    if (files.length > 0) {
+
+        $.each(files, function (index, file) {
+
+            let reader = new FileReader();
+
+            reader.onload = function (e) {
+
+                let html = `
+                <div class="col-md-3 mb-2">
+                    <img src="${e.target.result}" 
+                    style="width:100%;height:150px;object-fit:cover;border-radius:8px;">
+                </div>
+                `;
+
+                $("#preview-images").append(html);
+
+            }
+
+            reader.readAsDataURL(file);
+
+        });
+
     }
+
 });
 
 $("#store").on("click", function () {
+
     let formData = new FormData();
     let button = $(this);
 
     $('body').css('cursor', 'wait');
     $(button).prop('disabled', true);
 
-    let file = $("#foto")[0].files[0];
-    if (file) {
-        formData.append("foto", file);
-    }
     formData.append("_token", $("meta[name='csrf-token']").attr("content"));
-    formData.append("nama", $("#nama").val());
-    formData.append("email", $("#email").val());
+
+    formData.append("name", $("#nama").val());
+    formData.append("kode", $("#kode").val());
+    formData.append("pin", $("#pin").val());
+    formData.append("lokasi_id", $("#lokasi").val());
+
+    let files = $("#photos")[0].files;
+
+    for (let i = 0; i < files.length; i++) {
+        formData.append("photos[]", files[i]);
+    }
 
     $.ajax({
-        url: "/teacher/store",
+        url: "/board/store",
         method: "POST",
         processData: false,
         contentType: false,
         data: formData,
+
         success: function (response) {
-            $(`#${modal}`).modal("hide");
 
             $('body').css('cursor', 'default');
             $(button).prop('disabled', false);
 
             if (response.status) {
+
+                $("#tambah-data-modal").modal("hide");
+
                 alertModal(true, response.message);
-                $("#nama").val("");
-                $("#email").val("");
-                $("#foto").val("");
-                $("#preview-foto").attr("src", "#").addClass("d-none");
 
-                let foto = (response.data.foto) ? `../../storage/${response.data.foto}` : '/own_assets/images/avatar.png';
-
-                let row = `
-                    <div class="col-6 col-xl-3 col-md-3 detail-user" style="cursor: pointer" data-id="${response.data.id}" data-status="${response.data.status}">
-                        <div class="card">
-                            <div class="product-box">
-                                <div class="product-img">
-                                    <img class="img-fluid" src="${foto}" alt="Profile Picture">
-                                    <div class="ribbon ribbon-${(response.data.status) ? 'success' : 'danger'}">${(response.data.status) ? 'Active' : 'Nonactive'}</div>
-                                </div>
-                                <div class="product-details">
-                                    <span class="badge rounded-pill badge-primary text-white mb-2">Teacher</span>
-                                    <h5>${response.data.name}</h5>
-                                    <p>${response.data.email}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                `;
-
-                $(".data-ctr").prepend(row);
-                $("#is-error").removeClass('error-response');
             } else {
-                let message = `<div style="text-align: center; font-weight: bold; margin-bottom: 10px;">${response.message || "An error occurred."}</div>`;
+
+                let message = response.message;
 
                 if (response.errors) {
+
                     const detailMessages = Object.values(response.errors)
                         .map(msgs => msgs[0])
                         .join("<br>");
-                    message += `<div style="text-align: center;">${detailMessages}</div>`;
+
+                    message += "<br>" + detailMessages;
                 }
 
-                $("#is-error").addClass('error-response');
                 alertModal(false, message);
             }
 
         },
+
         error: function (xhr) {
-            $(`#${modal}`).modal("hide");
+
             $('body').css('cursor', 'default');
             $(button).prop('disabled', false);
 
-            let message = `<div style="text-align: center; font-weight: bold; margin-bottom: 10px;">An error occurred.</div>`;
+            let message = "Terjadi kesalahan";
 
-            if (xhr.responseJSON) {
-                if (xhr.responseJSON.message) {
-                    message = `<div style="text-align: center; font-weight: bold; margin-bottom: 10px;">${xhr.responseJSON.message}</div>`;
-                }
-                if (xhr.responseJSON.errors) {
-                    const detailMessages = Object.values(xhr.responseJSON.errors)
-                        .map(msgs => msgs[0])
-                        .join("<br>");
-                    message += `<div style="text-align: center;">${detailMessages}</div>`;
-                }
+            if (xhr.responseJSON?.errors) {
+
+                message = Object.values(xhr.responseJSON.errors)
+                    .map(msgs => msgs[0])
+                    .join("<br>");
             }
 
-            $("#is-error").addClass('error-response');
             alertModal(false, message);
+
         }
+
     });
-})
+
+});
 
 $("#update").on("click", function () {
     let formData = new FormData();
@@ -570,7 +556,7 @@ $("#search").on('input', function () {
             if (response.status) {
                 response.data.forEach(function (user) {
                     let foto = (user.foto) ? `/storage/${user.foto}` : '/own_assets/images/avatar.png';
-                    let statusRibbon = (user.status == 1) 
+                    let statusRibbon = (user.status == 1)
                         ? `<div class="ribbon ribbon-success">Active</div>`
                         : `<div class="ribbon ribbon-danger">Nonactive</div>`;
 
@@ -627,7 +613,7 @@ $("#apply-filter").on("click", function () {
 
 let offset = 20;
 
-$("#load-more").on("click", function() {
+$("#load-more").on("click", function () {
     let button = $(this);
     button.prop("disabled", true).text("Loading...");
 
@@ -635,13 +621,13 @@ $("#load-more").on("click", function() {
         url: "/students/load-more",
         method: "GET",
         data: { offset: offset },
-        success: function(response) {
+        success: function (response) {
             if (response.status && response.data.length > 0) {
                 response.data.forEach(user => {
-                    let foto = user.foto 
-                        ? `/storage/${user.foto}` 
+                    let foto = user.foto
+                        ? `/storage/${user.foto}`
                         : '/own_assets/images/avatar.png';
-                    
+
                     let statusRibbon = (user.status == 1)
                         ? `<div class="ribbon ribbon-success">Active</div>`
                         : `<div class="ribbon ribbon-danger">Nonactive</div>`;
@@ -674,7 +660,7 @@ $("#load-more").on("click", function() {
                 button.prop("disabled", true).text("No more data");
             }
         },
-        error: function() {
+        error: function () {
             button.prop("disabled", false).text("Load More");
             alert("Failed to load data.");
         }
