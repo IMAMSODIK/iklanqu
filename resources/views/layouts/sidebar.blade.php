@@ -52,104 +52,10 @@
                 </li>
 
                 <li class="sidebar-list">
-                    <a class="sidebar-link sidebar-title" href="/data-kamar">
-                        <i class="fa fa-bed text-white"></i>
-                        <span class="">Nomor Kamar</span>
-                    </a>
-                </li>
-
-                <li class="sidebar-list">
-                    <a class="sidebar-link sidebar-title" href="/pengaturan-kamar">
-                        <i class="fa fa-door-open text-white"></i>
-                        <span class="">Pengaturan Kamar</span>
-                </a>
-                </li>
-
-                <li class="sidebar-main-title">
-                    <div>
-                        <h6 class="">Data Peserta</h6>
-                    </div>
-                </li>
-
-                <li class="sidebar-list">
-                    <a class="sidebar-link sidebar-title" href="/daftar-peserta">
-                        <i class="fa fa-users text-white"></i>
-                        <span class="">Daftar Peserta</span>
-                    </a>
-                </li>
-
-                <li class="sidebar-list">
-                    <a class="sidebar-link sidebar-title" href="/pembayaran">
-                        <i class="fa fa-money text-white" aria-hidden="true"></i>
-                        <span class="">Pembayaran</span>
-                    </a>
-                </li>
-
-                <li class="sidebar-list">
-                    <a class="sidebar-link sidebar-title" href="/registrasi-peserta">
-                        <i class="fa fa-user-plus text-white"></i>
-                        <span class="">Registrasi Peserta</span>
-                    </a>
-                </li>
-
-                <li class="sidebar-list">
-                    <a class="sidebar-link sidebar-title" href="/absensi-peserta">
-                        <i class="fa fa-user-check text-white"></i>
-                        <span class="">Absensi Peserta</span>
-                    </a>
-                </li>
-
-                <li class="sidebar-main-title">
-                    <div>
-                        <h6 class="">Data Narasumber</h6>
-                    </div>
-                </li>
-
-                <li class="sidebar-list">
-                    <a class="sidebar-link sidebar-title" href="/daftar-narasumber">
-                        <i class="fa fa-users text-white"></i>
-                        <span class="">Daftar Narasumber</span>
-                    </a>
-                </li>
-
-                <li class="sidebar-list">
-                    <a class="sidebar-link sidebar-title" href="/registrasi-narasumber">
-                        <i class="fa fa-user-plus text-white"></i>
-                        <span class="">Registrasi Narasumber</span>
-                    </a>
-                </li>
-
-                <li class="sidebar-list">
-                    <a class="sidebar-link sidebar-title" href="/absensi-narasumber">
-                        <i class="fa fa-user-check text-white"></i>
-                        <span class="">Absensi Narasumber</span>
-                    </a>
-                </li>
-
-                <li class="sidebar-main-title">
-                    <div>
-                        <h6 class="">Data Rapat</h6>
-                    </div>
-                </li>
-
-                <li class="sidebar-list">
-                    <a class="sidebar-link sidebar-title" href="/materi-raker">
-                        <i class="fa fa-file-text text-white"></i>
-                        <span class="">Materi Raker</span>
-                    </a>
-                </li>
-
-                <li class="sidebar-list">
-                    <a class="sidebar-link sidebar-title" href="/dokumentasi-raker">
-                        <i class="fa fa-camera text-white"></i>
-                        <span class="">Dokumentasi Raker</span>
-                    </a>
-                </li>
-
-                <li class="sidebar-list">
-                    <a class="sidebar-link sidebar-title" href="/kit-peserta">
-                        <i class="fa fa-box-open text-white"></i>
-                        <span class="">Kit Peserta</span>
+                    <a class="sidebar-link sidebar-title" href="/board">
+                        <i class="fa fa-columns text-white"></i>
+                        <span>Board</span>
+                        <div class="according-menu"><i class="fa fa-angle-right"></i></div>
                     </a>
                 </li>
 

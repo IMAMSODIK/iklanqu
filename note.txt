@@ -1,0 +1,25 @@
+board
+    - kode board
+    - pin
+    - files
+    - lokasi_id
+
+lokasi
+    - nama
+    - alamat
+    - gambar
+    - link maps
+
+profile web (super admin)
+    - email
+    - no. hp
+    - instagram
+    - tiktok
+    - alamat
+
+clients dan user
+
+get in touch
+    - nama
+    - nomo whatsapp
+    - pesan
