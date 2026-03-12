@@ -9,15 +9,29 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        return view('dashboard.index');
         try {
+            $user = Auth::user();
+
+            $user_data = (object)[
+                'name' => $user->name,
+                'email' => $user->email,
+                'role' => $user->role,
+                'foto' => $user->foto,
+                'no_wa' => $user->no_wa,
+                'status' => $user->status,
+                'tutorial' => $user->tutorial
+            ];
+        
             $data = [
-                'pageTitle' => 'Dashboard'
+                'pageTitle' => 'Dashboard',
+                'user' => $user_data
             ];
 
-            if(in_array(Auth::user()->role, ['admin', 'verifikator'])){
+            return view('dashboard.index', $data);
+
+            if (in_array(Auth::user()->role, ['admin', 'verifikator'])) {
                 return view('dashboard.index_admin', $data);
-            }else{
+            } else {
                 return view('dashboard.index', $data);
             }
         } catch (\Exception $e) {
@@ -33,9 +47,9 @@ class DashboardController extends Controller
                 'pageTitle' => 'Daftar Lokasi'
             ];
 
-            if(in_array(Auth::user()->role, ['admin', 'verifikator'])){
+            if (in_array(Auth::user()->role, ['admin', 'verifikator'])) {
                 return view('dashboard.index_admin', $data);
-            }else{
+            } else {
                 return view('dashboard.lokasi', $data);
             }
         } catch (\Exception $e) {
@@ -51,9 +65,9 @@ class DashboardController extends Controller
                 'pageTitle' => 'Daftar Riwayat'
             ];
 
-            if(in_array(Auth::user()->role, ['admin', 'verifikator'])){
+            if (in_array(Auth::user()->role, ['admin', 'verifikator'])) {
                 return view('dashboard.index_admin', $data);
-            }else{
+            } else {
                 return view('dashboard.riwayat', $data);
             }
         } catch (\Exception $e) {
@@ -69,9 +83,9 @@ class DashboardController extends Controller
                 'pageTitle' => 'Daftar Pantau'
             ];
 
-            if(in_array(Auth::user()->role, ['admin', 'verifikator'])){
+            if (in_array(Auth::user()->role, ['admin', 'verifikator'])) {
                 return view('dashboard.index_admin', $data);
-            }else{
+            } else {
                 return view('dashboard.pantau', $data);
             }
         } catch (\Exception $e) {
@@ -87,9 +101,9 @@ class DashboardController extends Controller
                 'pageTitle' => 'Daftar Akun'
             ];
 
-            if(in_array(Auth::user()->role, ['admin', 'verifikator'])){
+            if (in_array(Auth::user()->role, ['admin', 'verifikator'])) {
                 return view('dashboard.index_admin', $data);
-            }else{
+            } else {
                 return view('dashboard.akun', $data);
             }
         } catch (\Exception $e) {
