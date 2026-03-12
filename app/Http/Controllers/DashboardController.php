@@ -114,10 +114,10 @@ class DashboardController extends Controller
     public function tutorialSelesai()
     {
         $user = Auth::user();
-
-        $user->update([
-            'tutorial' => 1
-        ]);
+        dd($user);
+        // $user->update([
+        //     'tutorial' => 1
+        // ]);
 
         return response()->json([
             'status' => 'success'
