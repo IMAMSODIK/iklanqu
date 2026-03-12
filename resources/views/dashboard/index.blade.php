@@ -350,21 +350,6 @@
             document.querySelectorAll(".tour-highlight")
                 .forEach(e => e.classList.remove("tour-highlight"));
 
-            $.ajax({
-                url: "/dashboard/tutorial/selesai",
-                type: "POST",
-                data: {
-                    _token: $('meta[name="csrf-token"]').attr("content"),
-                    'no_wa': $("#phone_number").val()
-                },
-                success: function(res) {
-                    alert("Nomor berhasil disimpan");
-                },
-                error: function() {
-                    console.log("Gagal update tutorial");
-                }
-            });
-
             showPhonePopup();
         }
 
@@ -396,7 +381,21 @@
                 return;
             }
 
-            document.querySelector(".phone-popup").remove();
+            $.ajax({
+                url: "/dashboard/tutorial/selesai",
+                type: "POST",
+                data: {
+                    _token: $('meta[name="csrf-token"]').attr("content"),
+                    'no_wa': $("#phone_number").val()
+                },
+                success: function(res) {
+                    document.querySelector(".phone-popup").remove();
+                    alert("Nomor berhasil disimpan");
+                },
+                error: function() {
+                    console.log("Gagal update tutorial");
+                }
+            });
         }
 
         const userTutorial = {{ $user->tutorial }};
