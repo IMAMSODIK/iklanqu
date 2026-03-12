@@ -321,7 +321,6 @@
         line-height: 1;
         display: block;
         color: white;
-        margin-top: -10px; 
     }
 
     .nav-item.middle-item .nav-icon {
