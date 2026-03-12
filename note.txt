@@ -1,14 +1,15 @@
-board
+board (done)
     - kode board
     - pin
     - files
     - lokasi_id
-
-lokasi
+clients dan user (done)
+lokasi (done)
     - nama
     - alamat
     - gambar
     - link maps
+
 
 profile web (super admin)
     - email
@@ -17,9 +18,14 @@ profile web (super admin)
     - tiktok
     - alamat
 
-clients dan user
-
 get in touch
     - nama
     - nomo whatsapp
     - pesan
+
+
+bagi tiap page menjadi html tersendiri
+buatkan yang aktif adalah halaman tambah
+cek, apakah user pertama kali atau tidak, jika ya munuclkan pop up untuk meminta nomor handphone dan next untuk lanjut ke tutorial
+tampilkan lokasi
+flow tambah iklan dan pembayaran

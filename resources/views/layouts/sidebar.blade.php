@@ -104,7 +104,7 @@
                 </li>
 
                 <li class="sidebar-list">
-                    <a class="sidebar-link sidebar-title" href="/touch">
+                    <a class="sidebar-link sidebar-title" href="/get-in-touch">
                         <i class="fa fa-comments text-white"></i>
                         <span>Get in Touch</span>
                         <div class="according-menu"><i class="fa fa-angle-right"></i></div>

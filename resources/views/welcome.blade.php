@@ -6,15 +6,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IklanQu - Iklan provider modern</title>
-    <link rel="shortcut icon" href="{{asset('landing_assets/images/favicon.png')}}">
-    <link rel="stylesheet" href="{{asset('landing_assets/css/bootstrap.min.css')}}">
-    <link rel="stylesheet" href="{{asset('landing_assets/css/meanmenu.css')}}">
-    <link rel="stylesheet" href="{{asset('landing_assets/css/all.min.css')}}">
-    <link rel="stylesheet" href="{{asset('landing_assets/css/swiper-bundle.min.css')}}">
-    <link rel="stylesheet" href="{{asset('landing_assets/css/magnific-popup.css')}}">
-    <link rel="stylesheet" href="{{asset('landing_assets/css/animate.css')}}">
-    <link rel="stylesheet" href="{{asset('landing_assets/css/nice-select.css')}}">
-    <link rel="stylesheet" href="{{asset('landing_assets/css/style.css')}}">
+    <link rel="shortcut icon" href="{{ asset('landing_assets/images/favicon.png') }}">
+    <link rel="stylesheet" href="{{ asset('landing_assets/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('landing_assets/css/meanmenu.css') }}">
+    <link rel="stylesheet" href="{{ asset('landing_assets/css/all.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('landing_assets/css/swiper-bundle.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('landing_assets/css/magnific-popup.css') }}">
+    <link rel="stylesheet" href="{{ asset('landing_assets/css/animate.css') }}">
+    <link rel="stylesheet" href="{{ asset('landing_assets/css/nice-select.css') }}">
+    <link rel="stylesheet" href="{{ asset('landing_assets/css/style.css') }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <style>
         .blog__content ul li a {
             text-align: center;
@@ -160,7 +161,8 @@
         <div class="container header__container">
             <div class="header-top-wrp">
                 <ul class="info">
-                    <li><svg width="15" height="12" viewBox="0 0 15 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <li><svg width="15" height="12" viewBox="0 0 15 12" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" clip-rule="evenodd"
                                 d="M13.8748 8.50453C13.8748 9.85566 12.7757 10.953 11.4263 10.953H3.39325C2.04384 10.953 0.94475 9.85563 0.94475 8.50453V3.39322C0.944449 2.95776 1.06111 2.53021 1.28253 2.15525L5.20216 6.07488C5.78856 6.663 6.57384 6.98706 7.41059 6.98706C8.24563 6.98706 9.03091 6.663 9.61731 6.07488L13.5369 2.15525C13.7584 2.5302 13.875 2.95776 13.8747 3.39322V8.50453H13.8748ZM11.4263 0.94475H3.39325C2.836 0.94475 2.32159 1.13334 1.91009 1.44712L5.86916 5.40791C6.27897 5.81597 6.82591 6.04231 7.41059 6.04231C7.99356 6.04231 8.54053 5.81597 8.95031 5.40791L12.9094 1.44712C12.4979 1.13334 11.9835 0.94475 11.4263 0.94475ZM11.4263 0H3.39325C1.52259 0 0 1.52259 0 3.39325V8.50456C0 10.3769 1.52259 11.8978 3.39325 11.8978H11.4263C13.2969 11.8978 14.8195 10.3769 14.8195 8.50456V3.39322C14.8195 1.52256 13.2969 0 11.4263 0Z"
                                 fill="black" />
@@ -180,12 +182,14 @@
                             </g>
                             <defs>
                                 <clipPath>
-                                    <rect width="15" height="15" fill="black" transform="translate(0.819458)" />
+                                    <rect width="15" height="15" fill="black"
+                                        transform="translate(0.819458)" />
                                 </clipPath>
                             </defs>
                         </svg>
 
-                        <a href="https://wa.me/628116584545?text=Halo%20saya%20ingin%20bertanya%20tentang%20sewa%20papan%20iklan" class="ms-1">+62 811-6584-545</a>
+                        <a href="https://wa.me/628116584545?text=Halo%20saya%20ingin%20bertanya%20tentang%20sewa%20papan%20iklan"
+                            class="ms-1">+62 811-6584-545</a>
                     </li>
                 </ul>
                 <ul class="link-info">
@@ -202,7 +206,7 @@
         <div class="container header__container">
             <div class="header__main">
                 <a href="/" class="logo">
-                    <img src="{{asset('landing_assets/images/logo/logo-light.png')}}" alt="logo">
+                    <img src="{{ asset('landing_assets/images/logo/logo-light.png') }}" alt="logo">
                 </a>
                 <div class="main-menu">
                     <nav>
@@ -224,9 +228,10 @@
                                 </ul>
                             </li>
                             <li><a href="#location">Location</a></li>
-                            <li><a href="#contact">Contact</a></li> 
-                            <li class="ml-20 d-none d-lg-block"><a class="search-trigger" href="#0"><svg width="17"
-                                        height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <li><a href="#contact">Contact</a></li>
+                            <li class="ml-20 d-none d-lg-block"><a class="search-trigger" href="#0"><svg
+                                        width="17" height="16" viewBox="0 0 17 16" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
                                         <g clip-path="url(#clip0_307_344)">
                                             <path
                                                 d="M16.0375 14.9381L12.0784 11.0334C13.0625 9.86621 13.6554 8.36744 13.6554 6.73438C13.6554 3.02103 10.5925 0 6.82774 0C3.0629 0 0 3.02103 0 6.73438C0 10.4475 3.0629 13.4683 6.82774 13.4683C8.4834 13.4683 10.0031 12.8836 11.1865 11.913L15.1456 15.8178C15.2687 15.9393 15.4301 16 15.5915 16C15.7529 16 15.9143 15.9393 16.0375 15.8178C16.2839 15.5748 16.2839 15.181 16.0375 14.9381ZM1.26142 6.73438C1.26142 3.70705 3.75845 1.24414 6.82774 1.24414C9.89695 1.24414 12.3939 3.70705 12.3939 6.73438C12.3939 9.76146 9.89695 12.2241 6.82774 12.2241C3.75845 12.2241 1.26142 9.76146 1.26142 6.73438Z"
@@ -243,8 +248,7 @@
                     </nav>
                 </div>
                 <div class="d-none d-lg-inline-block">
-                    <a href="/login" class="btn-one">Mulai Sekarang! <i
-                            class="fa-regular fa-arrow-right-long"></i></a>
+                    <a href="/login" class="btn-one">Mulai Sekarang! <i class="fa-regular fa-arrow-right-long"></i></a>
                 </div>
                 <div class="bars d-block d-lg-none">
                     <i id="openButton" class="fa-solid fa-bars"></i>
@@ -258,7 +262,7 @@
     <div id="targetElement" class="sidebar-area sidebar__hide">
         <div class="sidebar__overlay"></div>
         <a href="/" class="logo mb-40">
-            <img src="{{asset('landing_assets/images/logo/logo.png')}}" alt="logo">
+            <img src="{{ asset('landing_assets/images/logo/logo.png') }}" alt="logo">
         </a>
         <div class="sidebar__search mb-30">
             <input type="text" placeholder="Search...">
@@ -271,7 +275,8 @@
             <li class="py-2"><i class="fa-solid primary-color fa-phone-volume"></i> <a
                     href="tel:+208-6666-0112">+208-6666-0112</a>
             </li>
-            <li><i class="fa-solid primary-color fa-paper-plane"></i> <a href="mailto:info@iklanku.com">info@iklanku.com</a></li>
+            <li><i class="fa-solid primary-color fa-paper-plane"></i> <a
+                    href="mailto:info@iklanku.com">info@iklanku.com</a></li>
         </ul>
         <div class="social-icon mt-20">
             <a href="#0"><i class="fa-brands fa-instagram"></i></a>
@@ -303,35 +308,42 @@
                 <div class="swiper-wrapper">
                     <div class="swiper-slide">
                         <div class="banner__shape-left3 wow slideInLeft">
-                            <img class="sway__animation" src="{{asset('landing_assets/images/banner/banner-shape-left.png')}}" alt="shape">
+                            <img class="sway__animation"
+                                src="{{ asset('landing_assets/images/banner/banner-shape-left.png') }}"
+                                alt="shape">
                         </div>
                         <div class="banner__right-line1" data-animation="slideInRight" data-duration="2s"
                             data-delay=".9s">
-                            <img src="{{asset('landing_assets/images/banner/banner-right-line1.png')}}" alt="shape">
+                            <img src="{{ asset('landing_assets/images/banner/banner-right-line1.png') }}"
+                                alt="shape">
                         </div>
                         <div class="banner__right-line2" data-animation="slideInRight" data-duration="2s"
                             data-delay=".7s">
-                            <img src="{{asset('landing_assets/images/banner/banner-right-line2.png')}}" alt="shape">
+                            <img src="{{ asset('landing_assets/images/banner/banner-right-line2.png') }}"
+                                alt="shape">
                         </div>
                         <div class="banner__right-line3" data-animation="slideInRight" data-duration="2s"
                             data-delay=".5s">
-                            <img src="{{asset('landing_assets/images/banner/banner-right-line3.png')}}" alt="shape">
+                            <img src="{{ asset('landing_assets/images/banner/banner-right-line3.png') }}"
+                                alt="shape">
                         </div>
                         <div class="banner__right-line4" data-animation="slideInRight" data-duration="2s"
                             data-delay=".3s">
-                            <img src="{{asset('landing_assets/images/banner/banner-right-line4.png')}}" alt="shape">
+                            <img src="{{ asset('landing_assets/images/banner/banner-right-line4.png') }}"
+                                alt="shape">
                         </div>
-                        <div class="slide-bg" data-background="{{asset('landing_assets/images/banner/banner-image.png')}}"></div>
+                        <div class="slide-bg"
+                            data-background="{{ asset('landing_assets/images/banner/banner-image.png') }}"></div>
                         <div class="container">
                             <div class="banner__content">
                                 <h4 data-animation="slideInRight" data-duration="2s" data-delay=".3s"
                                     class="text-white mb-20">
-                                    <svg class="me-1" width="40" height="16" viewBox="0 0 40 16" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
+                                    <svg class="me-1" width="40" height="16" viewBox="0 0 40 16"
+                                        fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <rect x="0.5" y="0.500183" width="25.6667" height="15" rx="7.5"
                                             stroke="white" />
-                                        <rect x="13.3334" y="0.000183105" width="26.6667" height="16" rx="8"
-                                            fill="white" />
+                                        <rect x="13.3334" y="0.000183105" width="26.6667" height="16"
+                                            rx="8" fill="white" />
                                     </svg>
                                     Solusi pemasaran bisnis anda!
                                 </h4>
@@ -366,7 +378,8 @@
                     <div class="col-xl-6 wow fadeInRight" data-wow-delay="200ms" data-wow-duration="1500ms">
                         <div class="about__left-item">
                             <div class="image big-image">
-                                <img src="{{asset('landing_assets/images/about/about-image1.jpg')}}" alt="image">
+                                <img src="{{ asset('landing_assets/images/about/about-image1.jpg') }}"
+                                    alt="image">
                             </div>
                             <div class="image sm-image">
                                 <div class="video__btn-wrp">
@@ -379,32 +392,39 @@
                                     alt="image">
                             </div>
                             <div class="circle-shape">
-                                <img src="{{asset('landing_assets/images/shape/about-circle.png')}}" alt="shape">
+                                <img src="{{ asset('landing_assets/images/shape/about-circle.png') }}"
+                                    alt="shape">
                             </div>
                         </div>
                     </div>
                     <div class="col-xl-6">
                         <div class="section-header mb-40">
                             <h5 class="wow fadeInUp" data-wow-delay="00ms" data-wow-duration="1500ms">
-                                <img class="me-1" src="{{asset('landing_assets/images/logo/logo.png')}}" width="150px" alt="icon">
+                                <img class="me-1" src="{{ asset('landing_assets/images/logo/logo.png') }}"
+                                    width="150px" alt="icon">
                             </h5>
                             <h3 class="wow fadeInUp" data-wow-delay="200ms" data-wow-duration="1500ms">Partner
                                 Advertising Screen Anda</h3>
-                            <p class="wow fadeInUp" data-wow-delay="400ms" data-wow-duration="1500ms"><b>Iklanqu.id</b>
+                            <p class="wow fadeInUp" data-wow-delay="400ms" data-wow-duration="1500ms">
+                                <b>Iklanqu.id</b>
                                 adalah platform periklanan digital yang menyediakan layanan Outdoor Advertising Screen
                                 untuk membantu bisnis menampilkan iklan mereka di layar digital strategis dengan cara
-                                yang lebih mudah, cepat, dan efisien.</p>
-                            <p class="wow fadeInUp" data-wow-delay="400ms" data-wow-duration="1500ms">Melalui teknologi
+                                yang lebih mudah, cepat, dan efisien.
+                            </p>
+                            <p class="wow fadeInUp" data-wow-delay="400ms" data-wow-duration="1500ms">Melalui
+                                teknologi
                                 berbasis cloud, pengiklan dapat mengunggah, mengatur, dan mengelola konten iklan
                                 langsung dari smartphone atau perangkat mereka, tanpa proses yang rumit. Sistem kami
                                 dirancang agar siapa pun dapat menjalankan kampanye iklan outdoor hanya dalam beberapa
                                 langkah sederhana.</p>
                         </div>
-                        <div class="about__info mt-50 wow fadeInDown" data-wow-delay="400ms" data-wow-duration="1500ms">
+                        <div class="about__info mt-50 wow fadeInDown" data-wow-delay="400ms"
+                            data-wow-duration="1500ms">
                             <a href="/login" class="btn-one">Lebih Lanjut <i
                                     class="fa-regular fa-arrow-right-long"></i></a>
                             <div class="d-flex gap-2 align-items-center">
-                                <img src="{{asset('landing_assets/images/about/about-info.jpg')}}" style="border-radius: 50%" width="50px" alt="image">
+                                <img src="{{ asset('landing_assets/images/about/about-info.jpg') }}"
+                                    style="border-radius: 50%" width="50px" alt="image">
                                 <div class="info">
                                     <h5>Dwi Sandhi Romadhon</h5>
                                     <span class="sm-font">Co, Founder</span>
@@ -420,13 +440,15 @@
         <!-- Service area start here -->
         <section class="service-area pt-120 pb-120" id="service">
             <div class="service__shape wow slideInRight">
-                <img class="sway_Y__animation" src="{{asset('landing_assets/images/shape/service-bg-shape.png')}}" alt="shape">
+                <img class="sway_Y__animation" src="{{ asset('landing_assets/images/shape/service-bg-shape.png') }}"
+                    alt="shape">
             </div>
             <div class="container">
                 <div class="d-flex flex-wrap gap-4 align-items-center justify-content-between mb-60">
                     <div class="section-header">
                         <h5 class="wow fadeInLeft" data-wow-delay="00ms" data-wow-duration="1500ms">
-                            <img class="me-1" src="{{asset('landing_assets/images/icon/section-title.png')}}" alt="icon">
+                            <img class="me-1" src="{{ asset('landing_assets/images/icon/section-title.png') }}"
+                                alt="icon">
                             Layanan Kami
                         </h5>
                         <h2 class="wow fadeInLeft" data-wow-delay="200ms" data-wow-duration="1500ms">Excellent It
@@ -473,7 +495,8 @@
                         data-wow-duration="1500ms">
                         <div class="blog__item">
                             <a href="/login" class="blog__image image d-block">
-                                <img src="https://www.jnsnext.com/wp-content/uploads/2019/03/image1.png" alt="image">
+                                <img src="https://www.jnsnext.com/wp-content/uploads/2019/03/image1.png"
+                                    alt="image">
                             </a>
                             <div class="blog__content">
                                 <ul class="blog-info pb-20 bor-bottom mb-20">
@@ -597,7 +620,8 @@
             <div class="container">
                 <div class="d-flex flex-wrap gap-4 align-items-center justify-content-between mb-60">
                     <div class="section-header">
-                        <h2 class="wow fadeInLeft" data-wow-delay="200ms" data-wow-duration="1500ms">Lokasi Board Iklan
+                        <h2 class="wow fadeInLeft" data-wow-delay="200ms" data-wow-duration="1500ms">Lokasi Board
+                            Iklan
                             Kami</h2>
                     </div>
                     <!-- <a href="case.html" class="btn-one wow fadeInUp" data-wow-delay="200ms"
@@ -717,21 +741,22 @@
         <!-- Offer area start here -->
         <section class="offer-area secondary-bg pt-120 pb-200">
             <div class="offer__shadow wow fadeIn" data-wow-delay="200ms" data-wow-duration="1500ms">
-                <img src="{{asset('landing_assets/images/shape/offer-shadow-shape.png')}}" alt="shadow">
+                <img src="{{ asset('landing_assets/images/shape/offer-shadow-shape.png') }}" alt="shadow">
             </div>
             <div class="offer__shape-left">
                 <img class="wow fadeInUpBig" data-wow-delay="400ms" data-wow-duration="1500ms"
-                    src="{{asset('landing_assets/images/shape/offer-bg-shape-left.png')}}" alt="shape">
+                    src="{{ asset('landing_assets/images/shape/offer-bg-shape-left.png') }}" alt="shape">
             </div>
             <div class="offer__shape-right">
                 <img class="wow fadeInDownBig" data-wow-delay="400ms" data-wow-duration="1500ms"
-                    src="{{asset('landing_assets/images/shape/offer-bg-shape-right.png')}}" alt="shape">
+                    src="{{ asset('landing_assets/images/shape/offer-bg-shape-right.png') }}" alt="shape">
             </div>
             <div class="container">
                 <div class="d-flex gap-4 flex-wrap align-items-center justify-content-between mb-95">
                     <div class="section-header">
                         <h5 class="wow fadeInLeft" data-wow-delay="00ms" data-wow-duration="1500ms">
-                            <img class="me-1" src="{{asset('landing_assets/images/icon/section-title.png')}}" alt="icon">
+                            <img class="me-1" src="{{ asset('landing_assets/images/icon/section-title.png') }}"
+                                alt="icon">
                             Kenapa Memilih Kami
                         </h5>
                         <h2 class="text-white wow fadeInLeft" data-wow-delay="200ms" data-wow-duration="1500ms">
@@ -746,10 +771,12 @@
                         data-wow-duration="1500ms">
                         <div class="offer__item">
                             <div class="shape-top">
-                                <img src="{{asset('landing_assets/images/shape/offter-item-shape-top.png')}}" alt="shape">
+                                <img src="{{ asset('landing_assets/images/shape/offter-item-shape-top.png') }}"
+                                    alt="shape">
                             </div>
                             <div class="shape-bottom">
-                                <img src="{{asset('landing_assets/images/shape/offter-item-shape-bottom.png')}}" alt="shape">
+                                <img src="{{ asset('landing_assets/images/shape/offter-item-shape-bottom.png') }}"
+                                    alt="shape">
                             </div>
                             <div class="offer__icon">
                                 <i class="fa-solid fa-database"></i>
@@ -762,10 +789,12 @@
                         data-wow-duration="1500ms">
                         <div class="offer__item">
                             <div class="shape-top">
-                                <img src="{{asset('landing_assets/images/shape/offter-item-shape-top.png')}}" alt="shape">
+                                <img src="{{ asset('landing_assets/images/shape/offter-item-shape-top.png') }}"
+                                    alt="shape">
                             </div>
                             <div class="shape-bottom">
-                                <img src="{{asset('landing_assets/images/shape/offter-item-shape-bottom.png')}}" alt="shape">
+                                <img src="{{ asset('landing_assets/images/shape/offter-item-shape-bottom.png') }}"
+                                    alt="shape">
                             </div>
                             <div class="offer__icon">
                                 <i class="fa-solid fa-shield"></i>
@@ -778,10 +807,12 @@
                         data-wow-duration="1500ms">
                         <div class="offer__item">
                             <div class="shape-top">
-                                <img src="{{asset('landing_assets/images/shape/offter-item-shape-top.png')}}" alt="shape">
+                                <img src="{{ asset('landing_assets/images/shape/offter-item-shape-top.png') }}"
+                                    alt="shape">
                             </div>
                             <div class="shape-bottom">
-                                <img src="{{asset('landing_assets/images/shape/offter-item-shape-bottom.png')}}" alt="shape">
+                                <img src="{{ asset('landing_assets/images/shape/offter-item-shape-bottom.png') }}"
+                                    alt="shape">
                             </div>
                             <div class="offer__icon">
                                 <i class="fa-solid fa-bullhorn"></i>
@@ -794,10 +825,12 @@
                         data-wow-duration="1500ms">
                         <div class="offer__item">
                             <div class="shape-top">
-                                <img src="{{asset('landing_assets/images/shape/offter-item-shape-top.png')}}" alt="shape">
+                                <img src="{{ asset('landing_assets/images/shape/offter-item-shape-top.png') }}"
+                                    alt="shape">
                             </div>
                             <div class="shape-bottom">
-                                <img src="{{asset('landing_assets/images/shape/offter-item-shape-bottom.png')}}" alt="shape">
+                                <img src="{{ asset('landing_assets/images/shape/offter-item-shape-bottom.png') }}"
+                                    alt="shape">
                             </div>
                             <div class="offer__icon">
                                 <i class="fa-solid fa-eye"></i>
@@ -810,10 +843,12 @@
                         data-wow-duration="1500ms">
                         <div class="offer__item">
                             <div class="shape-top">
-                                <img src="{{asset('landing_assets/images/shape/offter-item-shape-top.png')}}" alt="shape">
+                                <img src="{{ asset('landing_assets/images/shape/offter-item-shape-top.png') }}"
+                                    alt="shape">
                             </div>
                             <div class="shape-bottom">
-                                <img src="{{asset('landing_assets/images/shape/offter-item-shape-bottom.png')}}" alt="shape">
+                                <img src="{{ asset('landing_assets/images/shape/offter-item-shape-bottom.png') }}"
+                                    alt="shape">
                             </div>
                             <div class="offer__icon">
                                 <i class="fa-solid fa-users"></i>
@@ -831,7 +866,7 @@
             <div class="container">
                 <div class="brand__wrp">
                     <div class="brand__shape">
-                        <img src="{{asset('landing_assets/images/shape/brand-shape.png')}}" alt="">
+                        <img src="{{ asset('landing_assets/images/shape/brand-shape.png') }}" alt="">
                     </div>
                     <div class="swiper brand__slider">
                         <div class="swiper-wrapper">
@@ -867,7 +902,8 @@
         <!-- Brand area end here -->
 
         <!-- Testimonial area start here -->
-        <section class="testimonial-area bg-image pt-120 pb-120" id="testimonial" data-background="{{asset('landing_assets/images/bg/testimonial-bg.png')}}">
+        <section class="testimonial-area bg-image pt-120 pb-120" id="testimonial"
+            data-background="{{ asset('landing_assets/images/bg/testimonial-bg.png') }}">
             <div class="container">
                 <div class="row g-4">
                     <div class="col-lg-6 wow fadeInLeft" data-wow-delay="200ms" data-wow-duration="1500ms">
@@ -876,37 +912,43 @@
                                 <h5 class="text-white">
                                     <svg width="28" height="12" viewBox="0 0 28 12" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
-                                        <rect x="0.75" y="0.75" width="18.5" height="10.5" rx="5.25" stroke="white"
-                                            stroke-width="1.5" />
+                                        <rect x="0.75" y="0.75" width="18.5" height="10.5" rx="5.25"
+                                            stroke="white" stroke-width="1.5" />
                                         <rect x="8" width="20" height="12" rx="6" fill="white" />
                                     </svg>
                                     Hubungi Kami
                                 </h5>
                                 <h2 class="text-white">Jelaskan Kebutuhan Anda Disini</h2>
                             </div>
-                            <form action="#">
+                            <form id="contact-form">
                                 <div class="row g-3">
                                     <div class="col-sm-6">
                                         <label for="name">Nama*</label>
-                                        <input type="text" id="name" placeholder="Masukkan Nama">
+                                        <input type="text" id="name" class="form-control"
+                                            placeholder="Masukkan Nama">
                                     </div>
+
                                     <div class="col-sm-6">
                                         <label for="number">Nomor Whatsapp*</label>
-                                        <input type="text" id="number" placeholder="+1253 457 7840">
+                                        <input type="text" id="number" class="form-control"
+                                            placeholder="+62812xxxx">
                                     </div>
+
                                     <div class="col-12">
-                                        <label for="massage">Pesan*</label>
-                                        <textarea id="massage" placeholder="Pesan"></textarea>
+                                        <label for="message">Pesan*</label>
+                                        <textarea id="message" class="form-control" placeholder="Pesan"></textarea>
                                     </div>
                                 </div>
-                                <button>Kirim Pesan</button>
+
+                                <button type="button" id="send-message">Kirim Pesan</button>
                             </form>
                         </div>
                     </div>
                     <div class="col-lg-6 ps-2 ps-lg-5">
                         <div class="section-header mb-40">
                             <h5 class="wow fadeInUp" data-wow-delay="00ms" data-wow-duration="1500ms">
-                                <img class="me-1" src="{{asset('landing_assets/images/icon/section-title.png')}}" alt="icon">
+                                <img class="me-1" src="{{ asset('landing_assets/images/icon/section-title.png') }}"
+                                    alt="icon">
                                 TESTIMONI KLIEN
                             </h5>
                             <h2 class="wow fadeInUp" data-wow-delay="200ms" data-wow-duration="1500ms">Apa Kata
@@ -922,13 +964,14 @@
                             <div class="swiper-wrapper">
                                 <div class="swiper-slide">
                                     <div class="testimonial__item">
-                                        <svg class="coma" width="50" height="37" viewBox="0 0 50 37" fill="none"
-                                            xmlns="http://www.w3.org/2000/svg">
+                                        <svg class="coma" width="50" height="37" viewBox="0 0 50 37"
+                                            fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M0 0V37L18.75 18.5V0H0ZM31.25 0V37L50 18.5V0H31.25Z"
                                                 fill="#3C72FC" />
                                         </svg>
                                         <div class="d-flex align-items-center gap-3">
-                                            <img src="{{asset('landing_assets/images/testimonial/testimonial-image1.png')}}" alt="image">
+                                            <img src="{{ asset('landing_assets/images/testimonial/testimonial-image1.png') }}"
+                                                alt="image">
                                             <div class="testi-info">
                                                 <h4>Andi Saputra</h4>
                                                 <p>Pemilik Cafe</p>
@@ -951,13 +994,14 @@
                                 </div>
                                 <div class="swiper-slide">
                                     <div class="testimonial__item">
-                                        <svg class="coma" width="50" height="37" viewBox="0 0 50 37" fill="none"
-                                            xmlns="http://www.w3.org/2000/svg">
+                                        <svg class="coma" width="50" height="37" viewBox="0 0 50 37"
+                                            fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M0 0V37L18.75 18.5V0H0ZM31.25 0V37L50 18.5V0H31.25Z"
                                                 fill="#3C72FC" />
                                         </svg>
                                         <div class="d-flex align-items-center gap-3">
-                                            <img src="{{asset('landing_assets/images/testimonial/testimonial-image2.png')}}" alt="image">
+                                            <img src="{{ asset('landing_assets/images/testimonial/testimonial-image2.png') }}"
+                                                alt="image">
                                             <div class="testi-info">
                                                 <h4>Siti Rahma</h4>
                                                 <p>Pemilik Toko Fashion</p>
@@ -996,25 +1040,27 @@
     <!-- Footer area start here -->
     <footer class="footer-area secondary-bg" id="contact">
         <div class="footer__shape-regular-left wow slideInLeft" data-wow-delay="00ms" data-wow-duration="1500ms">
-            <img src="{{asset('landing_assets/images/shape/footer-regular-left.png')}}" alt="shape">
+            <img src="{{ asset('landing_assets/images/shape/footer-regular-left.png') }}" alt="shape">
         </div>
         <div class="footer__shape-solid-left wow slideInLeft" data-wow-delay="200ms" data-wow-duration="1500ms">
-            <img class="sway_Y__animation" src="{{asset('landing_assets/images/shape/footer-solid-left.png')}}" alt="shape">
+            <img class="sway_Y__animation" src="{{ asset('landing_assets/images/shape/footer-solid-left.png') }}"
+                alt="shape">
         </div>
         <div class="footer__shape-solid-right wow slideInRight" data-wow-delay="00ms" data-wow-duration="1500ms">
-            <img class="sway_Y__animation" src="{{asset('landing_assets/images/shape/footer-regular-right.png')}}" alt="shape">
+            <img class="sway_Y__animation" src="{{ asset('landing_assets/images/shape/footer-regular-right.png') }}"
+                alt="shape">
         </div>
         <div class="footer__shape-regular-right wow slideInRight" data-wow-delay="200ms" data-wow-duration="1500ms">
-            <img src="{{asset('landing_assets/images/shape/footer-solid-right.png')}}" alt="shape">
+            <img src="{{ asset('landing_assets/images/shape/footer-solid-right.png') }}" alt="shape">
         </div>
         <div class="footer__shadow-shape">
-            <img src="{{asset('landing_assets/images/shape/footer-shadow-shape.png')}}" alt="shodow">
+            <img src="{{ asset('landing_assets/images/shape/footer-shadow-shape.png') }}" alt="shodow">
         </div>
         <div class="container">
             <div class="footer__wrp pt-100 pb-100">
                 <div class="footer__item item-big wow fadeInUp" data-wow-delay="00ms" data-wow-duration="1500ms">
                     <a href="/" class="logo mb-30">
-                        <img src="{{asset('landing_assets/images/logo/logo.png')}}" alt="image">
+                        <img src="{{ asset('landing_assets/images/logo/logo.png') }}" alt="image">
                     </a>
                     <p>iklanqu.id The Best Partner of Your Bussines</p>
                     <div class="social-icon">
@@ -1026,9 +1072,13 @@
                 <div class="footer__item item-sm wow fadeInUp" data-wow-delay="200ms" data-wow-duration="1500ms">
                     <h3 class="footer-title">Advertisment Solution</h3>
                     <ul>
-                        <li><a href="service-details.html"><i class="fa-regular fa-angles-right me-1"></i> Beriklan di Board Digital Kami</a></li>
-                        <li><a href="service-details.html"><i class="fa-regular fa-angles-right me-1"></i> Buat Konten Iklan</a>
-                        </li><li><a href="service-details.html"><i class="fa-regular fa-angles-right me-1"></i> Sewa Board Digital Kami</a></li>
+                        <li><a href="service-details.html"><i class="fa-regular fa-angles-right me-1"></i> Beriklan di
+                                Board Digital Kami</a></li>
+                        <li><a href="service-details.html"><i class="fa-regular fa-angles-right me-1"></i> Buat Konten
+                                Iklan</a>
+                        </li>
+                        <li><a href="service-details.html"><i class="fa-regular fa-angles-right me-1"></i> Sewa Board
+                                Digital Kami</a></li>
                     </ul>
                 </div>
                 <div class="footer__item item-sm wow fadeInUp" data-wow-delay="400ms" data-wow-duration="1500ms">
@@ -1038,12 +1088,14 @@
                         <li><a href="#about"><i class="fa-regular fa-angles-right me-1"></i> About</a></li>
                         <li><a href="#service"><i class="fa-regular fa-angles-right me-1"></i> Service</a></li>
                         <li><a href="#location"><i class="fa-regular fa-angles-right me-1"></i> Location</a></li>
-                        <li><a href="#testimonial"><i class="fa-regular fa-angles-right me-1"></i> Testimonial</a></li>
+                        <li><a href="#testimonial"><i class="fa-regular fa-angles-right me-1"></i> Testimonial</a>
+                        </li>
                     </ul>
                 </div>
                 <div class="footer__item item-big wow fadeInUp" data-wow-delay="600ms" data-wow-duration="1500ms">
                     <h3 class="footer-title">Hubungi Kami</h3>
-                    <p class="mb-20">Jl. Cycas Raya Jl. Taman Setia Budi Indah Blok VV No.172 Kompleks, Asam Kumbang, Kec. Medan Selayang, Kota Medan, Sumatera Utara</p>
+                    <p class="mb-20">Jl. Cycas Raya Jl. Taman Setia Budi Indah Blok VV No.172 Kompleks, Asam Kumbang,
+                        Kec. Medan Selayang, Kota Medan, Sumatera Utara</p>
                     <ul class="footer-contact">
                         <li>
                             <i class="fa-regular fa-clock"></i>
@@ -1060,8 +1112,10 @@
                                 <h5>
                                     Nomor Telephone:
                                 </h5>
-                                
-                                <p><a href="https://wa.me/628116584545?text=Halo%20saya%20ingin%20bertanya%20tentang%20sewa%20papan%20iklan">+62-811-6584-545</a></p>
+
+                                <p><a
+                                        href="https://wa.me/628116584545?text=Halo%20saya%20ingin%20bertanya%20tentang%20sewa%20papan%20iklan">+62-811-6584-545</a>
+                                </p>
                             </div>
                         </li>
                     </ul>
@@ -1072,7 +1126,8 @@
             <div class="container">
                 <div
                     class="d-flex gap-1 flex-wrap align-items-center justify-content-md-between justify-content-center">
-                    <p class="wow fadeInDown" data-wow-delay="00ms" data-wow-duration="1500ms">&copy; All Copyright 2024
+                    <p class="wow fadeInDown" data-wow-delay="00ms" data-wow-duration="1500ms">&copy; All Copyright
+                        2024
                         by <a href="#0">IklanQu.id</a></p>
                     <ul class="d-flex align-items-center gap-4 wow fadeInDown" data-wow-delay="200ms"
                         data-wow-duration="1500ms">
@@ -1093,18 +1148,18 @@
     </div>
     <!-- Back to top area end here -->
 
-    <script src="{{asset('landing_assets/js/jquery-3.7.1.min.js')}}"></script>
-    <script src="{{asset('landing_assets/js/bootstrap.min.js')}}"></script>
-    <script src="{{asset('landing_assets/js/meanmenu.js')}}"></script>
-    <script src="{{asset('landing_assets/js/swiper-bundle.min.js')}}"></script>
-    <script src="{{asset('landing_assets/js/jquery.counterup.min.js')}}"></script>
-    <script src="{{asset('landing_assets/js/wow.min.js')}}"></script>
-    <script src="{{asset('landing_assets/js/pace.min.js')}}"></script>
-    <script src="{{asset('landing_assets/js/magnific-popup.min.js')}}"></script>
-    <script src="{{asset('landing_assets/js/nice-select.min.js')}}"></script>
-    <script src="{{asset('landing_assets/js/isotope.pkgd.min.js')}}"></script>
-    <script src="{{asset('landing_assets/js/jquery.waypoints.js')}}"></script>
-    <script src="{{asset('landing_assets/js/script.js')}}"></script>
+    <script src="{{ asset('landing_assets/js/jquery-3.7.1.min.js') }}"></script>
+    <script src="{{ asset('landing_assets/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('landing_assets/js/meanmenu.js') }}"></script>
+    <script src="{{ asset('landing_assets/js/swiper-bundle.min.js') }}"></script>
+    <script src="{{ asset('landing_assets/js/jquery.counterup.min.js') }}"></script>
+    <script src="{{ asset('landing_assets/js/wow.min.js') }}"></script>
+    <script src="{{ asset('landing_assets/js/pace.min.js') }}"></script>
+    <script src="{{ asset('landing_assets/js/magnific-popup.min.js') }}"></script>
+    <script src="{{ asset('landing_assets/js/nice-select.min.js') }}"></script>
+    <script src="{{ asset('landing_assets/js/isotope.pkgd.min.js') }}"></script>
+    <script src="{{ asset('landing_assets/js/jquery.waypoints.js') }}"></script>
+    <script src="{{ asset('landing_assets/js/script.js') }}"></script>
     <script>
         const counters = document.querySelectorAll('.counter');
 
@@ -1127,6 +1182,56 @@
             };
 
             updateCounter();
+
+        });
+
+        $("#send-message").on("click", function() {
+
+            let button = $(this);
+
+            let data = {
+                _token: $('meta[name="csrf-token"]').attr('content'),
+                nama: $("#name").val(),
+                no_wa: $("#number").val(),
+                pesan: $("#message").val()
+            };
+
+            $('body').css('cursor', 'wait');
+            button.prop('disabled', true);
+
+            $.ajax({
+                url: "/get-in-touch/store",
+                method: "POST",
+                data: data,
+
+                success: function(response) {
+
+                    $('body').css('cursor', 'default');
+                    button.prop('disabled', false);
+
+                    if (response.status) {
+
+                        alert("Pesan berhasil dikirim");
+
+                        $("#name").val('');
+                        $("#number").val('');
+                        $("#message").val('');
+
+                    } else {
+                        alert(response.message);
+                    }
+
+                },
+
+                error: function() {
+
+                    $('body').css('cursor', 'default');
+                    button.prop('disabled', false);
+
+                    alert("Terjadi kesalahan");
+                }
+
+            });
 
         });
     </script>

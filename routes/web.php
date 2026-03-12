@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BoardController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\GetInTouchController;
 use App\Http\Controllers\LokasiController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
@@ -12,6 +13,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::post('/get-in-touch/store', [GetInTouchController::class, 'store']);
 
 Route::get('/auth/google', [AuthController::class, 'redirectGoogle'])->name('google.login');
 Route::get('/auth/google/callback', [AuthController::class, 'handleGoogleCallback']);
@@ -53,12 +56,15 @@ Route::post('/user/delete', [UserController::class, 'delete']);
 
 
 Route::get('/profile', [ProfileController::class, 'index']);
-Route::post('/profile', [ProfileController::class, 'update']);
-Route::post('/change-password', [ProfileController::class, 'changePassword'])->name('password.update');
+Route::post('/profile', [ProfileController::class, 'store']);
+
+Route::get('/get-in-touch', [GetInTouchController::class, 'index']);
+Route::post('/get-in-touch/store', [GetInTouchController::class, 'store']);
+Route::post('/get-in-touch/delete', [GetInTouchController::class, 'delete']);
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index']);
-    
+
 
     Route::get('/logout',[AuthController::class,'logout'])->name('logout');
 });
