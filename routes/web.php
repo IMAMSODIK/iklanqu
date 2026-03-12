@@ -58,6 +58,7 @@ Route::post('/change-password', [ProfileController::class, 'changePassword'])->n
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index']);
-
     
+
+    Route::get('/logout',[AuthController::class,'logout'])->name('logout');
 });

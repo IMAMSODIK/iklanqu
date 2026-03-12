@@ -66,4 +66,20 @@ class AuthController extends Controller
             return redirect('/login')->with('error', 'Login Google gagal');
         }
     }
+
+    public function logout()
+    {
+        try {
+
+            Auth::logout();
+
+            request()->session()->invalidate();
+            request()->session()->regenerateToken();
+
+            return redirect('/login')->with('success', 'Berhasil logout');
+        } catch (\Exception $e) {
+
+            return redirect()->back()->with('error', 'Logout gagal');
+        }
+    }
 }

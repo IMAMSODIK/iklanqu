@@ -579,7 +579,8 @@
     <div class="app-container">
         <!-- Status bar -->
         <div class="status-bar">
-            <img src="{{ asset('landing_assets/images/logo/logo.png') }}" width="20%" alt="logo" style="border-radius: 14px">
+            <img src="{{ asset('landing_assets/images/logo/logo.png') }}" width="20%" alt="logo"
+                style="border-radius: 14px">
         </div>
 
         <!-- Area konten -->
@@ -777,6 +778,12 @@
                             <h4>Pusat Bantuan</h4>
                         </div>
                     </div>
+                    <div class="card-item logout">
+                        <div class="item-icon">🚪</div>
+                        <div class="item-info">
+                            <h4>Logout</h4>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -856,6 +863,16 @@
             window.addEventListener('resize', setAppHeight);
             window.addEventListener('orientationchange', setAppHeight);
             setAppHeight();
+        });
+
+        document.querySelector(".logout").addEventListener("click", function() {
+
+            if (confirm("Apakah Anda yakin ingin logout?")) {
+
+                window.location.href = "/logout";
+
+            }
+
         });
     </script>
 </body>
