@@ -4,181 +4,86 @@
 <head>
     @include('dashboard_layouts.head')
     <style>
-        .badge-iklan {
-            display: inline-block;
-            margin-top: 5px;
-            padding: 2px 8px;
-            font-size: 12px;
-            font-weight: 500;
-            color: #2563eb;
-            background: #e0e7ff;
-            border-radius: 20px;
-        }
-
-        .lokasi-popup {
+        .lokasi-modal {
             position: fixed;
-            bottom: 0;
+            top: 0;
             left: 0;
             right: 0;
-            top: 0;
-            background: rgba(0, 0, 0, 0.5);
+            bottom: 0;
+            background: rgba(0, 0, 0, .45);
             display: none;
             align-items: center;
             justify-content: center;
             z-index: 9999;
         }
 
-        .popup-content {
-            background: #fff;
+        .modal-box {
             width: 90%;
-            max-width: 500px;
-            border-radius: 24px;
-            max-height: 85vh;
+            max-width: 420px;
+            background: #fff;
+            border-radius: 18px;
             overflow: hidden;
-            animation: fadeIn 0.3s ease;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, .3);
+            animation: modalFade .3s ease;
         }
 
-        @keyframes fadeIn {
+        @keyframes modalFade {
             from {
-                opacity: 0;
-                transform: scale(0.95);
+                transform: scale(.9);
+                opacity: 0
             }
 
             to {
-                opacity: 1;
                 transform: scale(1);
+                opacity: 1
             }
         }
 
-        .popup-header {
+        .modal-image img {
             width: 100%;
-            height: 220px;
-            overflow: hidden;
-            background: #f5f5f5;
-        }
-
-        .popup-header img {
-            width: 100%;
-            height: 100%;
+            height: 180px;
             object-fit: cover;
-            display: block;
         }
 
-        .popup-body {
-            padding: 24px;
-            overflow-y: auto;
-            max-height: calc(85vh - 220px);
+        .modal-body {
+            padding: 16px;
         }
 
-        .popup-body h3 {
-            font-size: 24px;
-            font-weight: 600;
-            color: #1e293b;
-            margin: 0 0 8px 0;
-            line-height: 1.3;
+        .modal-body h3 {
+            margin: 5px 0;
         }
 
-        .popup-body p {
-            font-size: 15px;
-            color: #475569;
-            margin: 0 0 16px 0;
-            line-height: 1.5;
-        }
-
-        .maps-btn {
-            display: inline-flex;
+        .modal-close {
+            position: absolute;
+            margin: 10px;
+            background: #fff;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
-            background: #2563eb;
-            color: white;
-            text-align: center;
-            padding: 14px 20px;
-            border-radius: 12px;
-            margin: 8px 0 16px 0;
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 15px;
-            width: 100%;
-            border: none;
             cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .maps-btn:hover {
-            background: #1d4ed8;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, .2);
         }
 
         .board-slider {
             display: flex;
-            gap: 12px;
+            gap: 10px;
             overflow-x: auto;
-            padding: 8px 0 12px 0;
-            margin-top: 8px;
-            scrollbar-width: thin;
-            scrollbar-color: #cbd5e1 #f1f5f9;
-        }
-
-        .board-slider::-webkit-scrollbar {
-            height: 6px;
-        }
-
-        .board-slider::-webkit-scrollbar-track {
-            background: #f1f5f9;
-            border-radius: 10px;
-        }
-
-        .board-slider::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
-            border-radius: 10px;
-        }
-
-        .board-slider::-webkit-scrollbar-thumb:hover {
-            background: #94a3b8;
+            margin-top: 10px;
         }
 
         .board-slider img {
-            height: 100px;
-            width: auto;
-            border-radius: 12px;
+            height: 110px;
+            border-radius: 10px;
             object-fit: cover;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s;
-            cursor: pointer;
         }
 
-        .board-slider img:hover {
-            transform: scale(1.02);
-        }
-
-        /* Responsive untuk layar kecil */
-        @media (max-width: 480px) {
-            .popup-content {
-                width: 95%;
-                border-radius: 20px;
-            }
-
-            .popup-header {
-                height: 180px;
-            }
-
-            .popup-body {
-                padding: 20px;
-                max-height: calc(85vh - 180px);
-            }
-
-            .popup-body h3 {
-                font-size: 20px;
-            }
-
-            .maps-btn {
-                padding: 12px 16px;
-            }
-
-            .board-slider img {
-                height: 80px;
-            }
+        .maps-preview {
+            margin-top: 10px;
+            border-radius: 10px;
+            overflow: hidden;
         }
     </style>
 </head>
@@ -228,25 +133,35 @@
         @include('dashboard_layouts.nav')
     </div>
 
-    <div class="lokasi-popup" id="lokasiPopup">
-        <div class="popup-content">
+    <div class="lokasi-modal" id="lokasiModal">
 
-            <div class="popup-header">
-                <img id="popupImage">
+        <div class="modal-box">
+
+            <div class="modal-close">✕</div>
+
+            <div class="modal-image">
+                <img id="modalImage">
             </div>
 
-            <div class="popup-body">
-                <h3 id="popupNama"></h3>
-                <p id="popupAlamat"></p>
+            <div class="modal-body">
 
-                <a id="popupMaps" target="_blank" class="maps-btn">
-                    📍 Buka di Google Maps
-                </a>
+                <h3 id="modalNama"></h3>
+                <p id="modalAlamat"></p>
+
+                <div class="maps-preview">
+                    <iframe id="modalMaps" width="100%" height="200" style="border:0" loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+
+                <h4 style="margin-top:15px">Board di lokasi ini</h4>
 
                 <div class="board-slider" id="boardSlider"></div>
+
             </div>
 
         </div>
+
     </div>
 
     @include('dashboard_layouts.script')
@@ -259,10 +174,15 @@
             let maps = $(this).data("maps");
             let boards = $(this).data("boards");
 
-            $("#popupNama").text(nama);
-            $("#popupAlamat").text(alamat);
-            $("#popupMaps").attr("href", maps);
-            $("#popupImage").attr("src", gambar);
+            $("#modalNama").text(nama);
+            $("#modalAlamat").text(alamat);
+            $("#modalImage").attr("src", gambar);
+
+            // embed maps
+            $("#modalMaps").attr(
+                "src",
+                maps
+            );
 
             let slider = $("#boardSlider");
             slider.html("");
@@ -277,11 +197,15 @@
                 }
             });
 
-            $("#lokasiPopup").fadeIn();
+            $("#lokasiModal").fadeIn();
+
         });
 
+        $(".modal-close").click(function() {
+            $("#lokasiModal").fadeOut();
+        });
 
-        $("#lokasiPopup").click(function(e) {
+        $("#lokasiModal").click(function(e) {
             if (e.target === this) {
                 $(this).fadeOut();
             }
