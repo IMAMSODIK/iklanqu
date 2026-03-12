@@ -1,8 +1,8 @@
 <div class="bottom-nav">
-    <button class="nav-item" data-page="lokasi">
+    <a class="nav-item" data-page="lokasi">
         <span class="nav-icon">📍</span>
         <span>Lokasi</span>
-    </button>
+    </a>
     <button class="nav-item" data-page="riwayat">
         <span class="nav-icon">📋</span>
         <span>Riwayat</span>
