@@ -27,13 +27,11 @@ class AuthController extends Controller
         try {
 
             return Socialite::driver('google')->redirect();
-
         } catch (\Exception $e) {
 
-            return redirect('/login')->with('error','Gagal menghubungkan ke Google');
+            return redirect('/login')->with('error', 'Gagal menghubungkan ke Google');
         }
     }
-
 
     public function handleGoogleCallback()
     {
@@ -49,19 +47,23 @@ class AuthController extends Controller
                     'name' => $googleUser->name,
                     'email' => $googleUser->email,
                     'google_id' => $googleUser->id,
+                    'foto' => $googleUser->avatar,
                     'role' => 'user',
-                    'password' => bcrypt(rand(100000,999999))
+                    'password' => bcrypt(rand(100000, 999999))
                 ]);
-
+            } else {
+                $user->update([
+                    'google_id' => $googleUser->id,
+                    'foto' => $googleUser->avatar
+                ]);
             }
 
             Auth::login($user);
 
             return redirect('/dashboard');
-
         } catch (\Exception $e) {
 
-            return redirect('/login')->with('error','Login Google gagal');
+            return redirect('/login')->with('error', 'Login Google gagal');
         }
     }
 }

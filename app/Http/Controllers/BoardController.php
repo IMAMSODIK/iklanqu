@@ -5,7 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Board;
 use App\Http\Requests\StoreBoardRequest;
 use App\Http\Requests\UpdateBoardRequest;
+use App\Models\BoardPhoto;
 use App\Models\Lokasi;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class BoardController extends Controller
 {
@@ -15,8 +20,8 @@ class BoardController extends Controller
             $data = [
                 'pageTitle' => "Boards",
                 'lokasi'    => Lokasi::all(),
-                'data'      => Board::orderBy('id', 'desc')
-                    ->take(20)
+                'data'      => Board::with(['photos', 'lokasi'])
+                    ->orderBy('id', 'desc')
                     ->get()
             ];
 
@@ -26,273 +31,258 @@ class BoardController extends Controller
         }
     }
 
-    // public function store(Request $request)
-    // {
-    //     try {
-    //         $validator = Validator::make($request->all(), [
-    //             'nama'  => 'required|string|max:255',
-    //             'email' => 'required|email|max:255|unique:users,email',
-    //             'foto'  => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240'
-    //         ]);
+    public function store(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|unique:boards,name',
+            'kode' => 'required|unique:boards,kode',
+            'pin' => 'required',
+            'lokasi_id' => 'required',
+            'photos' => 'nullable|array',
+            'photos.*' => 'image|mimes:jpg,jpeg,png|max:2048'
+        ]);
 
-    //         if ($validator->fails()) {
-    //             return response()->json([
-    //                 'status' => false,
-    //                 'message' => 'Validation error',
-    //                 'errors' => $validator->errors()
-    //             ], 422);
-    //         }
+        DB::beginTransaction();
 
-    //         $path = null;
-    //         if ($request->hasFile('foto')) {
-    //             $path = $request->file('foto')->store('foto_profile', 'public');
-    //         }
+        try {
 
-    //         $data = User::create([
-    //             'name'     => $request->nama,
-    //             'email'    => $request->email,
-    //             'password' => bcrypt($request->email),
-    //             'foto'  => $path,
-    //             'role'     => 'teacher',
-    //             'status' => 1,
-    //             'verification_status' => 1
-    //         ]);
+            $board = Board::create([
+                'name' => $request->name,
+                'kode' => $request->kode,
+                'pin' => $request->pin,
+                'lokasi_id' => $request->lokasi_id
+            ]);
 
-    //         return response()->json([
-    //             'status'  => true,
-    //             'message' => 'Teacher information saved successfully.',
-    //             'data'    => User::where('id', $data->id)->select('id', 'name', 'email', 'status', 'foto')->first()
-    //         ], 200);
-    //     } catch (\Exception $e) {
-    //         return response()->json([
-    //             'status' => false,
-    //             'message' => 'Something went wrong. Please try again later.',
-    //             'error'   => $e->getMessage()
-    //         ], 500);
-    //     }
-    // }
+            if ($request->hasFile('photos')) {
 
-    // public function detail(Request $r)
-    // {
-    //     try {
-    //         $validator = Validator::make($r->all(), [
-    //             'id' => 'required|uuid|exists:users,id'
-    //         ]);
+                foreach ($request->file('photos') as $photo) {
 
-    //         if ($validator->fails()) {
-    //             return response()->json([
-    //                 'status'  => false,
-    //                 'message' => 'Validation error',
-    //                 'errors'  => $validator->errors()
-    //             ], 422);
-    //         }
+                    $path = $photo->store('boards', 'public');
 
-    //         $user = User::find($r->id);
+                    BoardPhoto::create([
+                        'board_id' => $board->id,
+                        'file' => $path
+                    ]);
+                }
+            }
 
-    //         if (!$user) {
-    //             return response()->json([
-    //                 'status'  => false,
-    //                 'message' => 'User not found'
-    //             ], 404);
-    //         }
+            DB::commit();
 
-    //         return response()->json([
-    //             'status'  => true,
-    //             'message' => 'User data retrieved successfully.',
-    //             'data'    => $user->toArray()
-    //         ], 200);
-    //     } catch (\Exception $e) {
-    //         return response()->json([
-    //             'status'  => false,
-    //             'message' => 'Something went wrong.',
-    //             'error'   => $e->getMessage()
-    //         ], 500);
-    //     }
-    // }
+            return response()->json([
+                "status" => true,
+                "message" => "Board berhasil ditambahkan",
+                "data" => $board->load('photos', 'lokasi')
+            ]);
+        } catch (\Exception $e) {
 
-    // public function update(Request $r)
-    // {
-    //     $validator = Validator::make($r->all(), [
-    //         'id'    => 'required|exists:users,id',
-    //         'nama'  => 'required|string|max:255',
-    //         'email' => 'required|email|unique:users,email,' . $r->id,
-    //         'foto'  => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:10000'
-    //     ]);
+            DB::rollback();
 
-    //     if ($validator->fails()) {
-    //         return response()->json([
-    //             'status' => false,
-    //             'message' => 'Validation errors occurred.',
-    //             'errors' => $validator->errors()
-    //         ], 422);
-    //     }
+            return response()->json([
+                'status' => false,
+                'message' => $e->getMessage()
+            ]);
+        }
+    }
 
-    //     try {
-    //         $user = User::findOrFail($r->id);
+    public function detail(Request $r)
+    {
+        try {
 
-    //         $user->name  = $r->nama;
-    //         $user->email = $r->email;
+            $validator = Validator::make($r->all(), [
+                'id' => 'required|exists:boards,id'
+            ]);
 
-    //         if ($r->hasFile('foto')) {
-    //             $path = $r->file('foto')->store('foto_profile', 'public');
-    //             $user->foto = $path;
-    //         }
+            if ($validator->fails()) {
+                return response()->json([
+                    'status'  => false,
+                    'message' => 'Validation error',
+                    'errors'  => $validator->errors()
+                ], 422);
+            }
 
-    //         $user->save();
+            $board = Board::with(['photos', 'lokasi'])->find($r->id);
 
-    //         return response()->json([
-    //             'status'  => true,
-    //             'message' => 'Teacher information updated successfully.',
-    //             'data'    => $user
-    //         ], 200);
-    //     } catch (\Exception $e) {
-    //         return response()->json([
-    //             'status'  => false,
-    //             'message' => 'Failed to update teacher information.',
-    //             'errors'  => ['exception' => [$e->getMessage()]]
-    //         ], 500);
-    //     }
-    // }
+            if (!$board) {
+                return response()->json([
+                    'status'  => false,
+                    'message' => 'Board not found'
+                ], 404);
+            }
 
-    // public function resetPasssword(Request $r)
-    // {
-    //     $validator = Validator::make($r->all(), [
-    //         'id'    => 'required|exists:users,id'
-    //     ]);
+            return response()->json([
+                'status'  => true,
+                'message' => 'Board data retrieved successfully.',
+                'data'    => $board
+            ], 200);
+        } catch (\Exception $e) {
 
-    //     if ($validator->fails()) {
-    //         return response()->json([
-    //             'status' => false,
-    //             'message' => 'Validation errors occurred.',
-    //             'errors' => $validator->errors()
-    //         ], 422);
-    //     }
+            return response()->json([
+                'status'  => false,
+                'message' => 'Something went wrong.',
+                'error'   => $e->getMessage()
+            ], 500);
+        }
+    }
 
-    //     try {
-    //         $user = User::findOrFail($r->id);
+    public function update(Request $request)
+    {
+        $request->validate([
+            'id' => 'required',
+            'name' => 'required',
+            'kode' => 'required',
+            'pin' => 'required',
+            'lokasi_id' => 'required',
+            'photos.*' => 'image|mimes:jpg,jpeg,png|max:2048'
+        ]);
 
-    //         $user->password  = bcrypt($user->email);
-    //         $user->save();
+        DB::beginTransaction();
 
-    //         return response()->json([
-    //             'status'  => true,
-    //             'message' => 'Password has been reset.',
-    //             'data'    => $user
-    //         ], 200);
-    //     } catch (\Exception $e) {
-    //         return response()->json([
-    //             'status'  => false,
-    //             'message' => 'Failed to update teacher information.',
-    //             'errors'  => ['exception' => [$e->getMessage()]]
-    //         ], 500);
-    //     }
-    // }
+        try {
 
-    // public function delete(Request $r)
-    // {
-    //     $validator = Validator::make($r->all(), [
-    //         'id'    => 'required|exists:users,id'
-    //     ]);
+            $board = Board::findOrFail($request->id);
 
-    //     if ($validator->fails()) {
-    //         return response()->json([
-    //             'status' => false,
-    //             'message' => 'Validation errors occurred.',
-    //             'errors' => $validator->errors()
-    //         ], 422);
-    //     }
+            $board->update([
+                'name' => $request->name,
+                'kode' => $request->kode,
+                'pin' => $request->pin,
+                'lokasi_id' => $request->lokasi_id
+            ]);
 
-    //     try {
-    //         $user = User::findOrFail($r->id);
+            if ($request->hasFile('photos')) {
 
-    //         $user->status = 0;
-    //         $user->save();
+                foreach ($request->file('photos') as $photo) {
 
-    //         return response()->json([
-    //             'status'  => true,
-    //             'message' => 'The teacher has been deactivated.',
-    //             'data'    => $user
-    //         ], 200);
-    //     } catch (\Exception $e) {
-    //         return response()->json([
-    //             'status'  => false,
-    //             'message' => 'Failed to update teacher information.',
-    //             'errors'  => ['exception' => [$e->getMessage()]]
-    //         ], 500);
-    //     }
-    // }
+                    $path = $photo->store('boards', 'public');
 
-    // public function activate(Request $r)
-    // {
-    //     $validator = Validator::make($r->all(), [
-    //         'id'    => 'required|exists:users,id'
-    //     ]);
+                    BoardPhoto::create([
+                        'board_id' => $board->id,
+                        'file' => $path
+                    ]);
+                }
+            }
 
-    //     if ($validator->fails()) {
-    //         return response()->json([
-    //             'status' => false,
-    //             'message' => 'Validation errors occurred.',
-    //             'errors' => $validator->errors()
-    //         ], 422);
-    //     }
+            DB::commit();
 
-    //     try {
-    //         $user = User::findOrFail($r->id);
-    //         $user->status = 1;
-    //         $user->save();
+            return response()->json([
+                'status' => true,
+                'message' => 'Board berhasil diupdate',
+                'board' => $board->load('photos', 'lokasi')
+            ]);
+        } catch (\Exception $e) {
 
-    //         return response()->json([
-    //             'status'  => true,
-    //             'message' => 'The teacher has been Activated.',
-    //             'data'    => $user
-    //         ], 200);
-    //     } catch (\Exception $e) {
-    //         return response()->json([
-    //             'status'  => false,
-    //             'message' => 'Failed to update teacher information.',
-    //             'errors'  => ['exception' => [$e->getMessage()]]
-    //         ], 500);
-    //     }
-    // }
+            DB::rollback();
 
-    // public function search(Request $request)
-    // {
-    //     $keyword = $request->get('q');
+            return response()->json([
+                'status' => false,
+                'message' => $e->getMessage()
+            ]);
+        }
+    }
 
-    //     $users = User::where('role', 'teacher')
-    //         ->where(function ($query) use ($keyword) {
-    //             $query->where('name', 'like', "%{$keyword}%")
-    //                 ->orWhere('email', 'like', "%{$keyword}%");
-    //         })
-    //         ->get();
+    public function deletePhoto(Request $request)
+    {
+        $photo = BoardPhoto::findOrFail($request->id);
 
-    //     if ($users->isEmpty()) {
-    //         return response()->json([
-    //             'status' => false,
-    //             'message' => 'No teacher found.'
-    //         ], 200);
-    //     }
+        if ($photo->file && Storage::disk('public')->exists($photo->file)) {
+            Storage::disk('public')->delete($photo->file);
+        }
 
-    //     return response()->json([
-    //         'status' => true,
-    //         'data' => $users
-    //     ], 200);
-    // }
+        $photo->delete();
 
-    // public function loadMore(Request $request)
-    // {
-    //     $offset = (int) $request->get('offset', 0);
-    //     $limit  = 10;
+        return response()->json([
+            'status' => true,
+            'message' => 'Foto berhasil dihapus'
+        ]);
+    }
 
-    //     $users = User::where('role', 'teacher')
-    //         ->orderBy('id', 'desc')
-    //         ->skip($offset)
-    //         ->take($limit)
-    //         ->get();
+    public function delete(Request $r)
+    {
+        $validator = Validator::make($r->all(), [
+            'id'    => 'required|exists:boards,id'
+        ]);
 
-    //     return response()->json([
-    //         'status' => true,
-    //         'data'   => $users
-    //     ]);
-    // }
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Validation errors occurred.',
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        try {
+            $board = Board::findOrFail($r->id);
+
+            $board->status = 0;
+            $board->save();
+
+            return response()->json([
+                'status'  => true,
+                'message' => 'Board has been deactivated.',
+                'data'    => $board
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status'  => false,
+                'message' => 'Failed to update board information.',
+                'errors'  => ['exception' => [$e->getMessage()]]
+            ], 500);
+        }
+    }
+
+    public function activate(Request $r)
+    {
+        $validator = Validator::make($r->all(), [
+            'id'    => 'required|exists:boards,id'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Validation errors occurred.',
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        try {
+            $board = Board::findOrFail($r->id);
+            $board->status = 1;
+            $board->save();
+
+            return response()->json([
+                'status'  => true,
+                'message' => 'Board has been Activated.',
+                'data'    => $board
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status'  => false,
+                'message' => 'Failed to update board information.',
+                'errors'  => ['exception' => [$e->getMessage()]]
+            ], 500);
+        }
+    }
+
+    public function search(Request $request)
+    {
+        $keyword = $request->get('q');
+
+        $boards = Board::with(['photos', 'lokasi'])
+            ->where(function ($query) use ($keyword) {
+                $query->where('name', 'like', "%{$keyword}%")
+                    ->orWhere('kode', 'like', "%{$keyword}%");
+            })
+            ->get();
+
+        if ($boards->isEmpty()) {
+            return response()->json([
+                'status' => false,
+                'message' => 'No board found.'
+            ], 200);
+        }
+
+        return response()->json([
+            'status' => true,
+            'data' => $boards
+        ], 200);
+    }
 }

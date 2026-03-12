@@ -34,29 +34,33 @@ $("#tambah-data").on("click", function () {
     $(`#${modal}`).modal("show");
 });
 
-$(document).on("click", ".detail-user", function () {
-    userDetail = $((this));
-    $('body').css('cursor', 'wait');
-    $("#is-error").removeClass('error-response');
-    let id = $(this).data('id');
+$(document).on("click", ".detail-board", function () {
     modal = "edit-data-modal";
+    let id = $(this).data('id');
+
+    $('body').css('cursor', 'wait');
 
     $.ajax({
-        url: "/teacher/detail",
+        url: "/board/detail",
         method: "GET",
-        data: {
-            'id': id,
-        },
-        success: function (response) {
-            $('body').css('cursor', 'default');
-            if (response.status) {
-                $("#id").val(response.data.id);
-                $("#edit_nama").val(response.data.name);
-                $("#edit_email").val(response.data.email);
-                let foto = (response.data.foto) ? `../../storage/${response.data.foto}` : '/own_assets/images/avatar.png';
-                $("#preview-edit_foto").attr("src", foto).removeClass("d-none");
+        data: { id: id },
 
-                if (response.data.status == 1) {
+        success: function (response) {
+
+            $('body').css('cursor', 'default');
+
+            if (response.status) {
+
+                let d = response.data;
+
+                $("#edit_id").val(d.id);
+                $("#edit_nama").val(d.name);
+                $("#edit_kode").val(d.kode);
+                $("#edit_pin").val(d.pin);
+                $("#edit_lokasi").val(d.lokasi_id);
+
+                // STATUS BUTTON
+                if (d.status == 1) {
                     $("#delete").show();
                     $("#activate").hide();
                 } else {
@@ -64,40 +68,144 @@ $(document).on("click", ".detail-user", function () {
                     $("#activate").show();
                 }
 
+                // CAROUSEL FOTO
+                $("#carousel-images").html("");
 
-                $(`#${modal}`).modal("show");
-            } else {
-                let message = `<div style="text-align: center; font-weight: bold; margin-bottom: 10px;">${response.message || "An error occurred."}</div>`;
+                if (Array.isArray(d.photos) && d.photos.length) {
 
-                if (response.errors) {
-                    const detailMessages = Object.values(response.errors)
-                        .map(msgs => msgs[0])
-                        .join("<br>");
-                    message += `<div style="text-align: center;">${detailMessages}</div>`;
+                    d.photos.forEach((photo, index) => {
+
+                        let active = index === 0 ? "active" : "";
+
+                        $("#carousel-images").append(`
+            <div class="carousel-item ${active} position-relative">
+
+                <img src="/storage/${photo.file}"
+                    class="d-block w-100"
+                    style="height:300px;object-fit:cover">
+
+                <button
+                    type="button"
+                    class="btn btn-danger btn-sm delete-photo"
+                    data-id="${photo.id}"
+                    style="
+                        position:absolute;
+                        top:10px;
+                        right:10px;
+                        z-index:999;
+                    ">
+                    <i class="fa fa-trash"></i>
+                </button>
+
+            </div>
+        `);
+
+                    });
+
+                } else {
+
+                    $("#carousel-images").html(`
+        <div class="carousel-item active">
+            <img src="/own_assets/images/no-image.jpg"
+            class="d-block w-100"
+            style="height:300px;object-fit:cover">
+        </div>
+    `);
+
                 }
-                alertModal(false, message);
+
+                $("#edit-data-modal").modal("show");
+
             }
 
-        },
-        error: function (xhr) {
-            $('body').css('cursor', 'default');
-            let message = `<div style="text-align: center; font-weight: bold; margin-bottom: 10px;">An error occurred.</div>`;
-
-            if (xhr.responseJSON) {
-                if (xhr.responseJSON.message) {
-                    message = `<div style="text-align: center; font-weight: bold; margin-bottom: 10px;">${xhr.responseJSON.message}</div>`;
-                }
-                if (xhr.responseJSON.errors) {
-                    const detailMessages = Object.values(xhr.responseJSON.errors)
-                        .map(msgs => msgs[0])
-                        .join("<br>");
-                    message += `<div style="text-align: center;">${detailMessages}</div>`;
-                }
-            }
-            alertModal(false, message);
         }
+
     });
-})
+
+});
+
+let editFiles = [];
+
+$("#edit_photos").on("change", function (e) {
+
+    editFiles = Array.from(e.target.files);
+
+    $("#preview-edit-images").html("");
+
+    editFiles.forEach((file, index) => {
+
+        let reader = new FileReader();
+
+        reader.onload = function (e) {
+
+            $("#preview-edit-images").append(`
+                <div class="col-md-3 mb-2">
+                    <img src="${e.target.result}"
+                    style="width:100%;height:120px;object-fit:cover">
+                </div>
+            `);
+
+        };
+
+        reader.readAsDataURL(file);
+
+    });
+
+});
+
+$(document).on("click", ".delete-photo", function (e) {
+
+    e.preventDefault();
+    e.stopPropagation();
+
+    let btn = $(this);
+    let id = btn.data("id");
+
+    if (!confirm("Hapus foto ini?")) return;
+
+    $.post("/board/delete-photo", {
+        _token: $("meta[name='csrf-token']").attr("content"),
+        id: id
+    }, function (res) {
+
+        if (res.status) {
+
+            $('#carouselBoard').carousel('pause');
+
+            let item = btn.closest(".carousel-item");
+
+            item.fadeOut(200, function () {
+
+                $(this).remove();
+
+                let items = $("#carousel-images .carousel-item");
+
+                if (items.length > 0) {
+                    items.removeClass("active");
+                    items.first().addClass("active");
+                }
+
+                if (items.length === 0) {
+
+                    $("#carousel-images").html(`
+                        <div class="carousel-item active">
+                            <img src="/own_assets/images/no-image.jpg"
+                            class="d-block w-100"
+                            style="height:300px;object-fit:cover">
+                        </div>
+                    `);
+
+                }
+
+                $('#carouselBoard').carousel(0);
+
+            });
+
+        }
+
+    });
+
+});
 
 $(document).on("click", ".error-response", function () {
     $(`#${modal}`).modal("show");
@@ -123,36 +231,64 @@ function alertModal(status, message = null) {
     $("#alert").modal("show");
 }
 
-$("#photos").on("change", function () {
+let selectedFiles = [];
+
+$("#photos").on("change", function (e) {
+
+    selectedFiles = Array.from(e.target.files).filter(file =>
+        file.type.startsWith("image/")
+    );
+
+    renderPreview();
+
+});
+
+function renderPreview() {
 
     $("#preview-images").html("");
 
-    let files = this.files;
+    selectedFiles.forEach((file, index) => {
 
-    if (files.length > 0) {
+        let reader = new FileReader();
 
-        $.each(files, function (index, file) {
+        reader.onload = function (e) {
 
-            let reader = new FileReader();
+            let html = `
+            <div class="col-md-3 mb-3">
+                <div style="position:relative">
 
-            reader.onload = function (e) {
+                    <img src="${e.target.result}"
+                    style="width:100%;height:150px;object-fit:cover;border-radius:8px">
 
-                let html = `
-                <div class="col-md-3 mb-2">
-                    <img src="${e.target.result}" 
-                    style="width:100%;height:150px;object-fit:cover;border-radius:8px;">
+                    <button 
+                        type="button"
+                        class="btn btn-danger btn-sm remove-image"
+                        data-index="${index}"
+                        style="position:absolute;top:5px;right:5px">
+                        ×
+                    </button>
+
                 </div>
-                `;
+            </div>
+            `;
 
-                $("#preview-images").append(html);
+            $("#preview-images").append(html);
 
-            }
+        };
 
-            reader.readAsDataURL(file);
+        reader.readAsDataURL(file);
 
-        });
+    });
 
-    }
+}
+
+$(document).on("click", ".remove-image", function () {
+
+    let index = $(this).data("index");
+
+    selectedFiles.splice(index, 1);
+
+    renderPreview();
 
 });
 
@@ -165,16 +301,45 @@ $("#store").on("click", function () {
     $(button).prop('disabled', true);
 
     formData.append("_token", $("meta[name='csrf-token']").attr("content"));
-
     formData.append("name", $("#nama").val());
     formData.append("kode", $("#kode").val());
     formData.append("pin", $("#pin").val());
     formData.append("lokasi_id", $("#lokasi").val());
 
-    let files = $("#photos")[0].files;
+    // Validasi file sebelum dikirim
+    if (selectedFiles.length > 0) {
+        // Cek tipe file
+        for (let i = 0; i < selectedFiles.length; i++) {
+            const file = selectedFiles[i];
+            if (!file.type.startsWith('image/')) {
+                alertModal(false, `File ${file.name} bukan gambar!`);
+                $('body').css('cursor', 'default');
+                $(button).prop('disabled', false);
+                return;
+            }
 
-    for (let i = 0; i < files.length; i++) {
-        formData.append("photos[]", files[i]);
+            // Cek ekstensi file
+            const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+            if (!allowedTypes.includes(file.type)) {
+                alertModal(false, `File ${file.name} harus bertipe JPG, JPEG, atau PNG!`);
+                $('body').css('cursor', 'default');
+                $(button).prop('disabled', false);
+                return;
+            }
+
+            // Cek ukuran file (max 2MB)
+            if (file.size > 2 * 1024 * 1024) {
+                alertModal(false, `File ${file.name} terlalu besar! Maksimal 2MB`);
+                $('body').css('cursor', 'default');
+                $(button).prop('disabled', false);
+                return;
+            }
+        }
+
+        // Append files dengan nama yang benar
+        selectedFiles.forEach(file => {
+            formData.append("photos[]", file);
+        });
     }
 
     $.ajax({
@@ -184,14 +349,77 @@ $("#store").on("click", function () {
         contentType: false,
         data: formData,
 
-        success: function (response) {
+        // Tambahkan timeout untuk upload file
+        timeout: 30000, // 30 detik
 
+        success: function (response) {
             $('body').css('cursor', 'default');
             $(button).prop('disabled', false);
 
             if (response.status) {
 
                 $("#tambah-data-modal").modal("hide");
+
+                let board = response.data;
+
+                let photo = "/own_assets/images/no-image.jpg";
+
+                if (board.photos && board.photos.length > 0) {
+                    photo = "/storage/" + board.photos[0].file;
+                }
+
+                let ribbon = '<div class="ribbon ribbon-success">Active</div>'
+
+                let html = `
+        <div class="col-6 col-md-4 col-xl-3 detail-board" style="cursor:pointer"
+            data-id="${board.id}" data-status="1">
+
+            <div class="card h-100 shadow-sm">
+
+                <div class="product-img position-relative">
+
+                    <img class="img-fluid w-100"
+                        style="height:200px;object-fit:cover"
+                        src="${photo}">
+
+                    ${ribbon}
+
+                </div>
+
+                <div class="card-body text-center">
+
+                    <span class="badge bg-info mb-2">
+                        ${board.lokasi?.nama ?? '-'}
+                    </span>
+
+                    <h6 class="mb-1">
+                        ${board.name}
+                    </h6>
+
+                    <p class="text-muted small mb-1">
+                        Kode : ${board.kode}
+                    </p>
+
+                    <span class="badge bg-dark">
+                        ${board.photos ? board.photos.length : 0} Foto
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+        `;
+
+                $("#board-container").prepend(html);
+
+                // reset form
+                $("#nama").val('');
+                $("#kode").val('');
+                $("#pin").val('');
+                $("#photos").val('');
+                selectedFiles = [];
+                $("#preview-images").html('');
 
                 alertModal(true, response.message);
 
@@ -200,122 +428,95 @@ $("#store").on("click", function () {
                 let message = response.message;
 
                 if (response.errors) {
-
                     const detailMessages = Object.values(response.errors)
                         .map(msgs => msgs[0])
                         .join("<br>");
-
                     message += "<br>" + detailMessages;
                 }
 
                 alertModal(false, message);
             }
-
         },
 
         error: function (xhr) {
-
             $('body').css('cursor', 'default');
             $(button).prop('disabled', false);
 
             let message = "Terjadi kesalahan";
 
             if (xhr.responseJSON?.errors) {
-
                 message = Object.values(xhr.responseJSON.errors)
                     .map(msgs => msgs[0])
                     .join("<br>");
+            } else if (xhr.responseJSON?.message) {
+                message = xhr.responseJSON.message;
             }
 
             alertModal(false, message);
-
         }
 
     });
 
 });
 
-$("#update").on("click", function () {
+$("#update-board").click(function () {
+
     let formData = new FormData();
-    let button = $(this);
+    let id = $("#edit_id").val();
 
-    $('body').css('cursor', 'wait');
-    $(button).prop('disabled', true);
-
-    let file = $("#edit_foto")[0].files[0];
-    if (file) {
-        formData.append("foto", file);
-    }
     formData.append("_token", $("meta[name='csrf-token']").attr("content"));
-    formData.append("id", $("#id").val());
-    formData.append("nama", $("#edit_nama").val());
-    formData.append("email", $("#edit_email").val());
+    formData.append("id", id);
+    formData.append("name", $("#edit_nama").val());
+    formData.append("kode", $("#edit_kode").val());
+    formData.append("pin", $("#edit_pin").val());
+    formData.append("lokasi_id", $("#edit_lokasi").val());
+
+    editFiles.forEach(file => {
+        formData.append("photos[]", file);
+    });
 
     $.ajax({
-        url: "/teacher/update",
+        url: "/board/update",
         method: "POST",
         processData: false,
         contentType: false,
         data: formData,
-        success: function (response) {
-            $(`#${modal}`).modal("hide");
 
-            $('body').css('cursor', 'default');
-            $(button).prop('disabled', false);
+        success: function (response) {
 
             if (response.status) {
+
+                $("#edit-data-modal").modal("hide");
+
+                let board = response.board;
+
+                let card = $(`.detail-board[data-id="${board.id}"]`);
+
+                card.find("h6").text(board.name);
+                card.find(".text-muted").text("Kode : " + board.kode);
+
+                card.find(".badge.bg-info").text(board.lokasi?.nama ?? '-');
+
+                card.find(".badge.bg-dark").text(
+                    (board.photos ? board.photos.length : 0) + " Foto"
+                );
+
+                if (board.photos && board.photos.length > 0) {
+
+                    card.find("img").attr(
+                        "src",
+                        "/storage/" + board.photos[0].file
+                    );
+                }
+
                 alertModal(true, response.message);
-                $("#edit_nama").val("");
-                $("#edit_email").val("");
-                $("#edit_foto").val("");
-                $("#preview-edit_foto").attr("src", "#").addClass("d-none");
-
-                let foto = (response.data.foto) ? `../../storage/${response.data.foto}` : '/own_assets/images/avatar.png';
-
-                userDetail.find("img.img-fluid").attr("src", foto);
-                userDetail.find("h5").text(response.data.name);
-                userDetail.find("p").text(response.data.email);
-
-                $("#is-error").removeClass('error-response');
-            } else {
-                let message = `<div style="text-align: center; font-weight: bold; margin-bottom: 10px;">${response.message || "An error occurred."}</div>`;
-
-                if (response.errors) {
-                    const detailMessages = Object.values(response.errors)
-                        .map(msgs => msgs[0])
-                        .join("<br>");
-                    message += `<div style="text-align: center;">${detailMessages}</div>`;
-                }
-
-                $("#is-error").addClass('error-response');
-                alertModal(false, message);
             }
 
-        },
-        error: function (xhr) {
-            $(`#${modal}`).modal("hide");
-            $('body').css('cursor', 'default');
-            $(button).prop('disabled', false);
-
-            let message = `<div style="text-align: center; font-weight: bold; margin-bottom: 10px;">An error occurred.</div>`;
-
-            if (xhr.responseJSON) {
-                if (xhr.responseJSON.message) {
-                    message = `<div style="text-align: center; font-weight: bold; margin-bottom: 10px;">${xhr.responseJSON.message}</div>`;
-                }
-                if (xhr.responseJSON.errors) {
-                    const detailMessages = Object.values(xhr.responseJSON.errors)
-                        .map(msgs => msgs[0])
-                        .join("<br>");
-                    message += `<div style="text-align: center;">${detailMessages}</div>`;
-                }
-            }
-
-            $("#is-error").addClass('error-response');
-            alertModal(false, message);
         }
+
     });
-})
+
+});
 
 $("#reset").on("click", function () {
     let formData = new FormData();
@@ -388,281 +589,220 @@ $("#reset").on("click", function () {
 })
 
 $("#delete").on("click", function () {
+
     let formData = new FormData();
     let button = $(this);
+    let id = $("#edit_id").val();
 
     $('body').css('cursor', 'wait');
-    $(button).prop('disabled', true);
+    button.prop('disabled', true);
 
     formData.append("_token", $("meta[name='csrf-token']").attr("content"));
-    formData.append("id", $("#id").val());
+    formData.append("id", id);
 
     $.ajax({
-        url: "/students/delete",
+        url: "/board/delete",
         method: "POST",
         processData: false,
         contentType: false,
         data: formData,
-        success: function (response) {
-            $(`#${modal}`).modal("hide");
 
-            $('body').css('cursor', 'default');
-            $(button).prop('disabled', false);
+        success: function (response) {
+
+            $(`#${modal}`).modal("hide");
 
             if (response.status) {
-                alertModal(true, "The teacher has been Deactivated.");
-                userDetail.attr("data-status", response.data.status);
-                if (response.data.status == 1) {
-                    userDetail.find(".ribbon")
-                        .removeClass("ribbon-danger")
-                        .addClass("ribbon-success")
-                        .text("Active");
-                } else {
-                    userDetail.find(".ribbon")
-                        .removeClass("ribbon-success")
-                        .addClass("ribbon-danger")
-                        .text("Nonactive");
-                }
 
-                $("#is-error").removeClass('error-response');
+                let card = $(`.detail-board[data-id="${id}"]`);
+
+                card.attr("data-status", 0);
+
+                card.find(".ribbon").remove();
+                card.find(".product-img").append(
+                    `<div class="ribbon ribbon-danger">Nonactive</div>`
+                );
+
+                alertModal(true, "Board has been Deactivated.");
+
             } else {
-                let message = `<div style="text-align: center; font-weight: bold; margin-bottom: 10px;">Failed to update teacher information.</div>`;
 
-                if (response.errors) {
-                    const detailMessages = Object.values(response.errors)
-                        .map(msgs => msgs[0])
-                        .join("<br>");
-                    message += `<div style="text-align: center;">${detailMessages}</div>`;
-                }
-
-                $("#is-error").addClass('error-response');
-                alertModal(false, message);
+                alertModal(false, response.message);
             }
 
-        },
-        error: function (xhr) {
-            $(`#${modal}`).modal("hide");
             $('body').css('cursor', 'default');
-            $(button).prop('disabled', false);
-
-            let message = `<div style="text-align: center; font-weight: bold; margin-bottom: 10px;">An error occurred.</div>`;
-
-            if (xhr.responseJSON) {
-                if (xhr.responseJSON.message) {
-                    message = `<div style="text-align: center; font-weight: bold; margin-bottom: 10px;">${xhr.responseJSON.message}</div>`;
-                }
-                if (xhr.responseJSON.errors) {
-                    const detailMessages = Object.values(xhr.responseJSON.errors)
-                        .map(msgs => msgs[0])
-                        .join("<br>");
-                    message += `<div style="text-align: center;">${detailMessages}</div>`;
-                }
-            }
-
-            $("#is-error").addClass('error-response');
-            alertModal(false, message);
+            button.prop('disabled', false);
         }
     });
-})
+});
 
 $("#activate").on("click", function () {
+
     let formData = new FormData();
     let button = $(this);
+    let id = $("#edit_id").val();
 
     $('body').css('cursor', 'wait');
-    $(button).prop('disabled', true);
+    button.prop('disabled', true);
 
     formData.append("_token", $("meta[name='csrf-token']").attr("content"));
-    formData.append("id", $("#id").val());
+    formData.append("id", id);
 
     $.ajax({
-        url: "/students/activate",
+        url: "/board/activate",
         method: "POST",
         processData: false,
         contentType: false,
         data: formData,
-        success: function (response) {
-            $(`#${modal}`).modal("hide");
 
-            $('body').css('cursor', 'default');
-            $(button).prop('disabled', false);
+        success: function (response) {
+
+            $(`#${modal}`).modal("hide");
 
             if (response.status) {
-                alertModal(true, "The teacher has been Activated.");
-                userDetail.attr("data-status", response.data.status);
-                if (response.data.status == 1) {
-                    userDetail.find(".ribbon")
-                        .removeClass("ribbon-danger")
-                        .addClass("ribbon-success")
-                        .text("Active");
-                } else {
-                    userDetail.find(".ribbon")
-                        .removeClass("ribbon-success")
-                        .addClass("ribbon-danger")
-                        .text("Nonactive");
-                }
 
-                $("#is-error").removeClass('error-response');
+                let card = $(`.detail-board[data-id="${id}"]`);
+
+                card.attr("data-status", 1);
+
+                card.find(".ribbon").remove();
+                card.find(".product-img").append(
+                    `<div class="ribbon ribbon-success">Active</div>`
+                );
+
+                alertModal(true, "Board has been Activated.");
+
             } else {
-                let message = `<div style="text-align: center; font-weight: bold; margin-bottom: 10px;">Failed to update teacher information.</div>`;
 
-                if (response.errors) {
-                    const detailMessages = Object.values(response.errors)
-                        .map(msgs => msgs[0])
-                        .join("<br>");
-                    message += `<div style="text-align: center;">${detailMessages}</div>`;
-                }
-
-                $("#is-error").addClass('error-response');
-                alertModal(false, message);
+                alertModal(false, response.message);
             }
 
-        },
-        error: function (xhr) {
-            $(`#${modal}`).modal("hide");
             $('body').css('cursor', 'default');
-            $(button).prop('disabled', false);
-
-            let message = `<div style="text-align: center; font-weight: bold; margin-bottom: 10px;">An error occurred.</div>`;
-
-            if (xhr.responseJSON) {
-                if (xhr.responseJSON.message) {
-                    message = `<div style="text-align: center; font-weight: bold; margin-bottom: 10px;">${xhr.responseJSON.message}</div>`;
-                }
-                if (xhr.responseJSON.errors) {
-                    const detailMessages = Object.values(xhr.responseJSON.errors)
-                        .map(msgs => msgs[0])
-                        .join("<br>");
-                    message += `<div style="text-align: center;">${detailMessages}</div>`;
-                }
-            }
-
-            $("#is-error").addClass('error-response');
-            alertModal(false, message);
+            button.prop('disabled', false);
         }
     });
-})
+});
 
 $("#search").on('input', function () {
+
     let text = $(this).val();
 
     $.ajax({
-        url: "/students/search",
+        url: "/board/search",
         method: "GET",
         data: { q: text },
+
         success: function (response) {
+
             $(".data-ctr").empty();
 
             if (response.status) {
-                response.data.forEach(function (user) {
-                    let foto = (user.foto) ? `/storage/${user.foto}` : '/own_assets/images/avatar.png';
-                    let statusRibbon = (user.status == 1)
+
+                response.data.forEach(function (board) {
+
+                    let photo = "/own_assets/images/no-image.jpg";
+
+                    if (board.photos && board.photos.length > 0) {
+                        photo = "/storage/" + board.photos[0].file;
+                    }
+
+                    let ribbon = board.status
                         ? `<div class="ribbon ribbon-success">Active</div>`
                         : `<div class="ribbon ribbon-danger">Nonactive</div>`;
 
-                    let row = `
-                        <div class="col-6 col-xl-3 col-md-3 detail-user" style="cursor: pointer" data-id="${user.id}">
-                            <div class="card">
-                                <div class="product-box">
-                                    <div class="product-img">
-                                        <img class="img-fluid" src="${foto}" alt="Profile Picture">
-                                        ${statusRibbon}
-                                    </div>
-                                    <div class="product-details">
-                                        <span class="badge rounded-pill badge-primary text-white mb-2">Teacher</span>
-                                        <h5>${user.name}</h5>
-                                        <p>${user.email}</p>
-                                    </div>
-                                </div>
+                    let lokasi = board.lokasi ? board.lokasi.nama : '-';
+
+                    let html = `
+                    <div class="col-6 col-md-4 col-xl-3 detail-board"
+                        style="cursor:pointer"
+                        data-id="${board.id}"
+                        data-status="${board.status}">
+
+                        <div class="card h-100 shadow-sm">
+
+                            <div class="product-img position-relative">
+
+                                <img class="img-fluid w-100"
+                                    style="height:200px;object-fit:cover"
+                                    src="${photo}">
+
+                                ${ribbon}
+
                             </div>
+
+                            <div class="card-body text-center">
+
+                                <span class="badge bg-info mb-2">
+                                    ${lokasi}
+                                </span>
+
+                                <h6 class="mb-1">
+                                    ${board.name}
+                                </h6>
+
+                                <p class="text-muted small mb-1">
+                                    Kode : ${board.kode}
+                                </p>
+
+                                <span class="badge bg-dark">
+                                    ${board.photos.length} Foto
+                                </span>
+
+                            </div>
+
                         </div>
+
+                    </div>
                     `;
-                    $(".data-ctr").append(row);
+
+                    $(".data-ctr").append(html);
+
                 });
+
             } else {
+
                 $(".data-ctr").html(`
                     <div class="col-12 text-center">
-                        <p style="font-weight:bold; color:#999;">${response.message}</p>
+                        <p style="font-weight:bold; color:#999;">
+                            ${response.message}
+                        </p>
                     </div>
                 `);
+
             }
+
         },
+
         error: function () {
+
             $(".data-ctr").html(`
                 <div class="col-12 text-center">
-                    <p style="font-weight:bold; color:red;">An error occurred while searching.</p>
+                    <p style="font-weight:bold; color:red;">
+                        An error occurred while searching.
+                    </p>
                 </div>
             `);
+
         }
+
     });
+
 });
 
 $("#apply-filter").on("click", function () {
-    let status = $("#filter-status").val().trim();
 
-    $(".detail-user").each(function () {
-        let userStatus = $(this).attr("data-status");
+    let status = $("#filter-status").val();
+    console.log(status)
 
-        if (status === "" || userStatus == status) {
-            $(this).show();
+    $(".detail-board").each(function () {
+
+        let boardStatus = $(this).data("status");
+
+        if (status === "" || boardStatus == status) {
+            $(this).fadeIn(150);
         } else {
-            $(this).hide();
+            $(this).fadeOut(150);
         }
+
     });
-});
 
-let offset = 20;
-
-$("#load-more").on("click", function () {
-    let button = $(this);
-    button.prop("disabled", true).text("Loading...");
-
-    $.ajax({
-        url: "/students/load-more",
-        method: "GET",
-        data: { offset: offset },
-        success: function (response) {
-            if (response.status && response.data.length > 0) {
-                response.data.forEach(user => {
-                    let foto = user.foto
-                        ? `/storage/${user.foto}`
-                        : '/own_assets/images/avatar.png';
-
-                    let statusRibbon = (user.status == 1)
-                        ? `<div class="ribbon ribbon-success">Active</div>`
-                        : `<div class="ribbon ribbon-danger">Nonactive</div>`;
-
-                    let row = `
-                        <div class="col-6 col-xl-3 col-md-3 detail-user" style="cursor: pointer"
-                             data-id="${user.id}" data-status="${user.status}">
-                            <div class="card">
-                                <div class="product-box">
-                                    <div class="product-img">
-                                        <img class="img-fluid" src="${foto}" alt="Profile Picture">
-                                        ${statusRibbon}
-                                    </div>
-                                    <div class="product-details">
-                                        <span class="badge rounded-pill badge-primary text-white mb-2">Teacher</span>
-                                        <h5>${user.name}</h5>
-                                        <p>${user.email}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-
-                    $(".data-ctr").append(row);
-                });
-
-                offset += response.data.length;
-                button.prop("disabled", false).html(`<i class="fa fa-plus-circle me-2"></i> Load More`);
-            } else {
-                button.prop("disabled", true).text("No more data");
-            }
-        },
-        error: function () {
-            button.prop("disabled", false).text("Load More");
-            alert("Failed to load data.");
-        }
-    });
 });

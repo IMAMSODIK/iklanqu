@@ -9,4 +9,6 @@ class BoardPhoto extends Model
 {
     /** @use HasFactory<\Database\Factories\BoardPhotoFactory> */
     use HasFactory;
+
+    protected $guarded = ['id'];
 }

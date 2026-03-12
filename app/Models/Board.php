@@ -9,4 +9,16 @@ class Board extends Model
 {
     /** @use HasFactory<\Database\Factories\BoardFactory> */
     use HasFactory;
+
+    protected $guarded = ['id'];
+
+    public function photos()
+    {
+        return $this->hasMany(BoardPhoto::class);
+    }
+
+    public function lokasi()
+    {
+        return $this->belongsTo(Lokasi::class);
+    }
 }

@@ -86,57 +86,49 @@
                     </div>
                 </div>
                 <div class="product-wrapper-grid">
-                    <div class="row g-3 data-ctr" id="board-container">
+                    <div class="col-12">
+                        <div class="table-responsive">
+                            <table id="tableKamar" class="table table-bordered table-striped table-hover"
+                                style="width:100%">
+                                <thead class="text-center">
+                                    <tr>
+                                        <th style="width: 60px;">No</th>
+                                        <th class="text-center">Nama</th>
+                                        <th class="text-center">Email</th>
+                                        <th style="width: 150px;">Aksi</th>
+                                    </tr>
+                                </thead>
 
-                        @foreach ($data as $d)
-                            <div class="col-6 col-md-4 col-xl-3 detail-board" style="cursor:pointer"
-                                data-id="{{ $d->id }}" data-status="{{ $d->status }}">
+                                <tbody>
+                                    @php $i = 1; @endphp
+                                    @foreach ($data as $d)
+                                    {{-- $table->string('name');
+                                    $table->string('email')->unique();
+                                    $table->timestamp('email_verified_at')->nullable();
+                                    $table->string('password');
+                                    $table->enum('role', ['admin', 'user', 'verifikator'])->default('user');
+                                    $table->string('google_id')->nullable(); --}}
+                                        <tr>
+                                            <td class="text-center align-middle">{{ $i++ }}</td>
+                                            <td class="align-middle">{{ $d->name }}</td>
+                                            <td class="align-middle">{{ $d->email }}</td>
+                                            <td class="align-middle text-center">{{ $d->no_kamar }}</td>
 
-                                <div class="card h-100 shadow-sm">
+                                            <td class="text-center align-middle">
 
-                                    <div class="product-img position-relative">
+                                                <div class="d-flex justify-content-center gap-1">
+                                                    <button class="btn btn-sm btn-warning edit"
+                                                        data-id="{{ $d->id }}">Edit</button>
+                                                    <button class="btn btn-sm btn-danger hapus"
+                                                        data-id="{{ $d->id }}">Hapus</button>
+                                                </div>
 
-                                        @if ($d->photos->count())
-                                            <img class="img-fluid w-100" style="height:200px;object-fit:cover"
-                                                src="{{ asset('storage/' . $d->photos->first()->file) }}">
-                                        @else
-                                            <img class="img-fluid w-100" style="height:200px;object-fit:cover"
-                                                src="{{ asset('own_assets/images/no-image.jpg') }}">
-                                        @endif
-
-                                        @if ($d->status)
-                                            <div class="ribbon ribbon-success">Active</div>
-                                        @else
-                                            <div class="ribbon ribbon-danger">Nonactive</div>
-                                        @endif
-
-                                    </div>
-
-                                    <div class="card-body text-center">
-
-                                        <span class="badge bg-info mb-2">
-                                            {{ $d->lokasi->nama ?? '-' }}
-                                        </span>
-
-                                        <h6 class="mb-1">
-                                            {{ $d->name }}
-                                        </h6>
-
-                                        <p class="text-muted small mb-1">
-                                            Kode : {{ $d->kode }}
-                                        </p>
-
-                                        <span class="badge bg-dark">
-                                            {{ $d->photos->count() }} Foto
-                                        </span>
-
-                                    </div>
-
-                                </div>
-
-                            </div>
-                        @endforeach
-
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
 
@@ -145,23 +137,26 @@
     </div>
 
     <div class="modal fade bd-example-modal-lg" id="tambah-data-modal" tabindex="-1" role="dialog"
-        aria-labelledby="myExtraLargeModal" aria-hidden="true">
+        aria-labelledby="modalLokasi" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
+
                 <div class="modal-header">
-                    <h4 class="modal-title" id="myExtraLargeModal">Add Board</h4>
-                    <button class="btn-close py-0" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <h4 class="modal-title">Add Lokasi</h4>
+                    <button class="btn-close py-0" type="button" data-bs-dismiss="modal"></button>
                 </div>
+
                 <div class="modal-body dark-modal">
                     <div class="card">
                         <form class="form theme-form dark-inputs">
                             <div class="card-body">
+
                                 <div class="row">
                                     <div class="col">
                                         <div class="mb-3">
-                                            <label class="form-label" for="nama">Nama Board</label>
+                                            <label class="form-label">Nama Lokasi</label>
                                             <input type="text" class="form-control input-air-primary" id="nama"
-                                                placeholder="Masukkan nama board">
+                                                placeholder="Masukkan nama lokasi">
                                         </div>
                                     </div>
                                 </div>
@@ -169,9 +164,8 @@
                                 <div class="row">
                                     <div class="col">
                                         <div class="mb-3">
-                                            <label class="form-label" for="kode">Kode Board</label>
-                                            <input type="text" class="form-control input-air-primary" id="kode"
-                                                placeholder="Masukkan kode board">
+                                            <label class="form-label">Alamat</label>
+                                            <textarea class="form-control input-air-primary" id="alamat" rows="3" placeholder="Masukkan alamat lokasi"></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -179,22 +173,9 @@
                                 <div class="row">
                                     <div class="col">
                                         <div class="mb-3">
-                                            <label class="form-label" for="pin">Pin Board</label>
-                                            <input type="text" class="form-control input-air-primary" id="pin"
-                                                placeholder="Masukkan pin board">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col">
-                                        <div class="mb-3">
-                                            <label class="form-label" for="lokasi">Lokasi Board</label>
-                                            <select class="form-control input-air-primary" id="lokasi">
-                                                @foreach ($lokasi as $l)
-                                                    <option value="{{ $l->id }}">{{ $l->nama }}</option>
-                                                @endforeach
-                                            </select>
+                                            <label class="form-label">Link Google Maps</label>
+                                            <input type="text" class="form-control input-air-primary" id="link_maps"
+                                                placeholder="https://maps.google.com/...">
                                         </div>
                                     </div>
                                 </div>
@@ -203,24 +184,31 @@
                                     <div class="col">
                                         <div class="mb-3">
 
-                                            <label class="form-label">Upload Foto Board</label>
+                                            <label class="form-label">Upload Gambar Lokasi</label>
 
-                                            <input type="file" id="photos" name="photos[]" class="form-control"
-                                                accept="image/*" multiple>
+                                            <input type="file" id="gambar" class="form-control" accept="image/*">
 
-                                            <div class="row mt-3" id="preview-images"></div>
+                                            <div class="mt-3 text-center">
+                                                <img id="preview-gambar" src=""
+                                                    style="max-height:200px; display:none; object-fit:cover;"
+                                                    class="img-fluid rounded shadow-sm">
+                                            </div>
 
                                         </div>
                                     </div>
                                 </div>
+
                             </div>
+
                             <div class="card-footer text-end">
                                 <input class="btn btn-light" type="button" id="cancel-add" value="Cancel">
                                 <button class="btn btn-primary me-3" type="button" id="store">Submit</button>
                             </div>
+
                         </form>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
@@ -230,7 +218,7 @@
             <div class="modal-content">
 
                 <div class="modal-header">
-                    <h5 class="modal-title">Edit Board</h5>
+                    <h5 class="modal-title">Edit Lokasi</h5>
                     <button class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
 
@@ -238,61 +226,42 @@
 
                     <input type="hidden" id="edit_id">
 
-                    <div id="carouselBoard" class="carousel slide mb-4" data-bs-touch="false">
-                        <div class="carousel-inner" id="carousel-images"></div>
+                    <!-- PREVIEW GAMBAR -->
+                    <div class="text-center mb-4">
 
-                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselBoard"
-                            data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon"></span>
-                        </button>
+                        <img id="edit_preview" src="/own_assets/images/no-image.jpg" class="img-fluid rounded shadow-sm"
+                            style="max-height:250px; object-fit:cover">
 
-                        <button class="carousel-control-next" type="button" data-bs-target="#carouselBoard"
-                            data-bs-slide="next">
-                            <span class="carousel-control-next-icon"></span>
-                        </button>
                     </div>
 
-                    <!-- DETAIL BOARD -->
+                    <!-- FORM -->
 
                     <div class="row">
 
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">Nama Board</label>
+                            <label class="form-label">Nama Lokasi</label>
                             <input type="text" id="edit_nama" class="form-control">
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">Kode Board</label>
-                            <input type="text" id="edit_kode" class="form-control">
+                            <label class="form-label">Link Maps</label>
+                            <input type="text" id="edit_link_maps" class="form-control">
                         </div>
 
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label">Pin</label>
-                            <input type="text" id="edit_pin" class="form-control">
-                        </div>
-
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label">Lokasi</label>
-                            <select id="edit_lokasi" class="form-control">
-                                @foreach ($lokasi as $l)
-                                    <option value="{{ $l->id }}">
-                                        {{ $l->nama }}
-                                    </option>
-                                @endforeach
-                            </select>
+                        <div class="col-md-12 mb-3">
+                            <label class="form-label">Alamat</label>
+                            <textarea id="edit_alamat" class="form-control" rows="3"></textarea>
                         </div>
 
                     </div>
 
-                    <!-- TAMBAH FOTO -->
+                    <!-- GANTI GAMBAR -->
 
                     <div class="mt-3">
 
-                        <label class="form-label">Tambah Foto</label>
+                        <label class="form-label">Ganti Gambar</label>
 
-                        <input type="file" id="edit_photos" multiple class="form-control" accept="image/*">
-
-                        <div class="row mt-3" id="preview-edit-images"></div>
+                        <input type="file" id="edit_gambar" class="form-control" accept="image/*">
 
                     </div>
 
@@ -308,7 +277,7 @@
                         Aktifkan
                     </button>
 
-                    <button class="btn btn-primary" id="update-board">
+                    <button class="btn btn-primary" id="update-lokasi">
                         Update
                     </button>
 
@@ -366,7 +335,7 @@
 @endsection
 
 @section('own_script')
-    <script src="{{ asset('own_assets/scripts/board.js') }}"></script>
+    <script src="{{ asset('own_assets/scripts/lokasi.js') }}"></script>
     <script src="{{ asset('dashboard_assets/assets/js/range-slider/ion.rangeSlider.min.js') }}"></script>
     <script src="{{ asset('dashboard_assets/assets/js/range-slider/rangeslider-script.js') }}"></script>
     <script src="{{ asset('dashboard_assets/assets/js/touchspin/vendors.min.js') }}"></script>

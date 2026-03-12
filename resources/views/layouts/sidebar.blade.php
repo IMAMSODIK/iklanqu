@@ -52,9 +52,61 @@
                 </li>
 
                 <li class="sidebar-list">
+                    <a class="sidebar-link sidebar-title" href="/lokasi">
+                        <i class="fa fa-map-marker text-white"></i>
+                        <span>Daftar Lokasi</span>
+                        <div class="according-menu"><i class="fa fa-angle-right"></i></div>
+                    </a>
+                </li>
+
+                <li class="sidebar-list">
                     <a class="sidebar-link sidebar-title" href="/board">
-                        <i class="fa fa-columns text-white"></i>
-                        <span>Board</span>
+                        <i class="fa fa-desktop text-white"></i>
+                        <span>Daftar Board</span>
+                        <div class="according-menu"><i class="fa fa-angle-right"></i></div>
+                    </a>
+                </li>
+
+                <li class="sidebar-main-title">
+                    <div>
+                        <h6 class="">Data</h6>
+                    </div>
+                </li>
+
+                <li class="sidebar-list">
+                    <a class="sidebar-link sidebar-title" href="/client">
+                        <i class="fa fa-users text-white"></i>
+                        <span>Daftar Client</span>
+                        <div class="according-menu"><i class="fa fa-angle-right"></i></div>
+                    </a>
+                </li>
+
+                <li class="sidebar-list">
+                    <a class="sidebar-link sidebar-title" href="/user">
+                        <i class="fa fa-user-secret text-white"></i>
+                        <span>Daftar User</span>
+                        <div class="according-menu"><i class="fa fa-angle-right"></i></div>
+                    </a>
+                </li>
+
+                <li class="sidebar-main-title">
+                    <div>
+                        <h6 class="">Landing Page</h6>
+                    </div>
+                </li>
+
+                <li class="sidebar-list">
+                    <a class="sidebar-link sidebar-title" href="/profile-web">
+                        <i class="fa fa-cog text-white"></i>
+                        <span>Profile Web</span>
+                        <div class="according-menu"><i class="fa fa-angle-right"></i></div>
+                    </a>
+                </li>
+
+                <li class="sidebar-list">
+                    <a class="sidebar-link sidebar-title" href="/touch">
+                        <i class="fa fa-comments text-white"></i>
+                        <span>Get in Touch</span>
                         <div class="according-menu"><i class="fa fa-angle-right"></i></div>
                     </a>
                 </li>

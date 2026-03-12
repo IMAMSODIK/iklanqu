@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('kode')->unique();
             $table->string('pin');
             $table->foreignId('lokasi_id');
+            $table->boolean('status')->default(1);
             $table->timestamps();
         });
     }

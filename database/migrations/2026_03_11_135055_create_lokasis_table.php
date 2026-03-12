@@ -15,8 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('nama');
             $table->text('alamat');
-            $table->string('gambar');
+            $table->string('gambar')->nullable();
             $table->text('link_maps');
+            $table->boolean('status')->default(1);
             $table->timestamps();
         });
     }

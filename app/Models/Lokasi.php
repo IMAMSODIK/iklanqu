@@ -9,4 +9,11 @@ class Lokasi extends Model
 {
     /** @use HasFactory<\Database\Factories\LokasiFactory> */
     use HasFactory;
+
+    protected $guarded = ['id'];
+
+    public function board()
+    {
+        return $this->hasMany(Board::class);
+    }
 }
