@@ -21,7 +21,11 @@
                     @foreach ($lokasi as $l)
                         <div class="card-item">
                             <div class="item-icon">
-                                <img src="{{asset('storage') . '/' . $l->gambar}}" alt="{{ $l->nama }}">
+                                @if ($l->gambar)
+                                    <img src="{{asset('storage') . '/' . $l->gambar}}" alt="{{ $l->nama }}" width="100px">
+                                @else
+                                    🏢
+                                @endif
                             </div>
                             <div class="item-info">
                                 <h4>{{ $l->nama }}</h4>
