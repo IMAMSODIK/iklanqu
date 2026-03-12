@@ -21,7 +21,7 @@ class DashboardController extends Controller
                 'status' => $user->status,
                 'tutorial' => $user->tutorial
             ];
-        
+
             $data = [
                 'pageTitle' => 'Dashboard',
                 'user' => $user_data
@@ -109,5 +109,18 @@ class DashboardController extends Controller
         } catch (\Exception $e) {
             return back()->with('error', 'Terjadi kesalahan saat membuka halaman dashboard.');
         }
+    }
+
+    public function tutorialSelesai()
+    {
+        $user = Auth::user();
+
+        $user->update([
+            'tutorial' => 1
+        ]);
+
+        return response()->json([
+            'status' => 'success'
+        ]);
     }
 }

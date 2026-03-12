@@ -29,6 +29,7 @@ Route::get('/dashboard/lokasi', [DashboardController::class, 'lokasi'])->name('l
 Route::get('/dashboard/riwayat', [DashboardController::class, 'riwayat'])->name('riwayat');
 Route::get('/dashboard/pantau', [DashboardController::class, 'pantau'])->name('pantau');
 Route::get('/dashboard/akun', [DashboardController::class, 'akun'])->name('akun');
+Route::post('/dashboard/tutorial/selesai', [DashboardController::class, 'tutorialSelesai'])->name('akun');
 
 Route::get('/board', [BoardController::class, 'index']);
 Route::post('/board/store', [BoardController::class, 'store']);

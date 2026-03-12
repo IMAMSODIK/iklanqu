@@ -2,6 +2,7 @@
 <meta name="viewport"
     content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>Aplikasi Iklan - Full Screen Mobile</title>
+<meta name="csrf-token" content="{{ csrf_token() }}">
 <style>
     * {
         margin: 0;

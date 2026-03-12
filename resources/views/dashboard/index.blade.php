@@ -135,7 +135,6 @@
 </head>
 
 <body>
-    {{dd($user)}}
     <input type="hidden" id="page" value="buat">
     <div class="app-container">
         @include('dashboard_layouts.header')
@@ -351,7 +350,21 @@
             document.querySelectorAll(".tour-highlight")
                 .forEach(e => e.classList.remove("tour-highlight"));
 
-            showPhonePopup(); // tampilkan popup setelah tutorial
+            $.ajax({
+                url: "/dashboard/tutorial/selesai",
+                type: "POST",
+                data: {
+                    _token: $('meta[name="csrf-token"]').attr("content")
+                },
+                success: function(res) {
+                    console.log("Tutorial selesai");
+                },
+                error: function() {
+                    console.log("Gagal update tutorial");
+                }
+            });
+
+            showPhonePopup();
         }
 
         function showPhonePopup() {
@@ -389,10 +402,14 @@
             alert("Nomor berhasil disimpan");
         }
 
+        const userTutorial = {{ $user->tutorial }};
         window.addEventListener("load", function() {
-            setTimeout(() => {
-                startTour();
-            }, 800);
+            if (userTutorial === 0) {
+                setTimeout(() => {
+                    startTour();
+                }, 800);
+            }
+
         });
     </script>
 </body>
