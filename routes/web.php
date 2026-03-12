@@ -25,6 +25,7 @@ Route::middleware(['guest'])->group(function () {
 
 // admin
 Route::get('/dashboard', [DashboardController::class, 'index']);
+Route::get('/dashboard/lokasi', [DashboardController::class, 'lokasi']);
 
 Route::get('/board', [BoardController::class, 'index']);
 Route::post('/board/store', [BoardController::class, 'store']);

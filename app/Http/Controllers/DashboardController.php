@@ -23,4 +23,21 @@ class DashboardController extends Controller
             return back()->with('error', 'Terjadi kesalahan saat membuka halaman dashboard.');
         }
     }
+
+    public function lokasi()
+    {
+        try {
+            $data = [
+                'pageTitle' => 'Daftar Lokasi'
+            ];
+
+            if(in_array(Auth::user()->role, ['admin', 'verifikator'])){
+                return view('dashboard.index_admin', $data);
+            }else{
+                return view('dashboard.lokasi', $data);
+            }
+        } catch (\Exception $e) {
+            return back()->with('error', 'Terjadi kesalahan saat membuka halaman dashboard.');
+        }
+    }
 }

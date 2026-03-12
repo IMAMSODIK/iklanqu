@@ -1,5 +1,5 @@
 <div class="bottom-nav">
-    <a class="nav-item" data-page="lokasi">
+    <a class="nav-item" href="/dashboard/lokasi" data-page="lokasi">
         <span class="nav-icon">📍</span>
         <span>Lokasi</span>
     </a>
