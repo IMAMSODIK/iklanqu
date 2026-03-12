@@ -539,6 +539,10 @@
             background: #f1f5f9;
             color: #2563eb;
         }
+
+        .nav-item.middle-item .nav-icon {
+            margin-top: -10px;
+        }
     }
 
     /* Large Desktop */
@@ -549,6 +553,10 @@
 
         .page {
             max-width: 1000px;
+        }
+
+        .nav-item.middle-item .nav-icon {
+            margin-top: -10px;
         }
     }
 
