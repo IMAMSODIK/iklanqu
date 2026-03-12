@@ -43,7 +43,7 @@
                             <div class="item-info">
                                 <h4>{{ $l->nama }}</h4>
                                 <p>
-                                    {{ $l->alamat }}
+                                    {{ $l->alamat }} <br>
                                     <span class="badge-iklan">0 iklan aktif</span>
                                 </p>
                             </div>
