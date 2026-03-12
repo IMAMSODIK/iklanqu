@@ -115,12 +115,27 @@
             align-items: center;
             justify-content: center;
             z-index: 10000;
+            padding: 20px;
+        }
+
+        .image-preview.show {
+            display: flex;
         }
 
         .image-preview img {
             max-width: 90%;
             max-height: 90%;
-            border-radius: 10px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, .5);
+        }
+
+        .image-preview img {
+            transform: scale(.9);
+            transition: .25s;
+        }
+
+        .image-preview.show img {
+            transform: scale(1);
         }
     </style>
 </head>
@@ -255,12 +270,14 @@
 
                 $("#previewImage").attr("src", src);
 
-                $("#imagePreview").fadeIn();
+                $("#imagePreview").addClass("show");
 
             });
 
             $("#imagePreview").click(function() {
-                $(this).fadeOut();
+
+                $(this).removeClass("show");
+
             });
         </script>
 </body>
