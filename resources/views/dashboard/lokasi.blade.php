@@ -20,14 +20,14 @@
                 <div class="card">
                     @foreach ($lokasi as $l)
                         <div class="card-item">
-                            @if ($l->gambar)
-                                <img src="{{ asset('storage') . '/' . $l->gambar }}" alt="{{ $l->nama }}"
-                                    width="50" height="50" style="border-radius:50%; object-fit:cover;">
-                            @else
-                                <div class="item-icon">
+                            <div class="item-icon">
+                                @if ($l->gambar)
+                                    <img src="{{ asset('storage') . '/' . $l->gambar }}" alt="{{ $l->nama }}"
+                                        width="50" height="50" style="border-radius:50%; object-fit:cover;">
+                                @else
                                     🏢
-                                </div>
-                            @endif
+                                @endif
+                            </div>
                             <div class="item-info">
                                 <h4>{{ $l->nama }}</h4>
                                 <p>{{ $l->alamat }} • 0 iklan aktif</p>
