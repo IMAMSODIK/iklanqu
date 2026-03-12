@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Lokasi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -41,11 +42,13 @@ class DashboardController extends Controller
 
     public function lokasi()
     {
-        return view('dashboard.lokasi');
         try {
             $data = [
-                'pageTitle' => 'Daftar Lokasi'
+                'pageTitle' => 'Daftar Lokasi',
+                'lokasi' => Lokasi::all()
             ];
+
+            return view('dashboard.lokasi', $data);
 
             if (in_array(Auth::user()->role, ['admin', 'verifikator'])) {
                 return view('dashboard.index_admin', $data);
