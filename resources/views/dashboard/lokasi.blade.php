@@ -100,7 +100,7 @@
                         <div class="card-item lokasi-card" data-nama="{{ $l->nama }}"
                             data-alamat="{{ $l->alamat }}"
                             data-gambar="{{ $l->gambar ? asset('storage/' . $l->gambar) : '' }}"
-                            data-maps="{{ $l->link_maps }}" data-boards='@json($l->boards)'>
+                            data-maps="{{ $l->link_maps }}" data-boards='@json($l->board)'>
 
                             <div class="item-icon">
                                 @if ($l->gambar)

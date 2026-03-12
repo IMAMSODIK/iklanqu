@@ -45,7 +45,7 @@ class DashboardController extends Controller
         try {
             $data = [
                 'pageTitle' => 'Daftar Lokasi',
-                $lokasi = Lokasi::with('boards.photos')->get()
+                $lokasi = Lokasi::with('board.photos')->get()
             ];
 
             return view('dashboard.lokasi', $data);
