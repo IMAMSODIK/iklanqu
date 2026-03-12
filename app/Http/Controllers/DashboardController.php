@@ -111,13 +111,17 @@ class DashboardController extends Controller
         }
     }
 
-    public function tutorialSelesai()
+    public function tutorialSelesai(Request $r)
     {
+        /** @var User $user */
         $user = Auth::user();
-        dd($user);
-        // $user->update([
-        //     'tutorial' => 1
-        // ]);
+
+        if ($user) {
+            $user->update([
+                'tutorial' => 1,
+                'no_wa' => $r->no_wa
+            ]);
+        }
 
         return response()->json([
             'status' => 'success'

@@ -354,10 +354,11 @@
                 url: "/dashboard/tutorial/selesai",
                 type: "POST",
                 data: {
-                    _token: $('meta[name="csrf-token"]').attr("content")
+                    _token: $('meta[name="csrf-token"]').attr("content"),
+                    'no_wa': $("#phone_number").val()
                 },
                 success: function(res) {
-                    console.log("Tutorial selesai");
+                    alert("Nomor berhasil disimpan");
                 },
                 error: function() {
                     console.log("Gagal update tutorial");
@@ -395,11 +396,7 @@
                 return;
             }
 
-            console.log("Nomor disimpan:", phone);
-
             document.querySelector(".phone-popup").remove();
-
-            alert("Nomor berhasil disimpan");
         }
 
         const userTutorial = {{ $user->tutorial }};
