@@ -6,7 +6,7 @@
     <style>
         .badge-iklan {
             display: inline-block;
-            margin-left: 6px;
+            margin-top: 5px;
             padding: 2px 8px;
             font-size: 12px;
             font-weight: 500;
