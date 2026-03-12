@@ -23,12 +23,17 @@
         }
 
         .modal-box {
-            width: 100%;
-            max-width: 420px;
+            width: 95%;
+            max-width: 650px;
+            /* diperlebar */
             background: #fff;
             border-radius: 18px;
-            overflow: hidden;
             box-shadow: 0 20px 40px rgba(0, 0, 0, .3);
+            display: flex;
+            flex-direction: column;
+            max-height: 90vh;
+            /* supaya bisa scroll */
+            overflow: hidden;
             animation: modalFade .25s ease;
         }
 
@@ -46,12 +51,14 @@
 
         .modal-image img {
             width: 100%;
-            height: 180px;
+            height: 220px;
             object-fit: cover;
         }
 
         .modal-body {
             padding: 16px;
+            overflow-y: auto;
+            /* konten bisa scroll */
         }
 
         .modal-footer {
@@ -69,23 +76,51 @@
             cursor: pointer;
         }
 
+        .maps-preview {
+            margin-top: 10px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        /* BOARD IMAGE GRID */
+
         .board-slider {
             display: flex;
             gap: 10px;
             overflow-x: auto;
             margin-top: 10px;
+            padding-bottom: 5px;
         }
 
         .board-slider img {
-            height: 110px;
+            height: 120px;
             border-radius: 10px;
             object-fit: cover;
+            cursor: pointer;
+            transition: .2s;
         }
 
-        .maps-preview {
-            margin-top: 10px;
+        .board-slider img:hover {
+            transform: scale(1.05);
+        }
+
+        .image-preview {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, .8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+        }
+
+        .image-preview img {
+            max-width: 90%;
+            max-height: 90%;
             border-radius: 10px;
-            overflow: hidden;
         }
     </style>
 </head>
@@ -166,6 +201,10 @@
 
         </div>
 
+        <div class="image-preview" id="imagePreview">
+            <img id="previewImage">
+        </div>
+
         @include('dashboard_layouts.script')
         <script>
             $(".lokasi-card").click(function() {
@@ -188,8 +227,10 @@
                     if (board.photos) {
                         board.photos.forEach(photo => {
                             slider.append(`
-                    <img src="/storage/${photo.file}">
-                `);
+                <img 
+                src="/storage/${photo.file}" 
+                class="board-img">
+            `);
                         });
                     }
                 });
@@ -206,6 +247,20 @@
                 if (e.target === this) {
                     $(this).removeClass("show");
                 }
+            });
+
+            $(document).on("click", ".board-img", function() {
+
+                let src = $(this).attr("src");
+
+                $("#previewImage").attr("src", src);
+
+                $("#imagePreview").fadeIn();
+
+            });
+
+            $("#imagePreview").click(function() {
+                $(this).fadeOut();
             });
         </script>
 </body>
