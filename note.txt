@@ -29,3 +29,5 @@ buatkan yang aktif adalah halaman tambah
 cek, apakah user pertama kali atau tidak, jika ya munuclkan pop up untuk meminta nomor handphone dan next untuk lanjut ke tutorial
 tampilkan lokasi
 flow tambah iklan dan pembayaran
+riwayat
+akun

@@ -23,6 +23,9 @@ Route::middleware(['guest'])->group(function () {
     Route::get('/login', [AuthController::class, 'login'])->name('login');
 });
 
+// admin
+Route::get('/dashboard', [DashboardController::class, 'index']);
+
 Route::get('/board', [BoardController::class, 'index']);
 Route::post('/board/store', [BoardController::class, 'store']);
 Route::get('/board/detail', [BoardController::class, 'detail']);
@@ -62,9 +65,10 @@ Route::get('/get-in-touch', [GetInTouchController::class, 'index']);
 Route::post('/get-in-touch/store', [GetInTouchController::class, 'store']);
 Route::post('/get-in-touch/delete', [GetInTouchController::class, 'delete']);
 
-Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index']);
+Route::get('/logout',[AuthController::class,'logout'])->name('logout');
 
+// Route::middleware(['auth'])->group(function () {
+    
 
-    Route::get('/logout',[AuthController::class,'logout'])->name('logout');
-});
+    
+// });
