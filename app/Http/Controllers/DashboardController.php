@@ -9,6 +9,7 @@ class DashboardController extends Controller
 {
     public function index()
     {
+        return view('dashboard.index');
         try {
             $data = [
                 'pageTitle' => 'Dashboard'
@@ -26,6 +27,7 @@ class DashboardController extends Controller
 
     public function lokasi()
     {
+        return view('dashboard.lokasi');
         try {
             $data = [
                 'pageTitle' => 'Daftar Lokasi'
@@ -35,6 +37,60 @@ class DashboardController extends Controller
                 return view('dashboard.index_admin', $data);
             }else{
                 return view('dashboard.lokasi', $data);
+            }
+        } catch (\Exception $e) {
+            return back()->with('error', 'Terjadi kesalahan saat membuka halaman dashboard.');
+        }
+    }
+
+    public function riwayat()
+    {
+        return view('dashboard.riwayat');
+        try {
+            $data = [
+                'pageTitle' => 'Daftar Riwayat'
+            ];
+
+            if(in_array(Auth::user()->role, ['admin', 'verifikator'])){
+                return view('dashboard.index_admin', $data);
+            }else{
+                return view('dashboard.riwayat', $data);
+            }
+        } catch (\Exception $e) {
+            return back()->with('error', 'Terjadi kesalahan saat membuka halaman dashboard.');
+        }
+    }
+
+    public function pantau()
+    {
+        return view('dashboard.pantau');
+        try {
+            $data = [
+                'pageTitle' => 'Daftar Pantau'
+            ];
+
+            if(in_array(Auth::user()->role, ['admin', 'verifikator'])){
+                return view('dashboard.index_admin', $data);
+            }else{
+                return view('dashboard.pantau', $data);
+            }
+        } catch (\Exception $e) {
+            return back()->with('error', 'Terjadi kesalahan saat membuka halaman dashboard.');
+        }
+    }
+
+    public function akun()
+    {
+        return view('dashboard.akun');
+        try {
+            $data = [
+                'pageTitle' => 'Daftar Akun'
+            ];
+
+            if(in_array(Auth::user()->role, ['admin', 'verifikator'])){
+                return view('dashboard.index_admin', $data);
+            }else{
+                return view('dashboard.akun', $data);
             }
         } catch (\Exception $e) {
             return back()->with('error', 'Terjadi kesalahan saat membuka halaman dashboard.');

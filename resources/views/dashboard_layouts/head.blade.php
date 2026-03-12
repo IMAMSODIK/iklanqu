@@ -321,13 +321,8 @@
         line-height: 1;
         display: block;
         color: white;
+        margin-top: -10px; 
     }
-
-    .nav-item.middle-item .nav-text {
-        display: none;
-        /* Sembunyikan teks "Buat" di tombol tengah */
-    }
-
 
     .nav-item.middle-item .nav-icon {
         color: white !important;
@@ -567,5 +562,22 @@
             padding-left: max(16px, env(safe-area-inset-left));
             padding-right: max(16px, env(safe-area-inset-right));
         }
+    }
+</style>
+
+<style>
+    .bottom-nav a {
+        text-decoration: none;
+    }
+
+    .bottom-nav a,
+    .bottom-nav a:hover,
+    .bottom-nav a:focus {
+        text-decoration: none;
+    }
+
+    .bottom-nav .nav-item.active {
+        color: #0d6efd;
+        font-weight: 600;
     }
 </style>

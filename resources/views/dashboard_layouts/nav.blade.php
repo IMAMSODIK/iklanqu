@@ -1,25 +1,25 @@
 <div class="bottom-nav">
-    <a class="nav-item" href="/dashboard/lokasi" data-page="lokasi">
+    <a class="nav-item {{ request()->routeIs('lokasi') ? 'active' : '' }}" href="/dashboard/lokasi">
         <span class="nav-icon">📍</span>
         <span>Lokasi</span>
     </a>
-    <button class="nav-item" data-page="riwayat">
+
+    <a class="nav-item {{ request()->routeIs('riwayat') ? 'active' : '' }}" href="/dashboard/riwayat">
         <span class="nav-icon">📋</span>
         <span>Riwayat</span>
-    </button>
+    </a>
 
-    <!-- Tombol tengah - BUAT IKLAN (aktif default) -->
-    <button class="nav-item middle-item active" data-page="buat">
+    <a class="nav-item middle-item {{ request()->routeIs('buat') ? 'active' : '' }}" href="/dashboard">
         <span class="nav-icon">+</span>
-        <span class="nav-text">Buat</span>
-    </button>
+    </a>
 
-    <button class="nav-item" data-page="pantau">
+    <a class="nav-item {{ request()->routeIs('pantau') ? 'active' : '' }}" href="/dashboard/pantau">
         <span class="nav-icon">📊</span>
         <span>Pantau</span>
-    </button>
-    <button class="nav-item" data-page="akun">
+    </a>
+
+    <a class="nav-item {{ request()->routeIs('akun') ? 'active' : '' }}" href="/dashboard/akun">
         <span class="nav-icon">👤</span>
         <span>Akun</span>
-    </button>
+    </a>
 </div>

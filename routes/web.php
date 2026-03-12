@@ -24,8 +24,11 @@ Route::middleware(['guest'])->group(function () {
 });
 
 // admin
-Route::get('/dashboard', [DashboardController::class, 'index']);
-Route::get('/dashboard/lokasi', [DashboardController::class, 'lokasi']);
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('buat');
+Route::get('/dashboard/lokasi', [DashboardController::class, 'lokasi'])->name('lokasi');
+Route::get('/dashboard/riwayat', [DashboardController::class, 'riwayat'])->name('riwayat');
+Route::get('/dashboard/pantau', [DashboardController::class, 'pantau'])->name('pantau');
+Route::get('/dashboard/akun', [DashboardController::class, 'akun'])->name('akun');
 
 Route::get('/board', [BoardController::class, 'index']);
 Route::post('/board/store', [BoardController::class, 'store']);

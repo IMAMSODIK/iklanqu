@@ -11,42 +11,40 @@
 
         <div class="content-area" id="content-area">
             <!-- Halaman Daftar Lokasi -->
-            <div class="page" id="page-lokasi">
+            <div class="page" id="page-pantau">
                 <div class="page-header">
-                    <div class="page-title">Daftar Lokasi</div>
-                    <div class="page-subtitle">Kelola lokasi pemasangan iklan</div>
+                    <div class="page-title">Pantau Iklan</div>
+                    <div class="page-subtitle">Kinerja iklan real-time</div>
                 </div>
                 <div class="card">
                     <div class="card-item">
-                        <div class="item-icon">🏢</div>
+                        <div class="item-icon">📊</div>
                         <div class="item-info">
-                            <h4>Mall Central Park</h4>
-                            <p>Jakarta Barat • 5 iklan aktif</p>
+                            <h4>Kampanye Ramadhan</h4>
+                            <p>Impresi: 45.200 • Klik: 2.340</p>
                         </div>
+                        <span style="color: #2563eb; font-weight: 600;">5.2%</span>
                     </div>
                     <div class="card-item">
-                        <div class="item-icon">🏬</div>
+                        <div class="item-icon">📈</div>
                         <div class="item-info">
-                            <h4>Stasiun MRT Bundaran HI</h4>
-                            <p>Jakarta Pusat • 3 iklan aktif</p>
+                            <h4>Promo Akhir Pekan</h4>
+                            <p>Impresi: 28.900 • Klik: 1.456</p>
                         </div>
+                        <span style="color: #2563eb; font-weight: 600;">5.0%</span>
                     </div>
                     <div class="card-item">
-                        <div class="item-icon">🏪</div>
+                        <div class="item-icon">🔥</div>
                         <div class="item-info">
-                            <h4>Terminal Pulo Gebang</h4>
-                            <p>Jakarta Timur • 2 iklan aktif</p>
+                            <h4>Produk Terbaru</h4>
+                            <p>Impresi: 67.800 • Klik: 4.120</p>
                         </div>
-                    </div>
-                    <div class="card-item">
-                        <div class="item-icon">🛍️</div>
-                        <div class="item-info">
-                            <h4>Bandara Soekarno-Hatta</h4>
-                            <p>Tangerang • 4 iklan aktif</p>
-                        </div>
+                        <span style="color: #10b981; font-weight: 600;">6.1%</span>
                     </div>
                 </div>
-                <div style="color: #2563eb; font-weight: 500; padding: 8px 0;">+ Tambah lokasi baru</div>
+                <div class="card" style="background: white;">
+                    <p style="font-weight: 600;">Total pengeluaran bulan ini: Rp 2.450.000</p>
+                </div>
             </div>
         </div>
 
@@ -60,8 +58,9 @@
 
             // Set default ke halaman buat iklan
             pages.forEach(page => page.classList.remove('active-page'));
-            document.getElementById('page-lokasi').classList.add('active-page');
+            document.getElementById('page-pantau').classList.add('active-page');
 
+            // navItems.forEach(item => item.classList.remove('active'));
             document.querySelector('.nav-item.middle-item').classList.add('active');
 
             // Fungsi switch halaman
@@ -69,9 +68,6 @@
                 pages.forEach(page => page.classList.remove('active-page'));
                 const targetPage = document.getElementById('page-' + pageId);
                 if (targetPage) targetPage.classList.add('active-page');
-
-                const activeNavItem = document.querySelector(`.nav-item[data-page="${pageId}"]`);
-                if (activeNavItem) activeNavItem.classList.add('active');
             }
 
             // Fix untuk iOS viewport height

@@ -11,42 +11,37 @@
 
         <div class="content-area" id="content-area">
             <!-- Halaman Daftar Lokasi -->
-            <div class="page" id="page-lokasi">
+            <div class="page" id="page-riwayat">
                 <div class="page-header">
-                    <div class="page-title">Daftar Lokasi</div>
-                    <div class="page-subtitle">Kelola lokasi pemasangan iklan</div>
+                    <div class="page-title">Riwayat Iklan</div>
+                    <div class="page-subtitle">Iklan yang sudah tayang</div>
                 </div>
                 <div class="card">
                     <div class="card-item">
-                        <div class="item-icon">🏢</div>
+                        <div class="item-icon">📺</div>
                         <div class="item-info">
-                            <h4>Mall Central Park</h4>
-                            <p>Jakarta Barat • 5 iklan aktif</p>
+                            <h4>Promo Produk Susu</h4>
+                            <p>12-18 Mar 2025 • 12.500 tayangan</p>
                         </div>
+                        <span class="badge">Selesai</span>
                     </div>
                     <div class="card-item">
-                        <div class="item-icon">🏬</div>
+                        <div class="item-icon">📱</div>
                         <div class="item-info">
-                            <h4>Stasiun MRT Bundaran HI</h4>
-                            <p>Jakarta Pusat • 3 iklan aktif</p>
+                            <h4>Aplikasi Fintech</h4>
+                            <p>1-7 Mar 2025 • 8.230 tayangan</p>
                         </div>
+                        <span class="badge">Selesai</span>
                     </div>
                     <div class="card-item">
-                        <div class="item-icon">🏪</div>
+                        <div class="item-icon">🎮</div>
                         <div class="item-info">
-                            <h4>Terminal Pulo Gebang</h4>
-                            <p>Jakarta Timur • 2 iklan aktif</p>
+                            <h4>Game Online</h4>
+                            <p>20-28 Feb 2025 • 15.100 tayangan</p>
                         </div>
-                    </div>
-                    <div class="card-item">
-                        <div class="item-icon">🛍️</div>
-                        <div class="item-info">
-                            <h4>Bandara Soekarno-Hatta</h4>
-                            <p>Tangerang • 4 iklan aktif</p>
-                        </div>
+                        <span class="badge">Selesai</span>
                     </div>
                 </div>
-                <div style="color: #2563eb; font-weight: 500; padding: 8px 0;">+ Tambah lokasi baru</div>
             </div>
         </div>
 
@@ -60,7 +55,7 @@
 
             // Set default ke halaman buat iklan
             pages.forEach(page => page.classList.remove('active-page'));
-            document.getElementById('page-lokasi').classList.add('active-page');
+            document.getElementById('page-riwayat').classList.add('active-page');
 
             document.querySelector('.nav-item.middle-item').classList.add('active');
 
