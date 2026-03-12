@@ -96,7 +96,7 @@
                 </li>
 
                 <li class="sidebar-list">
-                    <a class="sidebar-link sidebar-title" href="/profile-web">
+                    <a class="sidebar-link sidebar-title" href="/profile">
                         <i class="fa fa-cog text-white"></i>
                         <span>Profile Web</span>
                         <div class="according-menu"><i class="fa fa-angle-right"></i></div>

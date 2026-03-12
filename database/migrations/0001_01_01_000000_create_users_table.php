@@ -20,6 +20,7 @@ return new class extends Migration
             $table->enum('role', ['admin', 'user', 'verifikator'])->default('user');
             $table->string('google_id')->nullable();
             $table->string('foto')->nullable();
+            $table->boolean('status')->default(0);
             $table->rememberToken();
             $table->timestamps();
         });

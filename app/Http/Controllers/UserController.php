@@ -11,235 +11,128 @@ class UserController extends Controller
     {
         try {
             $data = [
-                'pageTitle' => "Client",
-                'data'      => User::where('role', 'user')
+                'pageTitle' => "User",
+                'users'     => User::where('role', 'user')->where('status', 1)->orderBy('id', 'desc')->get(),
+                'data'      => User::whereIn('role', ['admin', 'verifikator'])
+                    ->where('status', 1)
                     ->orderBy('id', 'desc')
                     ->get()
             ];
 
-            return view('client.index', $data);
+            return view('user.index', $data);
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Terjadi kesalahan saat memuat data.');
+        }
+    }
+
+    public function delete(Request $r)
+    {
+        try {
+
+            $r->validate([
+                'id' => 'required|exists:users,id'
+            ]);
+
+            $user = User::findOrFail($r->id);
+
+            $user->status = 0;
+            $user->save();
+
+            return response()->json([
+                'status' => true,
+                'message' => 'User berhasil dinonaktifkan'
+            ]);
+        } catch (\Throwable $e) {
+
+            return response()->json([
+                'status' => false,
+                'message' => 'Gagal menonaktifkan user',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function update(Request $r)
+    {
+        try {
+
+            $r->validate([
+                'id' => 'required|exists:users,id',
+                'role' => 'required'
+            ]);
+
+            $user = User::findOrFail($r->id);
+
+            $user->role = $r->role;
+            $user->save();
+
+            return response()->json([
+                'status' => true,
+                'message' => 'User sekarang menjadi ' . ($r->role == 'verifikator' ? 'Verifikator' : 'User')
+            ]);
+        } catch (\Throwable $e) {
+
+            return response()->json([
+                'status' => false,
+                'message' => 'Gagal mengubah user',
+                'error' => $e->getMessage()
+            ], 500);
         }
     }
 
     // public function store(Request $request)
     // {
     //     try {
-
     //         $request->validate([
-    //             'nama' => 'required|string|max:255',
-    //             'alamat' => 'required|string',
-    //             'link_maps' => 'nullable|string|max:500',
-    //             'gambar' => 'required|image|mimes:jpg,jpeg,png|max:2048'
+    //             'no_kamar' => 'required|unique:kamars,no_kamar'
     //         ]);
 
-    //         $path = null;
-
-    //         if ($request->hasFile('gambar')) {
-    //             $path = $request->file('gambar')->store('lokasi', 'public');
-    //         }
-
-    //         $lokasi = Lokasi::create([
-    //             'nama' => $request->nama,
-    //             'alamat' => $request->alamat,
-    //             'link_maps' => $request->link_maps,
-    //             'gambar' => $path
+    //         Kamar::create([
+    //             'no_kamar' => $request->no_kamar
     //         ]);
 
     //         return response()->json([
     //             'status' => true,
-    //             'message' => 'Lokasi berhasil ditambahkan',
-    //             'data' => $lokasi
-    //         ], 200);
-    //     } catch (\Illuminate\Validation\ValidationException $e) {
-
-    //         return response()->json([
-    //             'status' => false,
-    //             'message' => 'Validasi gagal',
-    //             'errors' => $e->errors()
-    //         ], 422);
+    //             'message' => 'Kamar berhasil ditambahkan'
+    //         ]);
     //     } catch (\Exception $e) {
 
     //         return response()->json([
     //             'status' => false,
-    //             'message' => 'Terjadi kesalahan pada server',
-    //             'error' => $e->getMessage()
+    //             'message' => 'Terjadi kesalahan: ' . $e->getMessage()
     //         ], 500);
     //     }
     // }
 
-    // public function detail(Request $r)
+    // public function edit(Request $request)
     // {
+    //     $id = $request->id;
+
     //     try {
-
-    //         $validator = Validator::make($r->all(), [
-    //             'id' => 'required|exists:lokasis,id'
-    //         ]);
-
-    //         if ($validator->fails()) {
-    //             return response()->json([
-    //                 'status'  => false,
-    //                 'message' => 'Validation error',
-    //                 'errors'  => $validator->errors()
-    //             ], 422);
-    //         }
-
-    //         $lokasi = Lokasi::with('board')->find($r->id);
-
-    //         if (!$lokasi) {
-    //             return response()->json([
-    //                 'status'  => false,
-    //                 'message' => 'Lokasi not found'
-    //             ], 404);
-    //         }
-
-    //         return response()->json([
-    //             'status'  => true,
-    //             'message' => 'Lokasi data retrieved successfully.',
-    //             'data'    => $lokasi
-    //         ], 200);
+    //         $kamar = Kamar::findOrFail($id);
+    //         return response()->json($kamar);
     //     } catch (\Exception $e) {
-
     //         return response()->json([
-    //             'status'  => false,
-    //             'message' => 'Something went wrong.',
-    //             'error'   => $e->getMessage()
-    //         ], 500);
+    //             'message' => 'Data tidak ditemukan'
+    //         ], 404);
     //     }
     // }
 
-    // public function update(Request $request)
+    // public function delete(Request $request)
     // {
+    //     $id = $request->id;
+
     //     try {
-
-    //         $request->validate([
-    //             'id' => 'required|exists:lokasis,id',
-    //             'nama' => 'required|string|max:255',
-    //             'alamat' => 'required|string',
-    //             'link_maps' => 'nullable|string|max:500',
-    //             'gambar' => 'nullable|image|mimes:jpg,jpeg,png|max:2048'
-    //         ]);
-
-    //         $lokasi = Lokasi::findOrFail($request->id);
-
-    //         if ($request->hasFile('gambar')) {
-
-    //             if ($lokasi->gambar && Storage::disk('public')->exists($lokasi->gambar)) {
-
-    //                 Storage::disk('public')->delete($lokasi->gambar);
-    //             }
-
-    //             $path = $request->file('gambar')
-    //                 ->store('lokasi', 'public');
-
-    //             $lokasi->gambar = $path;
-    //         }
-
-    //         $lokasi->nama = $request->nama;
-    //         $lokasi->alamat = $request->alamat;
-    //         $lokasi->link_maps = $request->link_maps;
-    //         $lokasi->save();
-
+    //         $kamar = Kamar::findOrFail($id);
+    //         $kamar->delete();
+            
     //         return response()->json([
-    //             'status' => true,
-    //             'message' => 'Lokasi berhasil diupdate',
-    //             'data' => $lokasi
+    //             'status' => true
     //         ]);
-    //     } catch (\Throwable $e) {
-
+    //     } catch (\Exception $e) {
     //         return response()->json([
-    //             'status' => false,
-    //             'message' => 'Update lokasi gagal',
-    //             'error' => $e->getMessage()
-    //         ], 500);
-    //     }
-    // }
-
-    // public function delete(Request $r)
-    // {
-    //     try {
-
-    //         $r->validate([
-    //             'id' => 'required|exists:lokasis,id'
-    //         ]);
-
-    //         $lokasi = Lokasi::findOrFail($r->id);
-
-    //         $lokasi->status = 0;
-    //         $lokasi->save();
-
-    //         return response()->json([
-    //             'status' => true,
-    //             'message' => 'Lokasi berhasil dinonaktifkan'
-    //         ]);
-    //     } catch (\Throwable $e) {
-
-    //         return response()->json([
-    //             'status' => false,
-    //             'message' => 'Gagal menonaktifkan lokasi',
-    //             'error' => $e->getMessage()
-    //         ], 500);
-    //     }
-    // }
-
-    // public function activate(Request $request)
-    // {
-    //     try {
-
-    //         $request->validate([
-    //             'id' => 'required|exists:lokasis,id'
-    //         ]);
-
-    //         $lokasi = Lokasi::findOrFail($request->id);
-
-    //         $lokasi->status = 1;
-    //         $lokasi->save();
-
-    //         return response()->json([
-    //             'status' => true,
-    //             'message' => 'Lokasi berhasil diaktifkan'
-    //         ]);
-    //     } catch (\Throwable $e) {
-
-    //         return response()->json([
-    //             'status' => false,
-    //             'message' => 'Gagal mengaktifkan lokasi',
-    //             'error' => $e->getMessage()
-    //         ], 500);
-    //     }
-    // }
-
-    // public function search(Request $request)
-    // {
-    //     try {
-
-    //         $q = $request->q;
-
-    //         $data = Lokasi::where('nama', 'like', "%$q%")
-    //             ->orWhere('alamat', 'like', "%$q%")
-    //             ->orderBy('id', 'desc')
-    //             ->get();
-
-    //         if ($data->isEmpty()) {
-
-    //             return response()->json([
-    //                 'status' => false,
-    //                 'message' => 'Lokasi tidak ditemukan'
-    //             ]);
-    //         }
-
-    //         return response()->json([
-    //             'status' => true,
-    //             'data' => $data
-    //         ]);
-    //     } catch (\Throwable $e) {
-
-    //         return response()->json([
-    //             'status' => false,
-    //             'message' => 'Search gagal',
-    //             'error' => $e->getMessage()
-    //         ]);
+    //             'message' => 'Data tidak ditemukan'
+    //         ], 404);
     //     }
     // }
 }

@@ -10,6 +10,11 @@
                 <div class="col-4">
                     <h4>{{ $pageTitle }}</h4>
                 </div>
+                <div class="col-8 d-flex justify-content-end">
+                    <button class="btn btn-primary" id="tambah-data" style="margin-right: 5px">
+                        <i class="fa fa-plus-circle me-2"></i> Add Data
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -30,8 +35,8 @@
                                     <thead class="text-center">
                                         <tr>
                                             <th style="width: 60px;">No</th>
-                                            <th class="text-center">Client</th>
-                                            <th class="text-center">Iklan</th>
+                                            <th class="text-center">User</th>
+                                            <th class="text-center">Role</th>
                                             <th style="width: 150px;">Aksi</th>
                                         </tr>
                                     </thead>
@@ -53,13 +58,26 @@
                                                     </div>
                                                 </td>
                                                 <td class="text-center align-middle">
-                                                    <button class="btn btn-sm btn-danger detail-iklan"
-                                                            data-id="{{ $d->id }}">Belum Ada</button>
+                                                    @if ($d->role == 'admin')
+                                                        <span class="badge badge-primary">Admin</span>
+                                                    @else
+                                                        <span class="badge badge-success">Verifikator</span>
+                                                    @endif
                                                 </td>
+
                                                 <td class="text-center align-middle">
                                                     <div class="d-flex justify-content-center gap-1">
+
+                                                        <button class="btn btn-sm btn-warning reset"
+                                                            data-id="{{ $d->id }}">
+                                                            Reset
+                                                        </button>
+
                                                         <button class="btn btn-sm btn-danger hapus"
-                                                            data-id="{{ $d->id }}">Hapus</button>
+                                                            data-id="{{ $d->id }}">
+                                                            Hapus
+                                                        </button>
+
                                                     </div>
                                                 </td>
                                             </tr>
@@ -75,8 +93,71 @@
         </div>
     </div>
 
-    <div class="modal fade modal-alert" id="alert" tabindex="-1" role="dialog"
-        aria-labelledby="exampleModalCenter1" aria-hidden="true">
+    <div class="modal fade" id="modalTambahUser" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title">Pilih Akun</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="col-12">
+                        <div class="table-responsive">
+                            <table id="tableSelectUser" class="table table-bordered table-striped table-hover"
+                                style="width:100%">
+                                <thead class="text-center">
+                                    <tr>
+                                        <th style="width: 60px;">No</th>
+                                        <th class="text-center">User</th>
+                                        <th style="width: 150px;">Aksi</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    @php $i = 1; @endphp
+                                    @foreach ($users as $user)
+                                        <tr>
+                                            <td class="text-center align-middle">{{ $i++ }}</td>
+                                            <td class="align-middle">
+                                                <div class="d-flex align-items-center">
+                                                    <img src="{{ $user->foto ?? asset('own_assets/images/user.png') }}"
+                                                        class="rounded-circle me-3"
+                                                        style="width:40px; height:40px; object-fit:cover;">
+                                                    <div class="d-flex flex-column">
+                                                        <span class="fw-semibold">{{ $user->name }}</span>
+                                                        <small class="text-muted">{{ $user->email }}</small>
+                                                    </div>
+                                                </div>
+                                            </td>
+
+                                            <td class="text-center align-middle">
+
+                                                <div class="d-flex justify-content-center gap-1">
+                                                    <button class="btn btn-sm btn-info pilih"
+                                                        data-id="{{ $user->id }}">Pilih</button>
+                                                </div>
+
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade modal-alert" id="alert" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenter1"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-body">
@@ -124,5 +205,5 @@
 
 @section('own_script')
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="{{ asset('own_assets/scripts/client.js') }}"></script>
+    <script src="{{ asset('own_assets/scripts/user.js') }}"></script>
 @endsection

@@ -2,8 +2,10 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BoardController;
+use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LokasiController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -36,13 +38,23 @@ Route::post('/lokasi/delete', [LokasiController::class, 'delete']);
 Route::post('/lokasi/activate', [LokasiController::class, 'activate']);
 Route::get('/lokasi/search', [LokasiController::class, 'search']);
 
-Route::get('/client', [UserController::class, 'index']);
-Route::post('/client/store', [UserController::class, 'store']);
-Route::get('/client/detail', [UserController::class, 'detail']);
-Route::post('/client/update', [UserController::class, 'update']);
-Route::post('/client/delete', [UserController::class, 'delete']);
-Route::post('/client/activate', [UserController::class, 'activate']);
-Route::get('/client/search', [UserController::class, 'search']);
+Route::get('/client', [ClientController::class, 'index']);
+Route::get('/client/detail', [ClientController::class, 'detail']);
+Route::post('/client/delete', [ClientController::class, 'delete']);
+Route::post('/client/activate', [ClientController::class, 'activate']);
+
+Route::get('/user', [UserController::class, 'index']);
+Route::post('/user/store', [UserController::class, 'store']);
+Route::post('/user/update', [UserController::class, 'update']);
+Route::post('/user/delete', [UserController::class, 'delete']);
+// Route::post('/user/activate', [UserController::class, 'activate']);
+// Route::get('/user/detail', [UserController::class, 'detail']);
+// Route::get('/user/search', [UserController::class, 'search']);
+
+
+Route::get('/profile', [ProfileController::class, 'index']);
+Route::post('/profile', [ProfileController::class, 'update']);
+Route::post('/change-password', [ProfileController::class, 'changePassword'])->name('password.update');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index']);
