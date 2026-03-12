@@ -20,14 +20,14 @@
                 <div class="card">
                     @foreach ($lokasi as $l)
                         <div class="card-item">
-                        <div class="item-icon">
-                            <img src="{{asset('storage') . '/' $l->gambar}}" alt="">
+                            <div class="item-icon">
+                                <img src="{{asset('storage') . '/' . $l->gambar}}" alt="{{ $l->nama }}">
+                            </div>
+                            <div class="item-info">
+                                <h4>{{ $l->nama }}</h4>
+                                <p>{{ $l->alamat }} • 0 iklan aktif</p>
+                            </div>
                         </div>
-                        <div class="item-info">
-                            <h4>{{ $l->nama }}</h4>
-                            <p>{{ $l->alamat }} • 0 iklan aktif</p>
-                        </div>
-                    </div>
                     @endforeach
                 </div>
             </div>
