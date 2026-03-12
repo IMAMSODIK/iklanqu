@@ -135,7 +135,7 @@
 </head>
 
 <body>
-    {{dd($data)}}
+    {{dd($user)}}
     <input type="hidden" id="page" value="buat">
     <div class="app-container">
         @include('dashboard_layouts.header')
