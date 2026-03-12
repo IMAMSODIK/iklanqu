@@ -53,7 +53,7 @@
         @include('dashboard_layouts.nav')
     </div>
 
-    @include('dashboard_layouts.script')
+    {{-- @include('dashboard_layouts.script') --}}
 </body>
 
 </html>
