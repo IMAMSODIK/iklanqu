@@ -15,16 +15,21 @@
             align-items: center;
             justify-content: center;
             z-index: 9999;
+            padding: 20px;
+        }
+
+        .lokasi-modal.show {
+            display: flex;
         }
 
         .modal-box {
-            width: 90%;
+            width: 100%;
             max-width: 420px;
             background: #fff;
             border-radius: 18px;
             overflow: hidden;
             box-shadow: 0 20px 40px rgba(0, 0, 0, .3);
-            animation: modalFade .3s ease;
+            animation: modalFade .25s ease;
         }
 
         @keyframes modalFade {
@@ -49,22 +54,19 @@
             padding: 16px;
         }
 
-        .modal-body h3 {
-            margin: 5px 0;
+        .modal-footer {
+            padding: 12px 16px;
+            border-top: 1px solid #eee;
+            text-align: right;
         }
 
-        .modal-close {
-            position: absolute;
-            margin: 10px;
-            background: #fff;
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .btn-close-modal {
+            background: #ef4444;
+            color: #fff;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
             cursor: pointer;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, .2);
         }
 
         .board-slider {
@@ -131,86 +133,81 @@
         </div>
 
         @include('dashboard_layouts.nav')
-    </div>
 
-    <div class="lokasi-modal" id="lokasiModal">
+        <div class="lokasi-modal" id="lokasiModal">
 
-        <div class="modal-box">
+            <div class="modal-box">
 
-            <div class="modal-close">✕</div>
-
-            <div class="modal-image">
-                <img id="modalImage">
-            </div>
-
-            <div class="modal-body">
-
-                <h3 id="modalNama"></h3>
-                <p id="modalAlamat"></p>
-
-                <div class="maps-preview">
-                    <iframe id="modalMaps" width="100%" height="200" style="border:0" loading="lazy"
-                        referrerpolicy="no-referrer-when-downgrade">
-                    </iframe>
+                <div class="modal-image">
+                    <img id="modalImage">
                 </div>
 
-                <h4 style="margin-top:15px">Board di lokasi ini</h4>
+                <div class="modal-body">
 
-                <div class="board-slider" id="boardSlider"></div>
+                    <h3 id="modalNama"></h3>
+                    <p id="modalAlamat"></p>
+
+                    <div class="maps-preview">
+                        <iframe id="modalMaps" width="100%" height="200" style="border:0" loading="lazy">
+                        </iframe>
+                    </div>
+
+                    <h4 style="margin-top:15px">Board di lokasi ini</h4>
+
+                    <div class="board-slider" id="boardSlider"></div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn-close-modal">Tutup</button>
+                </div>
 
             </div>
 
         </div>
 
-    </div>
+        @include('dashboard_layouts.script')
+        <script>
+            $(".lokasi-card").click(function() {
 
-    @include('dashboard_layouts.script')
-    <script>
-        $(".lokasi-card").click(function() {
+                let nama = $(this).data("nama");
+                let alamat = $(this).data("alamat");
+                let gambar = $(this).data("gambar");
+                let maps = $(this).data("maps");
+                let boards = $(this).data("boards");
 
-            let nama = $(this).data("nama");
-            let alamat = $(this).data("alamat");
-            let gambar = $(this).data("gambar");
-            let maps = $(this).data("maps");
-            let boards = $(this).data("boards");
+                $("#modalNama").text(nama);
+                $("#modalAlamat").text(alamat);
+                $("#modalImage").attr("src", gambar);
+                $("#modalMaps").attr("src", maps);
 
-            $("#modalNama").text(nama);
-            $("#modalAlamat").text(alamat);
-            $("#modalImage").attr("src", gambar);
+                let slider = $("#boardSlider");
+                slider.html("");
 
-            // embed maps
-            $("#modalMaps").attr(
-                "src",
-                maps
-            );
-
-            let slider = $("#boardSlider");
-            slider.html("");
-
-            boards.forEach(board => {
-                if (board.photos) {
-                    board.photos.forEach(photo => {
-                        slider.append(`
+                boards.forEach(board => {
+                    if (board.photos) {
+                        board.photos.forEach(photo => {
+                            slider.append(`
                     <img src="/storage/${photo.file}">
                 `);
-                    });
-                }
+                        });
+                    }
+                });
+
+                $("#lokasiModal").addClass("show");
+
             });
 
-            $("#lokasiModal").fadeIn();
+            $(".btn-close-modal").click(function() {
+                $("#lokasiModal").removeClass("show");
+            });
 
-        });
-
-        $(".modal-close").click(function() {
-            $("#lokasiModal").fadeOut();
-        });
-
-        $("#lokasiModal").click(function(e) {
-            if (e.target === this) {
-                $(this).fadeOut();
-            }
-        });
-    </script>
+            $("#lokasiModal").click(function(e) {
+                if (e.target === this) {
+                    $(this).removeClass("show");
+                }
+            });
+        </script>
 </body>
 
 </html>
