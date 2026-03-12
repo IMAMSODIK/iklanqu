@@ -26,8 +26,9 @@
             <!-- Halaman Daftar Lokasi -->
             <div class="page" id="page-lokasi">
                 <div class="page-header">
-                    <div class="page-title">Daftar Lokasi</div>
-                    <div class="page-subtitle">Kelola lokasi pemasangan iklan</div>
+                    <div class="page-title">Pilih Lokasi Iklan</div>
+                    <div class="page-subtitle">Pasang iklan bisnis Anda di lokasi strategis dan jangkau lebih banyak
+                        pelanggan</div>
                 </div>
                 <div class="card">
                     @foreach ($lokasi as $l)
