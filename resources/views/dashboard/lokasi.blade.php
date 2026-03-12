@@ -3,6 +3,18 @@
 
 <head>
     @include('dashboard_layouts.head')
+    <style>
+        .badge-iklan {
+            display: inline-block;
+            margin-left: 6px;
+            padding: 2px 8px;
+            font-size: 12px;
+            font-weight: 500;
+            color: #2563eb;
+            background: #e0e7ff;
+            border-radius: 20px;
+        }
+    </style>
 </head>
 
 <body>
@@ -30,7 +42,10 @@
                             </div>
                             <div class="item-info">
                                 <h4>{{ $l->nama }}</h4>
-                                <p>{{ $l->alamat }} • 0 iklan aktif</p>
+                                <p>
+                                    {{ $l->alamat }}
+                                    <span class="badge-iklan">0 iklan aktif</span>
+                                </p>
                             </div>
                         </div>
                     @endforeach
