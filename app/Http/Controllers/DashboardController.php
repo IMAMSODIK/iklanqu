@@ -28,8 +28,6 @@ class DashboardController extends Controller
                 'user' => $user_data
             ];
 
-            return view('dashboard.index', $data);
-            dd(in_array(Auth::user()->role, ['admin', 'verifikator']));
             if (in_array(Auth::user()->role, ['admin', 'verifikator'])) {
                 return view('dashboard.index_admin', $data);
             } else {
