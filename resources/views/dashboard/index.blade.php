@@ -132,6 +132,270 @@
             cursor: pointer;
         }
     </style>
+
+    <style>
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            color: #0f172a;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            letter-spacing: -0.2px;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: 20px;
+            border: 1.5px solid #e2e8f0;
+            background: #ffffff;
+            font-size: 0.95rem;
+            transition: 0.2s;
+            outline: none;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 90px;
+        }
+
+        /* file upload styling */
+        .file-zone {
+            border: 2px dashed #cbd5e1;
+            border-radius: 24px;
+            padding: 28px 20px;
+            text-align: center;
+            background: #fefce8;
+            transition: 0.2s;
+            cursor: pointer;
+        }
+
+        .file-zone:hover {
+            border-color: #3b82f6;
+            background: #eff6ff;
+        }
+
+        .file-preview {
+            margin-top: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #f1f5f9;
+            border-radius: 40px;
+            padding: 8px 16px;
+            width: fit-content;
+        }
+
+        .file-preview span {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #1e293b;
+        }
+
+        .remove-file {
+            background: #ef4444;
+            border: none;
+            color: white;
+            border-radius: 40px;
+            padding: 4px 10px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        /* lokasi table style - rapi & modern */
+        .locations-section {
+            margin-top: 32px;
+            background: #f1f5f9;
+            border-radius: 24px;
+            padding: 20px;
+        }
+
+        .section-title {
+            font-weight: 700;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 18px;
+            color: #0f172a;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+            border-radius: 20px;
+            background: white;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
+
+        .location-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+        }
+
+        .location-table th {
+            background: #f8fafc;
+            padding: 14px 12px;
+            text-align: left;
+            font-weight: 600;
+            color: #1e293b;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .location-table td {
+            padding: 12px 12px;
+            border-bottom: 1px solid #eef2ff;
+            vertical-align: middle;
+        }
+
+        .location-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .location-name {
+            font-weight: 600;
+            color: #0f3b5f;
+        }
+
+        .date-input-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .date-input-group input {
+            padding: 8px 10px;
+            border-radius: 32px;
+            border: 1px solid #cbd5e1;
+            font-size: 0.75rem;
+            width: 140px;
+        }
+
+        .btn-sm {
+            background: #e2e8f0;
+            border: none;
+            border-radius: 40px;
+            padding: 6px 12px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.1s;
+        }
+
+        .btn-sm-primary {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .add-location-row {
+            margin-top: 20px;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .add-location-row select,
+        .add-location-row input {
+            padding: 8px 12px;
+            border-radius: 40px;
+            border: 1px solid #cbd5e1;
+            background: white;
+        }
+
+        .btn-add {
+            background: #0f172a;
+            color: white;
+            border: none;
+            padding: 8px 18px;
+            border-radius: 40px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        /* campaign footer */
+        .action-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 16px;
+            margin-top: 32px;
+        }
+
+        .btn-submit {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 12px 32px;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.2s;
+            box-shadow: 0 4px 8px rgba(37, 99, 235, 0.2);
+        }
+
+        .btn-submit:hover {
+            background: #1d4ed8;
+            transform: scale(0.98);
+        }
+
+        .btn-secondary {
+            background: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            padding: 12px 28px;
+            border-radius: 40px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        /* responsiveness */
+        @media (max-width: 700px) {
+            .campaign-card {
+                padding: 16px;
+            }
+
+            .date-input-group input {
+                width: 110px;
+            }
+
+            .location-table th,
+            .location-table td {
+                padding: 8px 6px;
+            }
+        }
+
+        .info-badge {
+            background: #dbeafe;
+            border-radius: 40px;
+            padding: 10px 16px;
+            font-size: 0.8rem;
+            color: #1e40af;
+            margin-bottom: 20px;
+        }
+
+        hr {
+            margin: 20px 0;
+            border-color: #eef2ff;
+        }
+
+        .required-star {
+            color: #ef4444;
+            margin-left: 2px;
+        }
+    </style>
 </head>
 
 <body>
@@ -144,6 +408,80 @@
                 <div class="page-header">
                     <div class="page-title">Buat Iklan Baru</div>
                     <div class="page-subtitle">Mulai kampanye iklan Anda</div>
+                </div>
+
+                <div class="campaign-card">
+                    <form id="campaignForm">
+                        <div class="form-group">
+                            <label>Nama Campaign <span class="required-star">*</span></label>
+                            <input type="text" id="campaign_name"
+                                placeholder="Contoh: Promo Ramadhan 2025 - Brand Boost" required>
+                        </div>
+
+                        <!-- DESKRIPSI IKLAN -->
+                        <div class="form-group">
+                            <label>Deskripsi Iklan</label>
+                            <textarea id="ad_description" placeholder="Tentukan pesan utama, target audiens, atau value proposition..."></textarea>
+                        </div>
+
+                        <!-- FILE (VIDEO/GAMBAR) -->
+                        <div class="form-group">
+                            <label>File Media (Gambar / Video) <span class="required-star">*</span></label>
+                            <div class="file-zone" id="fileDropZone">
+                                📤 Klik atau seret file ke sini<br>
+                                <small style="color:#64748b">Maks 20MB, format JPG, PNG, MP4, MOV</small>
+                            </div>
+                            <input type="file" id="media_file" style="display: none;" accept="image/*,video/*">
+                            <div id="filePreviewArea" style="margin-top: 12px;"></div>
+                        </div>
+
+                        <!-- TABLE LOKASI DENGAN TANGGAL MULAI & TANGGAL SELESAI -->
+                        <div class="locations-section">
+                            <div class="section-title">
+                                📍 Daftar Lokasi & Jadwal Penayangan
+                                <span
+                                    style="font-size: 12px; background:#e2e8f0; padding:3px 10px; border-radius:40px;">Setiap
+                                    lokasi punya jadwal sendiri</span>
+                            </div>
+                            <div class="table-wrapper">
+                                <table class="location-table" id="locationTable">
+                                    <thead>
+                                        <table>
+                                            <th>Lokasi</th>
+                                            <th>Tanggal Mulai</th>
+                                            <th>Tanggal Selesai</th>
+                                            <th style="width: 60px;">Aksi</th>
+                                            </tr>
+                                    </thead>
+                                    <tbody id="locationTableBody">
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="add-location-row">
+                                <select id="newLocationSelect">
+                                    <option value="Jakarta Pusat">Jakarta Pusat</option>
+                                    <option value="Surabaya">Surabaya</option>
+                                    <option value="Bandung">Bandung</option>
+                                    <option value="Medan">Medan</option>
+                                    <option value="Yogyakarta">Yogyakarta</option>
+                                    <option value="Denpasar">Denpasar</option>
+                                    <option value="Makassar">Makassar</option>
+                                    <option value="Palembang">Palembang</option>
+                                </select>
+                                <input type="date" id="newStartDate" value="{{ date('Y-m-d') }}">
+                                <input type="date" id="newEndDate" value="{{ date('Y-m-d', strtotime('+7 days')) }}">
+                                <button type="button" class="btn-add" id="addLocationBtn">+ Tambah Lokasi</button>
+                            </div>
+                            <small style="display: block; margin-top: 12px; color:#475569;">✔ Setiap lokasi bisa
+                                memiliki durasi tayang berbeda sesuai kebutuhan campaign</small>
+                        </div>
+
+                        <div class="action-buttons">
+                            <button type="button" class="btn-secondary" id="resetBtn">Reset Form</button>
+                            <button type="submit" class="btn-submit">🚀 Simpan Campaign</button>
+                        </div>
+                    </form>
                 </div>
 
                 <div class="create-ad-card">
