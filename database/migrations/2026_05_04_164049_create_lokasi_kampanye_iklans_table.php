@@ -11,14 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('lokasis', function (Blueprint $table) {
+        Schema::create('lokasi_kampanye_iklans', function (Blueprint $table) {
             $table->id();
-            $table->string('nama');
-            $table->text('alamat');
-            $table->string('gambar')->nullable();
-            $table->text('link_maps');
-            $table->boolean('status')->default(1);
-            $table->decimal('harga', 12, 2)->default(0);
+            $table->foreignId('kampanye_iklan_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('lokasi_id')->constrained()->cascadeOnDelete();
+
+            $table->date('tanggal_mulai');
+            $table->date('tanggal_selesai');
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('lokasis');
+        Schema::dropIfExists('lokasi_kampanye_iklans');
     }
 };

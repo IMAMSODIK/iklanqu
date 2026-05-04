@@ -16,13 +16,15 @@ class LokasiSeeder extends Seeder
         Lokasi::create([
             'nama' => 'Kilat Kuphi',
             'alamat' => 'Jl. Garuda No.79, Sei Sikambing B, Kec. Medan Sunggal, Kota Medan, Sumatera Utara 20122',
-            'link_maps' => 'https://maps.app.goo.gl/qGh3PtMtKe5WA1Fz7'
+            'link_maps' => 'https://maps.app.goo.gl/qGh3PtMtKe5WA1Fz7',
+            'harga' => 100000
         ]);
 
         Lokasi::create([
             'nama' => 'Candu Kuphi',
             'alamat' => 'Jl. T. Amir Hamzah No.216, Helvetia Tim., Kec. Medan Helvetia, Kota Medan, Sumatera Utara 20211',
-            'link_maps' => 'https://maps.app.goo.gl/n4UpdoEdVomNRMmV7'
+            'link_maps' => 'https://maps.app.goo.gl/n4UpdoEdVomNRMmV7',
+            'harga' => 100000
         ]);
     }
 }

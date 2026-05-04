@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Lokasi;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -11,7 +12,10 @@ class DashboardController extends Controller
     public function index()
     {
         try {
-            $user = Auth::user();
+            //setelah dev selesai buka komentar ini agar yang aktif adalah user yang sudah login
+            // $user = Auth::user();
+
+            $user = User::first();
 
             $user_data = (object)[
                 'name' => $user->name,
@@ -25,14 +29,16 @@ class DashboardController extends Controller
 
             $data = [
                 'pageTitle' => 'Dashboard',
-                'user' => $user_data
+                'user' => $user_data,
+                'lokasis' => Lokasi::where('status', 1)->orderBy('nama')->get()
             ];
 
-            if (in_array(Auth::user()->role, ['admin', 'verifikator'])) {
-                return view('dashboard.index_admin', $data);
-            } else {
-                return view('dashboard.index', $data);
-            }
+            // if (in_array(Auth::user()->role, ['admin', 'verifikator'])) {
+            //     return view('dashboard.index_admin', $data);
+            // } else {
+            //     return view('dashboard.index', $data);
+            // }
+            return view('dashboard.index', $data);
         } catch (\Exception $e) {
             return back()->with('error', 'Terjadi kesalahan saat membuka halaman dashboard.');
         }

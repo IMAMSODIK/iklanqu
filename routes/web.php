@@ -5,9 +5,11 @@ use App\Http\Controllers\BoardController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GetInTouchController;
+use App\Http\Controllers\KampanyeIklanController;
 use App\Http\Controllers\LokasiController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
+use App\Models\KampanyeIklan;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -53,6 +55,8 @@ Route::get('/client', [ClientController::class, 'index']);
 Route::get('/client/detail', [ClientController::class, 'detail']);
 Route::post('/client/delete', [ClientController::class, 'delete']);
 Route::post('/client/activate', [ClientController::class, 'activate']);
+
+Route::get('/campaigns', [KampanyeIklanController::class, 'store']);
 
 Route::get('/user', [UserController::class, 'index']);
 Route::post('/user/store', [UserController::class, 'store']);
