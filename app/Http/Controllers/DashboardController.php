@@ -13,9 +13,9 @@ class DashboardController extends Controller
     {
         try {
             //setelah dev selesai buka komentar ini agar yang aktif adalah user yang sudah login
-            $user = Auth::user();
+            // $user = Auth::user();
 
-            // $user = User::first();
+            $user = User::first();
 
             $user_data = (object)[
                 'name' => $user->name,
@@ -33,12 +33,12 @@ class DashboardController extends Controller
                 'lokasis' => Lokasi::where('status', 1)->orderBy('nama')->get()
             ];
 
-            if (in_array(Auth::user()->role, ['admin', 'verifikator'])) {
-                return view('dashboard.index_admin', $data);
-            } else {
-                return view('dashboard.index', $data);
-            }
-            // return view('dashboard.index', $data);
+            // if (in_array(Auth::user()->role, ['admin', 'verifikator'])) {
+            //     return view('dashboard.index_admin', $data);
+            // } else {
+            //     return view('dashboard.index', $data);
+            // }
+            return view('dashboard.index', $data);
         } catch (\Exception $e) {
             return back()->with('error', 'Terjadi kesalahan saat membuka halaman dashboard.');
         }

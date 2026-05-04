@@ -13,13 +13,19 @@ class KampanyeIklan extends Model
 
     protected $guarded = ['id'];
 
-    public function user(): BelongsTo{
+    public function user(): BelongsTo
+    {
         return $this->belongsTo(User::class);
+    }
+
+    public function payments()
+    {
+        return $this->hasMany(Payment::class, 'kampanye_iklan_id');
     }
 
     public function lokasi()
     {
-        return $this->belongsToMany(Lokasi::class)
+        return $this->belongsToMany(Lokasi::class, 'lokasi_kampanye_iklans')
             ->withPivot('tanggal_mulai', 'tanggal_selesai')
             ->withTimestamps();
     }

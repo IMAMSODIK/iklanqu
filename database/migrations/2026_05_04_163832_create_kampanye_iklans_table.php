@@ -17,6 +17,11 @@ return new class extends Migration
             $table->string('name');
             $table->text('description')->nullable();
             $table->string('media')->nullable();
+            $table->enum('payment_status', ['pending', 'paid', 'failed'])->default('pending');
+            $table->decimal('total_price', 12, 2)->default(0);
+            $table->string('payment_method')->nullable();
+            $table->timestamp('paid_at')->nullable();
+            $table->boolean('is_active')->default(false);
             $table->timestamps();
         });
     }

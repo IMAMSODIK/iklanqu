@@ -11,18 +11,21 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('lokasi_kampanye_iklans', function (Blueprint $table) {
+        Schema::create('payments', function (Blueprint $table) {
             $table->id();
             $table->foreignId('kampanye_iklan_id')
                 ->constrained('kampanye_iklans')
                 ->cascadeOnDelete();
 
-            $table->foreignId('lokasi_id')
-                ->constrained('lokasis')
-                ->cascadeOnDelete();
+            $table->string('invoice_number')->unique();
+            $table->decimal('amount', 12, 2);
 
-            $table->date('tanggal_mulai');
-            $table->date('tanggal_selesai');
+            $table->string('status')->default('pending'); // pending, paid, failed
+
+            $table->string('snap_token')->nullable();
+            $table->string('transaction_id')->nullable();
+
+            $table->timestamp('paid_at')->nullable();
             $table->timestamps();
         });
     }
@@ -32,6 +35,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('lokasi_kampanye_iklans');
+        Schema::dropIfExists('payments');
     }
 };

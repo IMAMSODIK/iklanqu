@@ -56,7 +56,8 @@ Route::get('/client/detail', [ClientController::class, 'detail']);
 Route::post('/client/delete', [ClientController::class, 'delete']);
 Route::post('/client/activate', [ClientController::class, 'activate']);
 
-Route::get('/campaigns', [KampanyeIklanController::class, 'store']);
+Route::post('/campaigns', [KampanyeIklanController::class, 'store']);
+Route::post('/midtrans/callback', [KampanyeIklanController::class, 'callback']);
 
 Route::get('/user', [UserController::class, 'index']);
 Route::post('/user/store', [UserController::class, 'store']);

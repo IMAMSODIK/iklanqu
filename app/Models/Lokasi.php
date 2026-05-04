@@ -19,7 +19,7 @@ class Lokasi extends Model
 
     public function kampanyeIklan()
     {
-        return $this->belongsToMany(KampanyeIklan::class)
+        return $this->belongsToMany(KampanyeIklan::class, 'lokasi_kampanye_iklans')
             ->withPivot('tanggal_mulai', 'tanggal_selesai')
             ->withTimestamps();
     }

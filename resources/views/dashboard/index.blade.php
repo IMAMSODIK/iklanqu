@@ -383,6 +383,8 @@
     </div>
 
     @include('dashboard_layouts.script')
+    <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ config('midtrans.client_key') }}">
+    </script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
@@ -530,15 +532,11 @@
                 }
             });
 
-            if (locations.length === 0) {
-                alert('Minimal pilih satu lokasi!');
-                return;
-            }
-
             let formData = new FormData();
             formData.append('name', $('#campaign_name').val());
             formData.append('description', $('#ad_description').val());
-            formData.append('media', $('#media_file')[0].files[0]);
+            formData.append('media', selectedFile);
+            formData.append('_token', $('meta[name="csrf-token"]').attr('content'));
             formData.append('locations', JSON.stringify(locations));
 
             $.ajax({
@@ -548,12 +546,26 @@
                 processData: false,
                 contentType: false,
                 success: function(res) {
-                    alert('Campaign berhasil disimpan!');
-                    location.reload();
+
+                    if (res.snap_token) {
+                        snap.pay(res.snap_token, {
+                            onSuccess: function() {
+                                alert('Pembayaran berhasil!');
+                                location.reload();
+                            },
+                            onPending: function() {
+                                alert('Menunggu pembayaran...');
+                            },
+                            onError: function() {
+                                alert('Pembayaran gagal');
+                            }
+                        });
+                    }
+
                 },
                 error: function(err) {
                     console.log(err);
-                    alert('Gagal menyimpan');
+                    alert('Gagal menyimpan campaign');
                 }
             });
         });
