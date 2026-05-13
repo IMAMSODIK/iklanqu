@@ -402,13 +402,13 @@
                         <div class="form-group">
                             <label>Nama Campaign <span class="required-star">*</span></label>
                             <input type="text" id="campaign_name"
-                                placeholder="Contoh: Promo Ramadhan 2025 - Brand Boost" required>
+                                placeholder="Contoh: Promo Ramadhan 2025 - Brand Boost" required name="name">
                         </div>
 
                         <!-- DESKRIPSI IKLAN -->
                         <div class="form-group">
                             <label>Deskripsi Iklan</label>
-                            <textarea id="ad_description" placeholder="Tentukan pesan utama, target audiens, atau value proposition..."></textarea>
+                            <textarea name="description" id="ad_description" placeholder="Tentukan pesan utama, target audiens, atau value proposition..."></textarea>
                         </div>
 
                         <!-- FILE (VIDEO/GAMBAR) -->
@@ -418,7 +418,7 @@
                                 📤 Klik atau seret file ke sini<br>
                                 <small style="color:#64748b">Maks 20MB, format JPG, PNG, MP4, MOV</small>
                             </div>
-                            <input type="file" id="media_file" style="display: none;" accept="image/*,video/*">
+                            <input type="file" name="media" id="media_file" style="display: none;" accept="image/*,video/*">
                             <div id="filePreviewArea" style="margin-top: 12px;"></div>
                         </div>
 
