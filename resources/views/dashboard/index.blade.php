@@ -161,7 +161,7 @@
             margin-top: 24px;
             background: #f8fafc;
             border-radius: 24px;
-            padding: 18px;
+            padding: 16px;
             border: 1px solid #e2e8f0;
         }
 
@@ -170,18 +170,18 @@
             justify-content: space-between;
             align-items: center;
             gap: 10px;
-            margin-bottom: 18px;
             flex-wrap: wrap;
+            margin-bottom: 16px;
             font-weight: 700;
             color: #0f172a;
         }
 
         .section-title span {
             background: #e2e8f0;
+            color: #475569;
             padding: 5px 12px;
             border-radius: 999px;
             font-size: 11px;
-            color: #475569;
         }
 
         .table-wrapper {
@@ -190,22 +190,23 @@
 
         .location-table {
             width: 100%;
-            min-width: 720px;
             border-collapse: separate;
             border-spacing: 0 10px;
+            min-width: 680px;
         }
 
         .location-table th {
             background: #f1f5f9;
-            padding: 14px;
+            padding: 12px;
             text-align: left;
-            font-size: 0.82rem;
-            color: #475569;
+            font-size: 12px;
+            color: #64748b;
         }
 
         .location-table td {
             background: white;
-            padding: 14px;
+            padding: 12px;
+            font-size: 12px;
             border-top: 1px solid #e2e8f0;
             border-bottom: 1px solid #e2e8f0;
             vertical-align: middle;
@@ -223,12 +224,12 @@
             border-bottom-right-radius: 16px;
         }
 
-        .location-table tbody tr {
+        .table-row {
             cursor: pointer;
             transition: 0.2s;
         }
 
-        .location-table tbody tr:hover td {
+        .table-row:hover td {
             background: #f8fafc;
         }
 
@@ -238,20 +239,20 @@
         }
 
         .board-code {
-            font-size: 12px;
-            color: #64748b;
             margin-top: 3px;
+            font-size: 11px;
+            color: #64748b;
         }
 
         .btn-edit {
             border: none;
             background: #eff6ff;
             color: #2563eb;
-            padding: 10px 14px;
-            border-radius: 12px;
-            cursor: pointer;
-            font-size: 12px;
+            padding: 8px 12px;
+            border-radius: 10px;
+            font-size: 11px;
             font-weight: 700;
+            cursor: pointer;
         }
 
         .modal-overlay {
@@ -262,7 +263,11 @@
             align-items: center;
             justify-content: center;
             padding: 16px;
-            z-index: 999;
+            z-index: 9999;
+        }
+
+        .modal-overlay.active {
+            display: flex;
         }
 
         .modal-content {
@@ -270,7 +275,7 @@
             max-width: 420px;
             background: white;
             border-radius: 24px;
-            padding: 20px;
+            padding: 18px;
             box-sizing: border-box;
         }
 
@@ -284,21 +289,22 @@
 
         .modal-header h3 {
             margin: 0;
+            font-size: 18px;
             color: #0f172a;
         }
 
         .modal-header p {
             margin: 4px 0 0;
+            font-size: 12px;
             color: #64748b;
-            font-size: 13px;
         }
 
         .close-modal {
             width: 36px;
             height: 36px;
             border: none;
-            border-radius: 12px;
             background: #f1f5f9;
+            border-radius: 12px;
             cursor: pointer;
         }
 
@@ -307,8 +313,8 @@
             color: #1d4ed8;
             padding: 14px;
             border-radius: 14px;
+            font-size: 13px;
             margin-bottom: 16px;
-            font-size: 14px;
         }
 
         .form-group {
@@ -318,20 +324,19 @@
         .form-group label {
             display: block;
             margin-bottom: 8px;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 600;
             color: #334155;
         }
 
         .form-group input {
             width: 100%;
-            max-width: 100%;
             height: 46px;
-            border-radius: 14px;
             border: 1px solid #cbd5e1;
+            border-radius: 14px;
             padding: 0 14px;
             box-sizing: border-box;
-            font-size: 14px;
+            font-size: 13px;
         }
 
         .summary-box {
@@ -345,6 +350,7 @@
             display: flex;
             justify-content: space-between;
             margin-bottom: 10px;
+            font-size: 13px;
         }
 
         .summary-item:last-child {
@@ -356,54 +362,25 @@
             gap: 10px;
         }
 
-        .btn-clear {
+        .btn-clear,
+        .btn-save {
             flex: 1;
-            height: 48px;
+            height: 46px;
             border: none;
             border-radius: 14px;
-            background: #fee2e2;
-            color: #dc2626;
+            font-size: 13px;
             font-weight: 700;
             cursor: pointer;
+        }
+
+        .btn-clear {
+            background: #fee2e2;
+            color: #dc2626;
         }
 
         .btn-save {
-            flex: 1;
-            height: 48px;
-            border: none;
-            border-radius: 14px;
             background: #0f172a;
             color: white;
-            font-weight: 700;
-            cursor: pointer;
-        }
-
-        @media (max-width: 768px) {
-
-            .locations-section {
-                padding: 14px;
-            }
-
-            .location-table {
-                min-width: 680px;
-            }
-
-            .location-table th,
-            .location-table td {
-                padding: 12px;
-                font-size: 12px;
-            }
-
-            .modal-content {
-                max-width: 100%;
-                border-radius: 20px;
-                padding: 18px;
-            }
-
-            .form-group input {
-                font-size: 13px;
-            }
-
         }
     </style>
 </head>
@@ -449,15 +426,11 @@
                         <div class="locations-section">
 
                             <div class="section-title">
-
-                                <div>
-                                    📍 Daftar Board
-                                </div>
+                                <div>📍 Daftar Board</div>
 
                                 <span>
                                     Klik row untuk mengatur jadwal
                                 </span>
-
                             </div>
 
                             <div class="table-wrapper">
@@ -465,7 +438,6 @@
                                 <table class="location-table">
 
                                     <thead>
-
                                         <tr>
                                             <th>Board</th>
                                             <th>Lokasi</th>
@@ -474,7 +446,6 @@
                                             <th>Total</th>
                                             <th>Aksi</th>
                                         </tr>
-
                                     </thead>
 
                                     <tbody>
@@ -485,7 +456,6 @@
                                                 data-harga="{{ $board->harga }}">
 
                                                 <td>
-
                                                     <div class="board-name">
                                                         {{ $board->name }}
                                                     </div>
@@ -493,7 +463,6 @@
                                                     <div class="board-code">
                                                         {{ $board->kode }}
                                                     </div>
-
                                                 </td>
 
                                                 <td>
@@ -526,6 +495,111 @@
                                     </tbody>
 
                                 </table>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="modal-overlay" id="scheduleModal">
+
+                            <div class="modal-content">
+
+                                <div class="modal-header">
+
+                                    <div>
+
+                                        <h3 id="modalBoardName">
+                                            Board
+                                        </h3>
+
+                                        <p id="modalLokasi">
+                                            Lokasi
+                                        </p>
+
+                                    </div>
+
+                                    <button type="button" class="close-modal" id="closeModal">
+                                        ✕
+                                    </button>
+
+                                </div>
+
+
+                                <div class="price-info">
+
+                                    Harga :
+                                    <strong id="modalHarga">
+                                        Rp 0
+                                    </strong>
+                                    / hari
+
+                                </div>
+
+
+                                <div class="form-group">
+
+                                    <label>
+                                        Tanggal Mulai
+                                    </label>
+
+                                    <input type="date" id="tanggalMulai">
+
+                                </div>
+
+
+                                <div class="form-group">
+
+                                    <label>
+                                        Tanggal Selesai
+                                    </label>
+
+                                    <input type="date" id="tanggalSelesai">
+
+                                </div>
+
+
+                                <div class="summary-box">
+
+                                    <div class="summary-item">
+
+                                        <span>
+                                            Total Hari
+                                        </span>
+
+                                        <strong id="totalHari">
+                                            0 Hari
+                                        </strong>
+
+                                    </div>
+
+                                    <div class="summary-item">
+
+                                        <span>
+                                            Total Harga
+                                        </span>
+
+                                        <strong id="totalHarga">
+                                            Rp 0
+                                        </strong>
+
+                                    </div>
+
+                                </div>
+
+
+                                <div class="modal-actions">
+
+                                    <button type="button" class="btn-clear" id="clearSchedule">
+                                        Clear
+                                    </button>
+
+                                    <button type="button" class="btn-save" id="saveSchedule">
+                                        Simpan
+                                    </button>
+
+                                </div>
 
                             </div>
 
@@ -761,183 +835,184 @@
     </script>
 
     <script>
+        const modal = document.getElementById('scheduleModal');
 
-    const modal = document.getElementById('scheduleModal');
+        const closeModal = document.getElementById('closeModal');
 
-    const closeModal = document.getElementById('closeModal');
+        const tanggalMulai = document.getElementById('tanggalMulai');
 
-    const tanggalMulai = document.getElementById('tanggalMulai');
+        const tanggalSelesai = document.getElementById('tanggalSelesai');
 
-    const tanggalSelesai = document.getElementById('tanggalSelesai');
+        const totalHariText = document.getElementById('totalHari');
 
-    const totalHariText = document.getElementById('totalHari');
+        const totalHargaText = document.getElementById('totalHarga');
 
-    const totalHargaText = document.getElementById('totalHarga');
+        const modalBoardName = document.getElementById('modalBoardName');
 
-    const modalBoardName = document.getElementById('modalBoardName');
+        const modalLokasi = document.getElementById('modalLokasi');
 
-    const modalLokasi = document.getElementById('modalLokasi');
+        const modalHarga = document.getElementById('modalHarga');
 
-    const modalHarga = document.getElementById('modalHarga');
+        let currentRow = null;
 
-    let currentRow = null;
-
-    let hargaPerHari = 0;
-
-
-
-    function openModal(row) {
-
-        currentRow = row;
-
-        modalBoardName.innerText =
-            row.dataset.name;
-
-        modalLokasi.innerText =
-            row.dataset.lokasi;
-
-        hargaPerHari =
-            parseInt(row.dataset.harga);
-
-        modalHarga.innerText =
-            'Rp ' + hargaPerHari.toLocaleString('id-ID');
-
-        modal.style.display = 'flex';
-    }
+        let hargaPerHari = 0;
 
 
 
-    document.querySelectorAll('.table-row').forEach(row => {
+        function openModal(row) {
 
-        row.addEventListener('click', function () {
+            currentRow = row;
 
-            openModal(this);
+            modalBoardName.innerText =
+                row.dataset.name;
 
-        });
+            modalLokasi.innerText =
+                row.dataset.lokasi;
 
-    });
+            hargaPerHari =
+                parseInt(row.dataset.harga);
 
+            modalHarga.innerText =
+                'Rp ' + hargaPerHari.toLocaleString('id-ID');
 
-
-    document.querySelectorAll('.btn-edit').forEach(button => {
-
-        button.addEventListener('click', function (e) {
-
-            e.stopPropagation();
-
-            const row = this.closest('tr');
-
-            openModal(row);
-
-        });
-
-    });
-
-
-
-    closeModal.addEventListener('click', function () {
-
-        modal.style.display = 'none';
-
-    });
-
-
-
-    window.addEventListener('click', function (e) {
-
-        if (e.target === modal) {
-
-            modal.style.display = 'none';
+            modal.classList.add('active');
 
         }
 
-    });
+
+
+        document.querySelectorAll('.table-row').forEach(row => {
+
+            row.addEventListener('click', function() {
+
+                openModal(this);
+
+            });
+
+        });
 
 
 
-    function calculateTotal() {
+        document.querySelectorAll('.btn-edit').forEach(button => {
 
-        if (!tanggalMulai.value || !tanggalSelesai.value) return;
+            button.addEventListener('click', function(e) {
 
-        const start = new Date(tanggalMulai.value);
+                e.stopPropagation();
 
-        const end = new Date(tanggalSelesai.value);
+                const row = this.closest('.table-row');
 
-        const diff = end - start;
+                openModal(row);
 
-        const totalHari = Math.floor(
-            diff / (1000 * 60 * 60 * 24)
-        ) + 1;
+            });
 
-        if (totalHari <= 0) return;
-
-        const totalHarga = totalHari * hargaPerHari;
-
-        totalHariText.innerText =
-            totalHari + ' Hari';
-
-        totalHargaText.innerText =
-            'Rp ' + totalHarga.toLocaleString('id-ID');
-
-    }
+        });
 
 
 
-    tanggalMulai.addEventListener('change', calculateTotal);
+        closeModal.addEventListener('click', function() {
 
-    tanggalSelesai.addEventListener('change', calculateTotal);
+            modal.classList.remove('active');
 
-
-
-    document.getElementById('saveSchedule')
-    .addEventListener('click', function () {
-
-        if (!currentRow) return;
-
-        const start = tanggalMulai.value;
-
-        const end = tanggalSelesai.value;
-
-        currentRow.querySelector('.jadwal-text').innerText =
-            start + ' s/d ' + end;
-
-        currentRow.querySelector('.durasi-text').innerText =
-            totalHariText.innerText;
-
-        currentRow.querySelector('.harga-text').innerText =
-            totalHargaText.innerText;
-
-        modal.style.display = 'none';
-
-    });
+        });
 
 
 
-    document.getElementById('clearSchedule')
-    .addEventListener('click', function () {
+        modal.addEventListener('click', function(e) {
 
-        if (!currentRow) return;
+            if (e.target === modal) {
 
-        currentRow.querySelector('.jadwal-text').innerText =
-            'Belum dipilih';
+                modal.classList.remove('active');
 
-        currentRow.querySelector('.durasi-text').innerText =
-            '-';
+            }
 
-        currentRow.querySelector('.harga-text').innerText =
-            '-';
+        });
 
-        tanggalMulai.value = '';
 
-        tanggalSelesai.value = '';
 
-        totalHariText.innerText = '0 Hari';
+        function calculateTotal() {
 
-        totalHargaText.innerText = 'Rp 0';
+            if (!tanggalMulai.value || !tanggalSelesai.value) return;
 
-    });
+            const start = new Date(tanggalMulai.value);
 
-</script>
+            const end = new Date(tanggalSelesai.value);
+
+            const diff = end - start;
+
+            const totalHari = Math.floor(
+                diff / (1000 * 60 * 60 * 24)
+            ) + 1;
+
+            if (totalHari <= 0) return;
+
+            const totalHarga = totalHari * hargaPerHari;
+
+            totalHariText.innerText =
+                totalHari + ' Hari';
+
+            totalHargaText.innerText =
+                'Rp ' + totalHarga.toLocaleString('id-ID');
+
+        }
+
+
+
+        tanggalMulai.addEventListener('change', calculateTotal);
+
+        tanggalSelesai.addEventListener('change', calculateTotal);
+
+
+
+        document.getElementById('saveSchedule')
+            .addEventListener('click', function() {
+
+                if (!currentRow) return;
+
+                const start = tanggalMulai.value;
+
+                const end = tanggalSelesai.value;
+
+                currentRow.querySelector('.jadwal-text').innerText =
+                    start + ' s/d ' + end;
+
+                currentRow.querySelector('.durasi-text').innerText =
+                    totalHariText.innerText;
+
+                currentRow.querySelector('.harga-text').innerText =
+                    totalHargaText.innerText;
+
+                modal.classList.remove('active');
+
+            });
+
+
+
+        document.getElementById('clearSchedule')
+            .addEventListener('click', function() {
+
+                if (!currentRow) return;
+
+                currentRow.querySelector('.jadwal-text').innerText =
+                    'Belum dipilih';
+
+                currentRow.querySelector('.durasi-text').innerText =
+                    '-';
+
+                currentRow.querySelector('.harga-text').innerText =
+                    '-';
+
+                tanggalMulai.value = '';
+
+                tanggalSelesai.value = '';
+
+                totalHariText.innerText =
+                    '0 Hari';
+
+                totalHargaText.innerText =
+                    'Rp 0';
+
+            });
+    </script>
 </body>
 
 </html>
