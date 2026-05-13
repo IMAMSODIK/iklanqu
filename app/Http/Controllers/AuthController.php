@@ -49,6 +49,7 @@ class AuthController extends Controller
                     'google_id' => $googleUser->id,
                     'foto' => $googleUser->avatar,
                     'role' => 'user',
+                    'status' => 1,
                     'password' => bcrypt(rand(100000, 999999))
                 ]);
             } else {

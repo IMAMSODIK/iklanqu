@@ -86,49 +86,62 @@
         }
 
         /* lokasi table style - rapi & modern */
+        /* =========================================================
+   MOBILE FRIENDLY LOCATION TABLE
+========================================================= */
+
         .locations-section {
-            margin-top: 32px;
-            background: #f1f5f9;
-            border-radius: 24px;
-            padding: 20px;
+            margin-top: 24px;
+            background: #f8fafc;
+            border-radius: 22px;
+            padding: 16px;
         }
 
         .section-title {
             font-weight: 700;
-            font-size: 1.2rem;
+            font-size: 1rem;
             display: flex;
+            flex-wrap: wrap;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             margin-bottom: 18px;
             color: #0f172a;
+            line-height: 1.5;
         }
+
+        .section-title span {
+            font-size: 11px !important;
+        }
+
+        /* =========================================================
+   DESKTOP TABLE
+========================================================= */
 
         .table-wrapper {
             overflow-x: auto;
-            border-radius: 20px;
-            background: white;
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
         }
 
         .location-table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 0.85rem;
+            background: white;
+            border-radius: 18px;
+            overflow: hidden;
         }
 
         .location-table th {
-            background: #f8fafc;
-            padding: 14px 12px;
+            background: #f1f5f9;
+            padding: 14px;
             text-align: left;
-            font-weight: 600;
-            color: #1e293b;
-            border-bottom: 1px solid #e2e8f0;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #334155;
         }
 
         .location-table td {
-            padding: 12px 12px;
-            border-bottom: 1px solid #eef2ff;
-            vertical-align: middle;
+            padding: 14px;
+            border-bottom: 1px solid #e2e8f0;
+            font-size: 0.85rem;
         }
 
         .location-table tr:last-child td {
@@ -137,63 +150,127 @@
 
         .location-name {
             font-weight: 600;
-            color: #0f3b5f;
+            color: #0f172a;
         }
 
-        .date-input-group {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .date-input-group input {
-            padding: 8px 10px;
-            border-radius: 32px;
+        .location-table input[type="date"] {
+            width: 100%;
+            min-width: 130px;
+            padding: 10px 14px;
+            border-radius: 14px;
             border: 1px solid #cbd5e1;
-            font-size: 0.75rem;
-            width: 140px;
-        }
-
-        .btn-sm {
-            background: #e2e8f0;
-            border: none;
-            border-radius: 40px;
-            padding: 6px 12px;
-            font-size: 0.7rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: 0.1s;
-        }
-
-        .btn-sm-primary {
-            background: #3b82f6;
-            color: white;
-        }
-
-        .add-location-row {
-            margin-top: 20px;
-            display: flex;
-            gap: 12px;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .add-location-row select,
-        .add-location-row input {
-            padding: 8px 12px;
-            border-radius: 40px;
-            border: 1px solid #cbd5e1;
+            font-size: 0.8rem;
             background: white;
         }
 
-        .btn-add {
-            background: #0f172a;
-            color: white;
+        .btn-sm {
             border: none;
-            padding: 8px 18px;
-            border-radius: 40px;
-            font-weight: 500;
+            border-radius: 14px;
+            padding: 10px 12px;
             cursor: pointer;
+            font-size: 0.75rem;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+
+        /* =========================================================
+   MOBILE VERSION
+========================================================= */
+
+        @media (max-width: 768px) {
+
+            .locations-section {
+                padding: 12px;
+                border-radius: 18px;
+            }
+
+            .table-wrapper {
+                overflow: visible;
+                background: transparent;
+                box-shadow: none;
+            }
+
+            .location-table,
+            .location-table thead,
+            .location-table tbody,
+            .location-table th,
+            .location-table td,
+            .location-table tr {
+                display: block;
+                width: 100%;
+            }
+
+            .location-table thead {
+                display: none;
+            }
+
+            .location-table tr {
+                background: white;
+                border-radius: 18px;
+                padding: 14px;
+                margin-bottom: 16px;
+                box-shadow: 0 4px 14px rgba(15, 23, 42, 0.06);
+                border: 1px solid #e2e8f0;
+            }
+
+            .location-table td {
+                border: none;
+                padding: 0;
+                margin-bottom: 14px;
+            }
+
+            .location-table td:last-child {
+                margin-bottom: 0;
+            }
+
+            /* LABEL MOBILE */
+            .location-table td::before {
+                display: block;
+                margin-bottom: 6px;
+                font-size: 0.72rem;
+                font-weight: 700;
+                color: #64748b;
+            }
+
+            .location-table td:nth-child(1)::before {
+                content: "Lokasi";
+            }
+
+            .location-table td:nth-child(2)::before {
+                content: "Tanggal Mulai";
+            }
+
+            .location-table td:nth-child(3)::before {
+                content: "Tanggal Selesai";
+            }
+
+            .location-table td:nth-child(4)::before {
+                content: "Jumlah Hari";
+            }
+
+            .location-table td:nth-child(5)::before {
+                content: "Aksi";
+            }
+
+            .location-name {
+                font-size: 0.95rem;
+            }
+
+            .location-table input[type="date"] {
+                width: 100%;
+                min-width: 100%;
+                height: 46px;
+                font-size: 0.85rem;
+                border-radius: 14px;
+            }
+
+            .btn-sm {
+                width: 100%;
+                height: 44px;
+                border-radius: 14px;
+                font-size: 0.85rem;
+            }
+
         }
 
         /* campaign footer */
