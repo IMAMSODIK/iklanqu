@@ -500,6 +500,7 @@
 
                         </div>
 
+                        <input type="hidden" name="boards" id="boardsInput">
                         <div class="action-buttons">
                             <button type="submit" class="btn-submit" id="btnSubmitCampaign">Simpan Campaign</button>
                         </div>
@@ -754,7 +755,7 @@
         }
     </script>
 
-    <script>
+    {{-- <script>
         $('#campaignForm').on('submit', function(e) {
             e.preventDefault();
 
@@ -813,7 +814,7 @@
                 }
             });
         });
-    </script>
+    </script> --}}
 
     <script>
         const modal = document.getElementById('scheduleModal');
@@ -989,11 +990,31 @@
 
         let currentSnapToken = null;
 
-
-
         form.addEventListener('submit', async function(e) {
 
             e.preventDefault();
+
+            const boards = [];
+
+            document.querySelectorAll('.table-row')
+                .forEach(row => {
+
+                    const jadwal =
+                        row.querySelector('.jadwal-text').innerText;
+
+                    if (jadwal === 'Belum dipilih') return;
+
+                    boards.push({
+                        board_id: row.dataset.id,
+                        tanggal_mulai: row.dataset.tanggal_mulai,
+                        tanggal_selesai: row.dataset.tanggal_selesai,
+                        total: row.dataset.total
+                    });
+
+                });
+
+            document.getElementById('boardsInput').value =
+                JSON.stringify(boards);
 
             const formData = new FormData(form);
 

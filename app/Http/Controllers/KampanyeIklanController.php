@@ -19,7 +19,6 @@ class KampanyeIklanController extends Controller
         DB::beginTransaction();
 
         try {
-
             $request->validate([
                 'name' => 'required',
                 'description' => 'nullable',
@@ -39,17 +38,11 @@ class KampanyeIklanController extends Controller
             ]);
 
             foreach ($request->boards as $board) {
-
                 $boardModel = Board::findOrFail($board['board_id']);
-
                 $start = Carbon::parse($board['tanggal_mulai']);
-
                 $end = Carbon::parse($board['tanggal_selesai']);
-
                 $days = $start->diffInDays($end) + 1;
-
                 $subtotal = $days * $boardModel->harga;
-
                 $totalPrice += $subtotal;
 
                 LokasiKampanyeIklan::create([
@@ -104,9 +97,7 @@ class KampanyeIklanController extends Controller
                 'snap_token' => $snapToken,
             ]);
         } catch (\Exception $e) {
-
             DB::rollBack();
-
             return response()->json([
                 'success' => false,
                 'message' => $e->getMessage()
