@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Board;
 use App\Models\Lokasi;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -37,6 +38,7 @@ class DashboardController extends Controller
             if (in_array($user->role, ['admin', 'verifikator'])) {
                 return view('dashboard.index_admin', $data);
             } else {
+                $data['boards'] = Board::with('lokasi')->get();
                 return view('dashboard.index', $data);
             }
             // return view('dashboard.index', $data);
