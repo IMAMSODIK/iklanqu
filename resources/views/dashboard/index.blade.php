@@ -761,125 +761,183 @@
     </script>
 
     <script>
-        const modal = document.getElementById('scheduleModal');
 
-        const closeModal = document.getElementById('closeModal');
+    const modal = document.getElementById('scheduleModal');
 
-        const tanggalMulai = document.getElementById('tanggalMulai');
+    const closeModal = document.getElementById('closeModal');
 
-        const tanggalSelesai = document.getElementById('tanggalSelesai');
+    const tanggalMulai = document.getElementById('tanggalMulai');
 
-        const totalHariText = document.getElementById('totalHari');
+    const tanggalSelesai = document.getElementById('tanggalSelesai');
 
-        const totalHargaText = document.getElementById('totalHarga');
+    const totalHariText = document.getElementById('totalHari');
 
-        const modalBoardName = document.getElementById('modalBoardName');
+    const totalHargaText = document.getElementById('totalHarga');
 
-        const modalLokasi = document.getElementById('modalLokasi');
+    const modalBoardName = document.getElementById('modalBoardName');
 
-        const modalHarga = document.getElementById('modalHarga');
+    const modalLokasi = document.getElementById('modalLokasi');
 
-        let currentRow = null;
+    const modalHarga = document.getElementById('modalHarga');
 
-        let hargaPerHari = 0;
+    let currentRow = null;
+
+    let hargaPerHari = 0;
 
 
 
-        document.querySelectorAll('.openModal').forEach(button => {
+    function openModal(row) {
 
-            button.addEventListener('click', function() {
+        currentRow = row;
 
-                currentRow = this.closest('tr');
+        modalBoardName.innerText =
+            row.dataset.name;
 
-                const boardName = currentRow.dataset.name;
+        modalLokasi.innerText =
+            row.dataset.lokasi;
 
-                const lokasi = currentRow.dataset.lokasi;
+        hargaPerHari =
+            parseInt(row.dataset.harga);
 
-                hargaPerHari = parseInt(currentRow.dataset.harga);
+        modalHarga.innerText =
+            'Rp ' + hargaPerHari.toLocaleString('id-ID');
 
-                modalBoardName.innerText = boardName;
+        modal.style.display = 'flex';
+    }
 
-                modalLokasi.innerText = lokasi;
 
-                modalHarga.innerText =
-                    'Rp ' + hargaPerHari.toLocaleString('id-ID');
 
-                modal.style.display = 'flex';
+    document.querySelectorAll('.table-row').forEach(row => {
 
-            });
+        row.addEventListener('click', function () {
+
+            openModal(this);
 
         });
 
+    });
 
 
-        closeModal.addEventListener('click', () => {
+
+    document.querySelectorAll('.btn-edit').forEach(button => {
+
+        button.addEventListener('click', function (e) {
+
+            e.stopPropagation();
+
+            const row = this.closest('tr');
+
+            openModal(row);
+
+        });
+
+    });
+
+
+
+    closeModal.addEventListener('click', function () {
+
+        modal.style.display = 'none';
+
+    });
+
+
+
+    window.addEventListener('click', function (e) {
+
+        if (e.target === modal) {
 
             modal.style.display = 'none';
 
-        });
-
-
-
-        function calculateTotal() {
-
-            if (!tanggalMulai.value || !tanggalSelesai.value) return;
-
-            const start = new Date(tanggalMulai.value);
-
-            const end = new Date(tanggalSelesai.value);
-
-            const diff = end - start;
-
-            const totalHari = Math.floor(
-                diff / (1000 * 60 * 60 * 24)
-            ) + 1;
-
-            if (totalHari <= 0) return;
-
-            const totalHarga = totalHari * hargaPerHari;
-
-            totalHariText.innerText =
-                totalHari + ' Hari';
-
-            totalHargaText.innerText =
-                'Rp ' + totalHarga.toLocaleString('id-ID');
-
         }
 
-
-
-        tanggalMulai.addEventListener('change', calculateTotal);
-
-        tanggalSelesai.addEventListener('change', calculateTotal);
+    });
 
 
 
-        document.getElementById('saveSchedule')
-            .addEventListener('click', function() {
+    function calculateTotal() {
 
-                if (!currentRow) return;
+        if (!tanggalMulai.value || !tanggalSelesai.value) return;
 
-                const start = tanggalMulai.value;
+        const start = new Date(tanggalMulai.value);
 
-                const end = tanggalSelesai.value;
+        const end = new Date(tanggalSelesai.value);
 
-                const durasi = totalHariText.innerText;
+        const diff = end - start;
 
-                const total = totalHargaText.innerText;
+        const totalHari = Math.floor(
+            diff / (1000 * 60 * 60 * 24)
+        ) + 1;
 
-                currentRow.querySelector('.jadwal-text').innerText =
-                    start + ' s/d ' + end;
+        if (totalHari <= 0) return;
 
-                currentRow.querySelector('.durasi-text').innerText =
-                    durasi;
+        const totalHarga = totalHari * hargaPerHari;
 
-                currentRow.querySelector('.harga-text').innerText =
-                    total;
+        totalHariText.innerText =
+            totalHari + ' Hari';
 
-                modal.style.display = 'none';
+        totalHargaText.innerText =
+            'Rp ' + totalHarga.toLocaleString('id-ID');
 
-            });
-    </script>
+    }
+
+
+
+    tanggalMulai.addEventListener('change', calculateTotal);
+
+    tanggalSelesai.addEventListener('change', calculateTotal);
+
+
+
+    document.getElementById('saveSchedule')
+    .addEventListener('click', function () {
+
+        if (!currentRow) return;
+
+        const start = tanggalMulai.value;
+
+        const end = tanggalSelesai.value;
+
+        currentRow.querySelector('.jadwal-text').innerText =
+            start + ' s/d ' + end;
+
+        currentRow.querySelector('.durasi-text').innerText =
+            totalHariText.innerText;
+
+        currentRow.querySelector('.harga-text').innerText =
+            totalHargaText.innerText;
+
+        modal.style.display = 'none';
+
+    });
+
+
+
+    document.getElementById('clearSchedule')
+    .addEventListener('click', function () {
+
+        if (!currentRow) return;
+
+        currentRow.querySelector('.jadwal-text').innerText =
+            'Belum dipilih';
+
+        currentRow.querySelector('.durasi-text').innerText =
+            '-';
+
+        currentRow.querySelector('.harga-text').innerText =
+            '-';
+
+        tanggalMulai.value = '';
+
+        tanggalSelesai.value = '';
+
+        totalHariText.innerText = '0 Hari';
+
+        totalHargaText.innerText = 'Rp 0';
+
+    });
+
+</script>
 </body>
 
 </html>
