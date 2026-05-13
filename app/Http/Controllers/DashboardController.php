@@ -39,6 +39,7 @@ class DashboardController extends Controller
                 return view('dashboard.index_admin', $data);
             } else {
                 $data['boards'] = Board::with('lokasi')->get();
+                dd($data);
                 return view('dashboard.index', $data);
             }
             // return view('dashboard.index', $data);
