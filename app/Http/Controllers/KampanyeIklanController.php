@@ -3,16 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\KampanyeIklan;
-use App\Http\Requests\StoreKampanyeIklanRequest;
-use App\Http\Requests\UpdateKampanyeIklanRequest;
-use App\Models\Lokasi;
+use App\Models\Board;
+use App\Models\LokasiKampanyeIklan;
 use App\Models\Payment;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Midtrans\Config;
-use Midtrans\Snap;
+use Illuminate\Support\Str;
 
 class KampanyeIklanController extends Controller
 {
@@ -44,9 +42,9 @@ class KampanyeIklanController extends Controller
 
                 $boardModel = Board::findOrFail($board['board_id']);
 
-                $start = Carbon\Carbon::parse($board['tanggal_mulai']);
+                $start = Carbon::parse($board['tanggal_mulai']);
 
-                $end = Carbon\Carbon::parse($board['tanggal_selesai']);
+                $end = Carbon::parse($board['tanggal_selesai']);
 
                 $days = $start->diffInDays($end) + 1;
 
