@@ -87,191 +87,176 @@
 
         /* lokasi table style - rapi & modern */
         /* =========================================================
-   MOBILE FRIENDLY LOCATION TABLE
+   RESPONSIVE TABLE MOBILE FRIENDLY
 ========================================================= */
 
-        .locations-section {
-            margin-top: 24px;
-            background: #f8fafc;
-            border-radius: 22px;
-            padding: 16px;
-        }
+.locations-section {
+    margin-top: 24px;
+    background: #f8fafc;
+    border-radius: 20px;
+    padding: 14px;
+}
 
-        .section-title {
-            font-weight: 700;
-            font-size: 1rem;
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 18px;
-            color: #0f172a;
-            line-height: 1.5;
-        }
+.section-title {
+    font-weight: 700;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+    color: #0f172a;
+    flex-wrap: wrap;
+}
 
-        .section-title span {
-            font-size: 11px !important;
-        }
+.table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-radius: 18px;
+    background: white;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+}
 
-        /* =========================================================
-   DESKTOP TABLE
+/* =========================================================
+   TABLE
 ========================================================= */
 
-        .table-wrapper {
-            overflow-x: auto;
-        }
+.location-table {
+    width: 100%;
+    min-width: 720px;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+}
 
-        .location-table {
-            width: 100%;
-            border-collapse: collapse;
-            background: white;
-            border-radius: 18px;
-            overflow: hidden;
-        }
+.location-table th {
+    background: #f8fafc;
+    padding: 14px 12px;
+    text-align: left;
+    font-weight: 700;
+    color: #334155;
+    border-bottom: 1px solid #e2e8f0;
+    white-space: nowrap;
+}
 
-        .location-table th {
-            background: #f1f5f9;
-            padding: 14px;
-            text-align: left;
-            font-size: 0.85rem;
-            font-weight: 700;
-            color: #334155;
-        }
+.location-table td {
+    padding: 12px;
+    border-bottom: 1px solid #eef2ff;
+    vertical-align: middle;
+}
 
-        .location-table td {
-            padding: 14px;
-            border-bottom: 1px solid #e2e8f0;
-            font-size: 0.85rem;
-        }
+.location-table tr:last-child td {
+    border-bottom: none;
+}
 
-        .location-table tr:last-child td {
-            border-bottom: none;
-        }
+.location-name {
+    font-weight: 600;
+    color: #0f172a;
+    white-space: nowrap;
+}
 
-        .location-name {
-            font-weight: 600;
-            color: #0f172a;
-        }
-
-        .location-table input[type="date"] {
-            width: 100%;
-            min-width: 130px;
-            padding: 10px 14px;
-            border-radius: 14px;
-            border: 1px solid #cbd5e1;
-            font-size: 0.8rem;
-            background: white;
-        }
-
-        .btn-sm {
-            border: none;
-            border-radius: 14px;
-            padding: 10px 12px;
-            cursor: pointer;
-            font-size: 0.75rem;
-            font-weight: 600;
-            transition: 0.2s;
-        }
-
-        /* =========================================================
-   MOBILE VERSION
+/* =========================================================
+   INPUT
 ========================================================= */
 
-        @media (max-width: 768px) {
+.location-table input[type="date"] {
+    width: 100%;
+    min-width: 140px;
+    padding: 10px 12px;
+    border-radius: 12px;
+    border: 1px solid #cbd5e1;
+    background: white;
+    font-size: 0.8rem;
+    outline: none;
+}
 
-            .locations-section {
-                padding: 12px;
-                border-radius: 18px;
-            }
+.location-table input[type="date"]:focus {
+    border-color: #3b82f6;
+}
 
-            .table-wrapper {
-                overflow: visible;
-                background: transparent;
-                box-shadow: none;
-            }
+/* =========================================================
+   BUTTON
+========================================================= */
 
-            .location-table,
-            .location-table thead,
-            .location-table tbody,
-            .location-table th,
-            .location-table td,
-            .location-table tr {
-                display: block;
-                width: 100%;
-            }
+.btn-sm {
+    border: none;
+    border-radius: 12px;
+    padding: 8px 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+    white-space: nowrap;
+}
 
-            .location-table thead {
-                display: none;
-            }
+/* =========================================================
+   MOBILE
+========================================================= */
 
-            .location-table tr {
-                background: white;
-                border-radius: 18px;
-                padding: 14px;
-                margin-bottom: 16px;
-                box-shadow: 0 4px 14px rgba(15, 23, 42, 0.06);
-                border: 1px solid #e2e8f0;
-            }
+@media (max-width: 768px) {
 
-            .location-table td {
-                border: none;
-                padding: 0;
-                margin-bottom: 14px;
-            }
+    .locations-section {
+        padding: 10px;
+        border-radius: 16px;
+    }
 
-            .location-table td:last-child {
-                margin-bottom: 0;
-            }
+    .section-title {
+        font-size: 0.95rem;
+    }
 
-            /* LABEL MOBILE */
-            .location-table td::before {
-                display: block;
-                margin-bottom: 6px;
-                font-size: 0.72rem;
-                font-weight: 700;
-                color: #64748b;
-            }
+    .section-title span {
+        font-size: 10px !important;
+    }
 
-            .location-table td:nth-child(1)::before {
-                content: "Lokasi";
-            }
+    .table-wrapper {
 
-            .location-table td:nth-child(2)::before {
-                content: "Tanggal Mulai";
-            }
+        /*
+        |--------------------------------------------------------------------------
+        | SCROLL SMOOTH
+        |--------------------------------------------------------------------------
+        */
 
-            .location-table td:nth-child(3)::before {
-                content: "Tanggal Selesai";
-            }
+        overflow-x: auto;
+        scrollbar-width: thin;
+    }
 
-            .location-table td:nth-child(4)::before {
-                content: "Jumlah Hari";
-            }
+    .location-table {
 
-            .location-table td:nth-child(5)::before {
-                content: "Aksi";
-            }
+        /*
+        |--------------------------------------------------------------------------
+        | PENTING
+        |--------------------------------------------------------------------------
+        |
+        | jangan dibuat width 100%
+        | agar table tetap proper
+        |
+        */
 
-            .location-name {
-                font-size: 0.95rem;
-            }
+        min-width: 720px;
+        font-size: 0.78rem;
+    }
 
-            .location-table input[type="date"] {
-                width: 100%;
-                min-width: 100%;
-                height: 46px;
-                font-size: 0.85rem;
-                border-radius: 14px;
-            }
+    .location-table th {
+        padding: 12px 10px;
+        font-size: 0.75rem;
+    }
 
-            .btn-sm {
-                width: 100%;
-                height: 44px;
-                border-radius: 14px;
-                font-size: 0.85rem;
-            }
+    .location-table td {
+        padding: 10px;
+    }
 
-        }
+    .location-table input[type="date"] {
+        min-width: 130px;
+        padding: 8px 10px;
+        font-size: 0.75rem;
+        border-radius: 10px;
+    }
+
+    .btn-sm {
+        padding: 8px 10px;
+        font-size: 0.7rem;
+        border-radius: 10px;
+    }
+
+}
 
         /* campaign footer */
         .action-buttons {
