@@ -37,9 +37,10 @@ class BoardController extends Controller
             'name' => 'required|unique:boards,name',
             'kode' => 'required|unique:boards,kode',
             'pin' => 'required',
+            'price' => 'required',
             'lokasi_id' => 'required',
             'photos' => 'nullable|array',
-            'photos.*' => 'image|mimes:jpg,jpeg,png|max:2048'
+            'photos.*' => 'image|mimes:jpg,jpeg,png|max:20480'
         ]);
 
         DB::beginTransaction();
@@ -50,6 +51,7 @@ class BoardController extends Controller
                 'name' => $request->name,
                 'kode' => $request->kode,
                 'pin' => $request->pin,
+                'price' => $request->price,
                 'lokasi_id' => $request->lokasi_id
             ]);
 
@@ -131,6 +133,7 @@ class BoardController extends Controller
             'name' => 'required',
             'kode' => 'required',
             'pin' => 'required',
+            'price' => 'required',
             'lokasi_id' => 'required',
             'photos.*' => 'image|mimes:jpg,jpeg,png|max:2048'
         ]);
@@ -144,6 +147,7 @@ class BoardController extends Controller
             $board->update([
                 'name' => $request->name,
                 'kode' => $request->kode,
+                'price' => $request->price,
                 'pin' => $request->pin,
                 'lokasi_id' => $request->lokasi_id
             ]);

@@ -57,6 +57,7 @@ $(document).on("click", ".detail-board", function () {
                 $("#edit_nama").val(d.name);
                 $("#edit_kode").val(d.kode);
                 $("#edit_pin").val(d.pin);
+                $("#edit_price").val(formatRupiah(d.price));
                 $("#edit_lokasi").val(d.lokasi_id);
 
                 // STATUS BUTTON
@@ -296,6 +297,7 @@ $("#store").on("click", function () {
 
     let formData = new FormData();
     let button = $(this);
+    let price = $('#price').val().replace(/[^0-9]/g, '');
 
     $('body').css('cursor', 'wait');
     $(button).prop('disabled', true);
@@ -304,6 +306,7 @@ $("#store").on("click", function () {
     formData.append("name", $("#nama").val());
     formData.append("kode", $("#kode").val());
     formData.append("pin", $("#pin").val());
+    formData.append("price", price);
     formData.append("lokasi_id", $("#lokasi").val());
 
     // Validasi file sebelum dikirim
@@ -328,7 +331,7 @@ $("#store").on("click", function () {
             }
 
             // Cek ukuran file (max 2MB)
-            if (file.size > 2 * 1024 * 1024) {
+            if (file.size > 10 * 1024 * 1024) {
                 alertModal(false, `File ${file.name} terlalu besar! Maksimal 2MB`);
                 $('body').css('cursor', 'default');
                 $(button).prop('disabled', false);
@@ -463,12 +466,14 @@ $("#update-board").click(function () {
 
     let formData = new FormData();
     let id = $("#edit_id").val();
+    let price = $('#edit_price').val().replace(/[^0-9]/g, '');
 
     formData.append("_token", $("meta[name='csrf-token']").attr("content"));
     formData.append("id", id);
     formData.append("name", $("#edit_nama").val());
     formData.append("kode", $("#edit_kode").val());
     formData.append("pin", $("#edit_pin").val());
+    formData.append("price", price);
     formData.append("lokasi_id", $("#edit_lokasi").val());
 
     editFiles.forEach(file => {
@@ -805,4 +810,30 @@ $("#apply-filter").on("click", function () {
 
     });
 
+});
+
+$('#price').on('keyup', function () {
+    let cursorPos = this.selectionStart;
+    let value = this.value.replace(/[^0-9]/g, '');
+
+    if (value) {
+        this.value = formatRupiah(value);
+    } else {
+        this.value = '';
+    }
+
+    this.setSelectionRange(this.value.length, this.value.length);
+});
+
+$('#edit_price').on('keyup', function () {
+    let cursorPos = this.selectionStart;
+    let value = this.value.replace(/[^0-9]/g, '');
+
+    if (value) {
+        this.value = formatRupiah(value);
+    } else {
+        this.value = '';
+    }
+
+    this.setSelectionRange(this.value.length, this.value.length);
 });

@@ -125,6 +125,9 @@
                                         <p class="text-muted small mb-1">
                                             Kode : {{ $d->kode }}
                                         </p>
+                                        <p class="text-muted small mb-1">
+                                            Harga : Rp {{ number_format($d->price, 0, ',', '.') }}
+                                        </p>
 
                                         <span class="badge bg-dark">
                                             {{ $d->photos->count() }} Foto
@@ -157,17 +160,14 @@
                         <form class="form theme-form dark-inputs">
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col">
+                                    <div class="col-lg-6 col-12">
                                         <div class="mb-3">
                                             <label class="form-label" for="nama">Nama Board</label>
                                             <input type="text" class="form-control input-air-primary" id="nama"
                                                 placeholder="Masukkan nama board">
                                         </div>
                                     </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col">
+                                    <div class="col-lg-6 col-12">
                                         <div class="mb-3">
                                             <label class="form-label" for="kode">Kode Board</label>
                                             <input type="text" class="form-control input-air-primary" id="kode"
@@ -177,17 +177,25 @@
                                 </div>
 
                                 <div class="row">
-                                    <div class="col">
+                                    <div class="col-lg-6 col-12">
                                         <div class="mb-3">
                                             <label class="form-label" for="pin">Pin Board</label>
                                             <input type="text" class="form-control input-air-primary" id="pin"
                                                 placeholder="Masukkan pin board">
                                         </div>
                                     </div>
+                                    <div class="col-lg-6 col-12">
+                                        <div class="mb-3">
+                                            <label>Harga (Wajib diisi)</label>
+                                            <input type="text" name="price" id="price" class="form-control"
+                                                placeholder="Masukkan harga produk">
+                                            <small class="text-danger error-price"></small>
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div class="row">
-                                    <div class="col">
+                                    <div class="col-lg-6 col-12">
                                         <div class="mb-3">
                                             <label class="form-label" for="lokasi">Lokasi Board</label>
                                             <select class="form-control input-air-primary" id="lokasi">
@@ -197,21 +205,19 @@
                                             </select>
                                         </div>
                                     </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col">
+                                    <div class="col-lg-6 col-12">
                                         <div class="mb-3">
 
                                             <label class="form-label">Upload Foto Board</label>
 
-                                            <input type="file" id="photos" name="photos[]" class="form-control"
+                                            <input type="file" id="photos" name="photos[]" class="input-air-primary form-control"
                                                 accept="image/*" multiple>
-
-                                            <div class="row mt-3" id="preview-images"></div>
 
                                         </div>
                                     </div>
+                                </div>
+                                <div class="row">
+                                    <div class="row mt-3" id="preview-images"></div>
                                 </div>
                             </div>
                             <div class="card-footer text-end">
@@ -255,23 +261,35 @@
                     <!-- DETAIL BOARD -->
 
                     <div class="row">
-
-                        <div class="col-md-6 mb-3">
+                        <div class="col-md-6 col-12 mb-3">
                             <label class="form-label">Nama Board</label>
                             <input type="text" id="edit_nama" class="form-control">
                         </div>
 
-                        <div class="col-md-6 mb-3">
+                        <div class="col-md-6 col-12 mb-3">
                             <label class="form-label">Kode Board</label>
                             <input type="text" id="edit_kode" class="form-control">
                         </div>
+                    </div>
 
-                        <div class="col-md-6 mb-3">
+                    <div class="row">
+                        <div class="col-md-6 col-12 mb-3">
                             <label class="form-label">Pin</label>
                             <input type="text" id="edit_pin" class="form-control">
                         </div>
 
-                        <div class="col-md-6 mb-3">
+                        <div class="col-md-6 col-12 mb-3">
+                            <div class="mb-3">
+                                <label>Harga (Wajib diisi)</label>
+                                <input type="text" name="price" id="edit_price" class="form-control"
+                                    placeholder="Masukkan harga produk">
+                                <small class="text-danger error-price"></small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 col-12 mb-3">
                             <label class="form-label">Lokasi</label>
                             <select id="edit_lokasi" class="form-control">
                                 @foreach ($lokasi as $l)
@@ -281,19 +299,14 @@
                                 @endforeach
                             </select>
                         </div>
-
+                        <div class="col-md-6 col-12 mb-3">
+                            <label class="form-label">Tambah Foto</label>
+                            <input type="file" id="edit_photos" multiple class="form-control" accept="image/*">
+                        </div>
                     </div>
 
-                    <!-- TAMBAH FOTO -->
-
-                    <div class="mt-3">
-
-                        <label class="form-label">Tambah Foto</label>
-
-                        <input type="file" id="edit_photos" multiple class="form-control" accept="image/*">
-
+                    <div class="row">
                         <div class="row mt-3" id="preview-edit-images"></div>
-
                     </div>
 
                 </div>
