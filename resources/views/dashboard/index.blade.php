@@ -500,111 +500,6 @@
 
                         </div>
 
-
-
-                        <div class="modal-overlay" id="scheduleModal">
-
-                            <div class="modal-content">
-
-                                <div class="modal-header">
-
-                                    <div>
-
-                                        <h3 id="modalBoardName">
-                                            Board
-                                        </h3>
-
-                                        <p id="modalLokasi">
-                                            Lokasi
-                                        </p>
-
-                                    </div>
-
-                                    <button type="button" class="close-modal" id="closeModal">
-                                        ✕
-                                    </button>
-
-                                </div>
-
-
-                                <div class="price-info">
-
-                                    Harga :
-                                    <strong id="modalHarga">
-                                        Rp 0
-                                    </strong>
-                                    / hari
-
-                                </div>
-
-
-                                <div class="form-group">
-
-                                    <label>
-                                        Tanggal Mulai
-                                    </label>
-
-                                    <input type="date" id="tanggalMulai">
-
-                                </div>
-
-
-                                <div class="form-group">
-
-                                    <label>
-                                        Tanggal Selesai
-                                    </label>
-
-                                    <input type="date" id="tanggalSelesai">
-
-                                </div>
-
-
-                                <div class="summary-box">
-
-                                    <div class="summary-item">
-
-                                        <span>
-                                            Total Hari
-                                        </span>
-
-                                        <strong id="totalHari">
-                                            0 Hari
-                                        </strong>
-
-                                    </div>
-
-                                    <div class="summary-item">
-
-                                        <span>
-                                            Total Harga
-                                        </span>
-
-                                        <strong id="totalHarga">
-                                            Rp 0
-                                        </strong>
-
-                                    </div>
-
-                                </div>
-
-
-                                <div class="modal-actions">
-
-                                    <button type="button" class="btn-clear" id="clearSchedule">
-                                        Clear
-                                    </button>
-
-                                    <button type="button" class="btn-save" id="saveSchedule">
-                                        Simpan
-                                    </button>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
                         <div class="action-buttons">
                             <button type="submit" class="btn-submit">Simpan Campaign</button>
                         </div>
@@ -626,85 +521,104 @@
         @include('dashboard_layouts.nav')
     </div>
 
-    <div class="locations-section">
+    <div class="modal-overlay" id="scheduleModal">
 
-        <div class="section-title">
+        <div class="modal-content">
 
-            <div>
-                📍 Daftar Board
+            <div class="modal-header">
+
+                <div>
+
+                    <h3 id="modalBoardName">
+                        Board
+                    </h3>
+
+                    <p id="modalLokasi">
+                        Lokasi
+                    </p>
+
+                </div>
+
+                <button type="button" class="close-modal" id="closeModal">
+                    ✕
+                </button>
+
             </div>
 
-            <span>
-                Klik row untuk mengatur jadwal
-            </span>
 
-        </div>
+            <div class="price-info">
 
-        <div class="table-wrapper">
+                Harga :
+                <strong id="modalHarga">
+                    Rp 0
+                </strong>
+                / hari
 
-            <table class="location-table">
+            </div>
 
-                <thead>
 
-                    <tr>
-                        <th>Board</th>
-                        <th>Lokasi</th>
-                        <th>Jadwal</th>
-                        <th>Durasi</th>
-                        <th>Total</th>
-                        <th>Aksi</th>
-                    </tr>
+            <div class="form-group">
 
-                </thead>
+                <label>
+                    Tanggal Mulai
+                </label>
 
-                <tbody>
+                <input type="date" id="tanggalMulai">
 
-                    @foreach ($boards as $board)
-                        <tr class="table-row" data-id="{{ $board->id }}" data-name="{{ $board->name }}"
-                            data-lokasi="{{ $board->lokasi->nama }}" data-harga="{{ $board->harga }}">
+            </div>
 
-                            <td>
 
-                                <div class="board-name">
-                                    {{ $board->name }}
-                                </div>
+            <div class="form-group">
 
-                                <div class="board-code">
-                                    {{ $board->kode }}
-                                </div>
+                <label>
+                    Tanggal Selesai
+                </label>
 
-                            </td>
+                <input type="date" id="tanggalSelesai">
 
-                            <td>
-                                {{ $board->lokasi->nama }}
-                            </td>
+            </div>
 
-                            <td class="jadwal-text">
-                                Belum dipilih
-                            </td>
 
-                            <td class="durasi-text">
-                                -
-                            </td>
+            <div class="summary-box">
 
-                            <td class="harga-text">
-                                -
-                            </td>
+                <div class="summary-item">
 
-                            <td>
+                    <span>
+                        Total Hari
+                    </span>
 
-                                <button type="button" class="btn-edit">
-                                    Edit
-                                </button>
+                    <strong id="totalHari">
+                        0 Hari
+                    </strong>
 
-                            </td>
+                </div>
 
-                        </tr>
-                    @endforeach
+                <div class="summary-item">
 
-                </tbody>
+                    <span>
+                        Total Harga
+                    </span>
 
-            </table>
+                    <strong id="totalHarga">
+                        Rp 0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="modal-actions">
+
+                <button type="button" class="btn-clear" id="clearSchedule">
+                    Clear
+                </button>
+
+                <button type="button" class="btn-save" id="saveSchedule">
+                    Simpan
+                </button>
+
+            </div>
 
         </div>
 
