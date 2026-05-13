@@ -501,7 +501,7 @@
                         </div>
 
                         <div class="action-buttons">
-                            <button type="submit" class="btn-submit">Simpan Campaign</button>
+                            <button type="submit" class="btn-submit" id="btnSubmitCampaign">Simpan Campaign</button>
                         </div>
                     </form>
                 </div>
@@ -616,6 +616,73 @@
 
                 <button type="button" class="btn-save" id="saveSchedule">
                     Simpan
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="modal-overlay" id="orderModal">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <div>
+
+                    <h3>
+                        Detail Order
+                    </h3>
+
+                    <p>
+                        Pastikan data campaign sudah benar
+                    </p>
+
+                </div>
+
+                <button type="button" class="close-modal" id="closeOrderModal">
+                    ✕
+                </button>
+
+            </div>
+
+
+            <div class="summary-box">
+
+                <div class="summary-item">
+                    <span>Invoice</span>
+                    <strong id="detailInvoice">
+                        -
+                    </strong>
+                </div>
+
+                <div class="summary-item">
+                    <span>Total</span>
+                    <strong id="detailTotal">
+                        Rp 0
+                    </strong>
+                </div>
+
+                <div class="summary-item">
+                    <span>Status</span>
+                    <strong>
+                        Pending
+                    </strong>
+                </div>
+
+            </div>
+
+
+            <div class="modal-actions">
+
+                <button type="button" class="btn-clear" id="btnEditCampaign">
+                    Edit
+                </button>
+
+                <button type="button" class="btn-save" id="btnCheckout">
+                    Checkout
                 </button>
 
             </div>
@@ -904,6 +971,120 @@
 
                 totalHargaText.innerText =
                     'Rp 0';
+
+            });
+    </script>
+
+    <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ config('midtrans.client_key') }}">
+    </script>
+
+    <script>
+        const form = document.getElementById('campaignForm');
+
+        const orderModal =
+            document.getElementById('orderModal');
+
+        const closeOrderModal =
+            document.getElementById('closeOrderModal');
+
+        let currentSnapToken = null;
+
+
+
+        form.addEventListener('submit', async function(e) {
+
+            e.preventDefault();
+
+            const formData = new FormData(form);
+
+            try {
+
+                const response = await fetch(
+                    "{{ route('campaign.store') }}", {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        },
+                        body: formData
+                    }
+                );
+
+                const result = await response.json();
+
+                if (!result.success) {
+
+                    alert(result.message);
+                    return;
+
+                }
+
+                currentSnapToken =
+                    result.snap_token;
+
+                document.getElementById('detailInvoice')
+                    .innerText =
+                    result.invoice;
+
+                document.getElementById('detailTotal')
+                    .innerText =
+                    'Rp ' + parseInt(result.total)
+                    .toLocaleString('id-ID');
+
+                orderModal.classList.add('active');
+
+            } catch (error) {
+
+                alert('Terjadi kesalahan');
+
+            }
+
+        });
+
+
+
+        closeOrderModal.addEventListener('click', function() {
+
+            orderModal.classList.remove('active');
+
+        });
+
+
+
+        document.getElementById('btnEditCampaign')
+            .addEventListener('click', function() {
+
+                orderModal.classList.remove('active');
+
+            });
+
+
+
+        document.getElementById('btnCheckout')
+            .addEventListener('click', function() {
+
+                orderModal.classList.remove('active');
+
+                snap.pay(currentSnapToken, {
+
+                    onSuccess: function(result) {
+
+                        window.location.reload();
+
+                    },
+
+                    onPending: function(result) {
+
+                        window.location.reload();
+
+                    },
+
+                    onError: function(result) {
+
+                        alert('Pembayaran gagal');
+
+                    }
+
+                });
 
             });
     </script>

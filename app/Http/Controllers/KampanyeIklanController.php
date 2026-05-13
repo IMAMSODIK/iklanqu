@@ -10,6 +10,7 @@ use App\Models\Payment;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Midtrans\Config;
 use Midtrans\Snap;
 
@@ -17,78 +18,102 @@ class KampanyeIklanController extends Controller
 {
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'media' => 'required|file',
-            'locations' => 'required'
-        ]);
+        DB::beginTransaction();
 
-        $path = $request->file('media')->store('campaigns', 'public');
-        $locations = json_decode($request->locations, true);
-        $totalPrice = 0;
+        try {
 
-        foreach ($locations as $loc) {
-            $lokasi = Lokasi::find($loc['location_id']);
-
-            $start = Carbon::parse($loc['tanggal_mulai']);
-            $end = Carbon::parse($loc['tanggal_selesai']);
-            $days = $start->diffInDays($end) + 1;
-
-            $totalPrice += $lokasi->harga * $days;
-        }
-
-        $campaign = KampanyeIklan::create([
-            'user_id' => auth()->user()->id,
-            // 'user_id' => 1,
-            'name' => $request->name,
-            'description' => $request->description,
-            'media' => $path,
-            'total_price' => $totalPrice,
-            'is_active' => false
-        ]);
-
-        foreach ($locations as $loc) {
-            $campaign->lokasi()->attach($loc['location_id'], [
-                'tanggal_mulai' => $loc['tanggal_mulai'],
-                'tanggal_selesai' => $loc['tanggal_selesai'],
+            $request->validate([
+                'name' => 'required',
+                'description' => 'nullable',
+                'media' => 'nullable',
+                'boards' => 'required|array|min:1',
             ]);
+
+            $totalPrice = 0;
+
+            $campaign = KampanyeIklan::create([
+                'user_id' => Auth::id(),
+                'name' => $request->name,
+                'description' => $request->description,
+                'media' => $request->media,
+                'payment_status' => 'pending',
+                'is_active' => false,
+            ]);
+
+            foreach ($request->boards as $board) {
+
+                $boardModel = Board::findOrFail($board['board_id']);
+
+                $start = Carbon\Carbon::parse($board['tanggal_mulai']);
+
+                $end = Carbon\Carbon::parse($board['tanggal_selesai']);
+
+                $days = $start->diffInDays($end) + 1;
+
+                $subtotal = $days * $boardModel->harga;
+
+                $totalPrice += $subtotal;
+
+                LokasiKampanyeIklan::create([
+                    'kampanye_iklan_id' => $campaign->id,
+                    'lokasi_id' => $boardModel->lokasi_id,
+                    'tanggal_mulai' => $board['tanggal_mulai'],
+                    'tanggal_selesai' => $board['tanggal_selesai'],
+                ]);
+            }
+
+            $campaign->update([
+                'total_price' => $totalPrice
+            ]);
+
+            $payment = Payment::create([
+                'kampanye_iklan_id' => $campaign->id,
+                'invoice_number' => 'INV-' . strtoupper(Str::random(10)),
+                'amount' => $totalPrice,
+                'status' => 'pending',
+            ]);
+
+            \Midtrans\Config::$serverKey = config('midtrans.server_key');
+            \Midtrans\Config::$isProduction = config('midtrans.is_production');
+            \Midtrans\Config::$isSanitized = true;
+            \Midtrans\Config::$is3ds = true;
+
+            $params = [
+                'transaction_details' => [
+                    'order_id' => $payment->invoice_number,
+                    'gross_amount' => (int) $payment->amount,
+                ],
+                'customer_details' => [
+                    'first_name' => Auth::user()->name,
+                    'email' => Auth::user()->email,
+                ]
+            ];
+
+            $snapToken = \Midtrans\Snap::getSnapToken($params);
+
+            $payment->update([
+                'snap_token' => $snapToken
+            ]);
+
+            DB::commit();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Campaign berhasil dibuat',
+                'campaign_id' => $campaign->id,
+                'invoice' => $payment->invoice_number,
+                'total' => $payment->amount,
+                'snap_token' => $snapToken,
+            ]);
+        } catch (\Exception $e) {
+
+            DB::rollBack();
+
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage()
+            ], 500);
         }
-
-        // MIDTRANS CONFIG
-        Config::$serverKey = config('midtrans.server_key');
-        Config::$isProduction = false;
-        Config::$isSanitized = true;
-        Config::$is3ds = true;
-
-        $orderId = 'INV-' . time();
-
-        $transaction = [
-            'transaction_details' => [
-                'order_id' => $orderId,
-                'gross_amount' => $totalPrice,
-            ],
-            'customer_details' => [
-                'first_name' => auth()->user()->name ?? 'User',
-                'email' => auth()->user()->email ?? 'user@mail.com',
-                // 'first_name' => 'User',
-                // 'email' => 'user@mail.com',
-            ]
-        ];
-
-        $snapToken = Snap::getSnapToken($transaction);
-
-        Payment::create([
-            'kampanye_iklan_id' => $campaign->id,
-            'invoice_number' => $orderId,
-            'amount' => $totalPrice,
-            'status' => 'pending',
-            'snap_token' => $snapToken
-        ]);
-
-        return response()->json([
-            'success' => true,
-            'snap_token' => $snapToken
-        ]);
     }
 
     public function callback(Request $request)
