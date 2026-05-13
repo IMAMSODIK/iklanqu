@@ -85,215 +85,6 @@
             cursor: pointer;
         }
 
-        /* lokasi table style - rapi & modern */
-        .locations-section {
-            margin-top: 24px;
-            background: #f8fafc;
-            border-radius: 24px;
-            padding: 18px;
-            border: 1px solid #e2e8f0;
-        }
-
-        .section-title {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 18px;
-            flex-wrap: wrap;
-            font-weight: 700;
-            color: #0f172a;
-        }
-
-        .section-title span {
-            background: #e2e8f0;
-            padding: 5px 12px;
-            border-radius: 999px;
-            font-size: 11px;
-            color: #475569;
-        }
-
-        .table-wrapper {
-            overflow-x: auto;
-        }
-
-        .location-table {
-            width: 100%;
-            border-collapse: separate;
-            border-spacing: 0 10px;
-            min-width: 720px;
-        }
-
-        .location-table th {
-            background: #f1f5f9;
-            padding: 14px;
-            text-align: left;
-            font-size: 0.82rem;
-            color: #475569;
-        }
-
-        .location-table td {
-            background: white;
-            padding: 14px;
-            border-top: 1px solid #e2e8f0;
-            border-bottom: 1px solid #e2e8f0;
-        }
-
-        .location-table td:first-child {
-            border-left: 1px solid #e2e8f0;
-            border-top-left-radius: 16px;
-            border-bottom-left-radius: 16px;
-        }
-
-        .location-table td:last-child {
-            border-right: 1px solid #e2e8f0;
-            border-top-right-radius: 16px;
-            border-bottom-right-radius: 16px;
-        }
-
-        .board-name {
-            font-weight: 700;
-            color: #0f172a;
-        }
-
-        .board-code {
-            font-size: 12px;
-            color: #64748b;
-            margin-top: 3px;
-        }
-
-        .btn-jadwal {
-            border: none;
-            background: #2563eb;
-            color: white;
-            padding: 10px 14px;
-            border-radius: 12px;
-            cursor: pointer;
-            font-size: 12px;
-            font-weight: 600;
-        }
-
-        .modal-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(15, 23, 42, 0.5);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            padding: 16px;
-            z-index: 999;
-        }
-
-        .modal-content {
-            width: 100%;
-            max-width: 420px;
-            background: white;
-            border-radius: 24px;
-            padding: 20px;
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            gap: 10px;
-            margin-bottom: 18px;
-        }
-
-        .modal-header h3 {
-            margin: 0;
-            color: #0f172a;
-        }
-
-        .modal-header p {
-            margin: 4px 0 0;
-            color: #64748b;
-            font-size: 13px;
-        }
-
-        .close-modal {
-            width: 36px;
-            height: 36px;
-            border: none;
-            border-radius: 12px;
-            background: #f1f5f9;
-            cursor: pointer;
-        }
-
-        .price-info {
-            background: #eff6ff;
-            color: #1d4ed8;
-            padding: 14px;
-            border-radius: 14px;
-            margin-bottom: 16px;
-            font-size: 14px;
-        }
-
-        .form-group {
-            margin-bottom: 16px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-size: 13px;
-            font-weight: 600;
-            color: #334155;
-        }
-
-        .form-group input {
-            width: 100%;
-            height: 46px;
-            border-radius: 14px;
-            border: 1px solid #cbd5e1;
-            padding: 0 14px;
-        }
-
-        .summary-box {
-            background: #f8fafc;
-            border-radius: 16px;
-            padding: 16px;
-            margin-bottom: 16px;
-        }
-
-        .summary-item {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-        }
-
-        .summary-item:last-child {
-            margin-bottom: 0;
-        }
-
-        .btn-save {
-            width: 100%;
-            height: 48px;
-            border: none;
-            border-radius: 14px;
-            background: #0f172a;
-            color: white;
-            font-weight: 700;
-            cursor: pointer;
-        }
-
-        @media (max-width: 768px) {
-
-            .locations-section {
-                padding: 14px;
-            }
-
-            .location-table {
-                min-width: 680px;
-            }
-
-            .location-table th,
-            .location-table td {
-                padding: 12px;
-                font-size: 12px;
-            }
-
-        }
-
         /* campaign footer */
         .action-buttons {
             text-align: center;
@@ -362,6 +153,259 @@
             margin-left: 2px;
         }
     </style>
+
+
+    {{-- lokasi style --}}
+    <style>
+        .locations-section {
+            margin-top: 24px;
+            background: #f8fafc;
+            border-radius: 24px;
+            padding: 18px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .section-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 18px;
+            flex-wrap: wrap;
+            font-weight: 700;
+            color: #0f172a;
+        }
+
+        .section-title span {
+            background: #e2e8f0;
+            padding: 5px 12px;
+            border-radius: 999px;
+            font-size: 11px;
+            color: #475569;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        .location-table {
+            width: 100%;
+            min-width: 720px;
+            border-collapse: separate;
+            border-spacing: 0 10px;
+        }
+
+        .location-table th {
+            background: #f1f5f9;
+            padding: 14px;
+            text-align: left;
+            font-size: 0.82rem;
+            color: #475569;
+        }
+
+        .location-table td {
+            background: white;
+            padding: 14px;
+            border-top: 1px solid #e2e8f0;
+            border-bottom: 1px solid #e2e8f0;
+            vertical-align: middle;
+        }
+
+        .location-table td:first-child {
+            border-left: 1px solid #e2e8f0;
+            border-top-left-radius: 16px;
+            border-bottom-left-radius: 16px;
+        }
+
+        .location-table td:last-child {
+            border-right: 1px solid #e2e8f0;
+            border-top-right-radius: 16px;
+            border-bottom-right-radius: 16px;
+        }
+
+        .location-table tbody tr {
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .location-table tbody tr:hover td {
+            background: #f8fafc;
+        }
+
+        .board-name {
+            font-weight: 700;
+            color: #0f172a;
+        }
+
+        .board-code {
+            font-size: 12px;
+            color: #64748b;
+            margin-top: 3px;
+        }
+
+        .btn-edit {
+            border: none;
+            background: #eff6ff;
+            color: #2563eb;
+            padding: 10px 14px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            z-index: 999;
+        }
+
+        .modal-content {
+            width: 100%;
+            max-width: 420px;
+            background: white;
+            border-radius: 24px;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 18px;
+        }
+
+        .modal-header h3 {
+            margin: 0;
+            color: #0f172a;
+        }
+
+        .modal-header p {
+            margin: 4px 0 0;
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        .close-modal {
+            width: 36px;
+            height: 36px;
+            border: none;
+            border-radius: 12px;
+            background: #f1f5f9;
+            cursor: pointer;
+        }
+
+        .price-info {
+            background: #eff6ff;
+            color: #1d4ed8;
+            padding: 14px;
+            border-radius: 14px;
+            margin-bottom: 16px;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #334155;
+        }
+
+        .form-group input {
+            width: 100%;
+            max-width: 100%;
+            height: 46px;
+            border-radius: 14px;
+            border: 1px solid #cbd5e1;
+            padding: 0 14px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+
+        .summary-box {
+            background: #f8fafc;
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .summary-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-clear {
+            flex: 1;
+            height: 48px;
+            border: none;
+            border-radius: 14px;
+            background: #fee2e2;
+            color: #dc2626;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .btn-save {
+            flex: 1;
+            height: 48px;
+            border: none;
+            border-radius: 14px;
+            background: #0f172a;
+            color: white;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+
+            .locations-section {
+                padding: 14px;
+            }
+
+            .location-table {
+                min-width: 680px;
+            }
+
+            .location-table th,
+            .location-table td {
+                padding: 12px;
+                font-size: 12px;
+            }
+
+            .modal-content {
+                max-width: 100%;
+                border-radius: 20px;
+                padding: 18px;
+            }
+
+            .form-group input {
+                font-size: 13px;
+            }
+
+        }
+    </style>
 </head>
 
 <body>
@@ -405,13 +449,15 @@
                         <div class="locations-section">
 
                             <div class="section-title">
+
                                 <div>
                                     📍 Daftar Board
                                 </div>
 
                                 <span>
-                                    Klik pilih jadwal untuk mengatur penayangan
+                                    Klik row untuk mengatur jadwal
                                 </span>
+
                             </div>
 
                             <div class="table-wrapper">
@@ -419,6 +465,7 @@
                                 <table class="location-table">
 
                                     <thead>
+
                                         <tr>
                                             <th>Board</th>
                                             <th>Lokasi</th>
@@ -427,16 +474,18 @@
                                             <th>Total</th>
                                             <th>Aksi</th>
                                         </tr>
+
                                     </thead>
 
                                     <tbody>
 
                                         @foreach ($boards as $board)
-                                            <tr data-id="{{ $board->id }}" data-name="{{ $board->name }}"
-                                                data-lokasi="{{ $board->lokasi->nama }}"
+                                            <tr class="table-row" data-id="{{ $board->id }}"
+                                                data-name="{{ $board->name }}" data-lokasi="{{ $board->lokasi->nama }}"
                                                 data-harga="{{ $board->harga }}">
 
                                                 <td>
+
                                                     <div class="board-name">
                                                         {{ $board->name }}
                                                     </div>
@@ -444,6 +493,7 @@
                                                     <div class="board-code">
                                                         {{ $board->kode }}
                                                     </div>
+
                                                 </td>
 
                                                 <td>
@@ -464,8 +514,8 @@
 
                                                 <td>
 
-                                                    <button type="button" class="btn-jadwal openModal">
-                                                        Pilih Jadwal
+                                                    <button type="button" class="btn-edit">
+                                                        Edit
                                                     </button>
 
                                                 </td>
@@ -502,73 +552,85 @@
         @include('dashboard_layouts.nav')
     </div>
 
-    <div class="modal-overlay" id="scheduleModal">
+    <div class="locations-section">
 
-        <div class="modal-content">
+        <div class="section-title">
 
-            <div class="modal-header">
-
-                <div>
-                    <h3 id="modalBoardName">Board</h3>
-                    <p id="modalLokasi">Lokasi</p>
-                </div>
-
-                <button type="button" class="close-modal" id="closeModal">
-                    ✕
-                </button>
-
+            <div>
+                📍 Daftar Board
             </div>
 
+            <span>
+                Klik row untuk mengatur jadwal
+            </span>
 
-            <div class="price-info">
-                Harga :
-                <strong id="modalHarga">
-                    Rp 0
-                </strong>
-                / hari
-            </div>
+        </div>
 
+        <div class="table-wrapper">
 
-            <div class="form-group">
+            <table class="location-table">
 
-                <label>Tanggal Mulai</label>
+                <thead>
 
-                <input type="date" id="tanggalMulai">
+                    <tr>
+                        <th>Board</th>
+                        <th>Lokasi</th>
+                        <th>Jadwal</th>
+                        <th>Durasi</th>
+                        <th>Total</th>
+                        <th>Aksi</th>
+                    </tr>
 
-            </div>
+                </thead>
 
+                <tbody>
 
-            <div class="form-group">
+                    @foreach ($boards as $board)
+                        <tr class="table-row" data-id="{{ $board->id }}" data-name="{{ $board->name }}"
+                            data-lokasi="{{ $board->lokasi->nama }}" data-harga="{{ $board->harga }}">
 
-                <label>Tanggal Selesai</label>
+                            <td>
 
-                <input type="date" id="tanggalSelesai">
+                                <div class="board-name">
+                                    {{ $board->name }}
+                                </div>
 
-            </div>
+                                <div class="board-code">
+                                    {{ $board->kode }}
+                                </div>
 
+                            </td>
 
-            <div class="summary-box">
+                            <td>
+                                {{ $board->lokasi->nama }}
+                            </td>
 
-                <div class="summary-item">
-                    <span>Total Hari</span>
-                    <strong id="totalHari">
-                        0 Hari
-                    </strong>
-                </div>
+                            <td class="jadwal-text">
+                                Belum dipilih
+                            </td>
 
-                <div class="summary-item">
-                    <span>Total Harga</span>
-                    <strong id="totalHarga">
-                        Rp 0
-                    </strong>
-                </div>
+                            <td class="durasi-text">
+                                -
+                            </td>
 
-            </div>
+                            <td class="harga-text">
+                                -
+                            </td>
 
+                            <td>
 
-            <button type="button" class="btn-save" id="saveSchedule">
-                Simpan Jadwal
-            </button>
+                                <button type="button" class="btn-edit">
+                                    Edit
+                                </button>
+
+                            </td>
+
+                        </tr>
+                    @endforeach
+
+                </tbody>
+
+            </table>
 
         </div>
 
@@ -579,25 +641,6 @@
     </script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-
-    <script>
-        $(document).on('click', '.remove-location', function() {
-            const row = $(this).closest('tr');
-            const lokasiNama = row.find('.location-name').text();
-
-            if (confirm(`Reset jadwal untuk lokasi "${lokasiNama}"?`)) {
-                row.find('.tanggal-mulai').val('');
-                row.find('.tanggal-selesai').val('');
-
-                row.find('td:eq(3)').text('0 Hari');
-
-                row.css('background', '#fee2e2');
-                setTimeout(() => {
-                    row.css('background', '');
-                }, 500);
-            }
-        });
-    </script>
 
     <script>
         // ---------- FILE UPLOAD HANDLER dengan preview ----------
@@ -716,7 +759,6 @@
             });
         });
     </script>
-
 
     <script>
         const modal = document.getElementById('scheduleModal');
