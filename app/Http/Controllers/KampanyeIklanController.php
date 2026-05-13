@@ -23,8 +23,13 @@ class KampanyeIklanController extends Controller
                 'name' => 'required',
                 'description' => 'nullable',
                 'media' => 'nullable',
-                'boards' => 'required|array|min:1',
+                'boards' => 'required',
             ]);
+
+            $boards = json_decode($request->boards, true);
+            if (!$boards || count($boards) < 1) {
+                throw new \Exception('Board belum dipilih');
+            }
 
             $totalPrice = 0;
 
@@ -37,7 +42,7 @@ class KampanyeIklanController extends Controller
                 'is_active' => false,
             ]);
 
-            foreach ($request->boards as $board) {
+            foreach ($boards as $board) {
                 $boardModel = Board::findOrFail($board['board_id']);
                 $start = Carbon::parse($board['tanggal_mulai']);
                 $end = Carbon::parse($board['tanggal_selesai']);
