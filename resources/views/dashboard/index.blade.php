@@ -88,187 +88,186 @@
         /* lokasi table style - rapi & modern */
         .locations-section {
             margin-top: 24px;
-            background: #f1f5f9;
-            border-radius: 20px;
-            padding: 16px;
+            background: #f8fafc;
+            border-radius: 24px;
+            padding: 18px;
+            border: 1px solid #e2e8f0;
         }
 
         .section-title {
-            font-weight: 700;
-            font-size: 1rem;
             display: flex;
-            flex-wrap: wrap;
             align-items: center;
             justify-content: space-between;
-            gap: 8px;
-            margin-bottom: 16px;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 18px;
+            font-size: 1rem;
+            font-weight: 700;
             color: #0f172a;
         }
 
         .section-title span {
-            font-size: 10px;
             background: #e2e8f0;
-            padding: 4px 10px;
-            border-radius: 40px;
-            white-space: nowrap;
+            color: #475569;
+            padding: 5px 12px;
+            border-radius: 999px;
+            font-size: 11px;
+            font-weight: 600;
         }
 
-        /* TABLE WRAPPER - HORIZONTAL SCROLL UNTUK MOBILE */
         .table-wrapper {
-            overflow-x: auto;
-            overflow-y: visible;
-            border-radius: 16px;
-            background: white;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
-            -webkit-overflow-scrolling: touch;
-            /* smooth scroll di iOS */
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
         }
 
         .location-table {
             width: 100%;
-            border-collapse: collapse;
-            font-size: 0.8rem;
-            min-width: 500px;
-            /* Memaksa scroll horizontal di mobile, tapi tetap rapi */
+            border-collapse: separate;
+            border-spacing: 0 12px;
         }
 
-        /* Untuk mobile, kolom tertentu punya lebar minimum */
-        @media (max-width: 640px) {
-            .location-table {
-                min-width: 550px;
-            }
-
-            .location-table th,
-            .location-table td {
-                padding: 12px 8px;
-            }
-
-            /* Kolom Aksi lebih kecil */
-            .location-table th:last-child,
-            .location-table td:last-child {
-                position: sticky;
-                right: 0;
-                background: white;
-                box-shadow: -2px 0 5px rgba(0, 0, 0, 0.05);
-            }
-        }
-
-        .location-table th {
-            background: #f8fafc;
-            padding: 14px 10px;
+        .location-table thead th {
+            background: #f1f5f9;
+            padding: 14px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: #475569;
             text-align: left;
-            font-weight: 600;
-            color: #1e293b;
-            border-bottom: 2px solid #e2e8f0;
-            font-size: 0.75rem;
             white-space: nowrap;
         }
 
-        .location-table td {
-            padding: 12px 10px;
-            border-bottom: 1px solid #eef2ff;
-            vertical-align: middle;
+        .location-table thead th:first-child {
+            border-top-left-radius: 14px;
+            border-bottom-left-radius: 14px;
         }
 
-        .location-table tr:last-child td {
-            border-bottom: none;
+        .location-table thead th:last-child {
+            border-top-right-radius: 14px;
+            border-bottom-right-radius: 14px;
+        }
+
+        .location-table tbody tr {
+            background: #fff;
+            box-shadow: 0 2px 10px rgba(15, 23, 42, 0.04);
+        }
+
+        .location-table tbody td {
+            padding: 14px;
+            vertical-align: middle;
+            border-top: 1px solid #e2e8f0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .location-table tbody td:first-child {
+            border-left: 1px solid #e2e8f0;
+            border-top-left-radius: 18px;
+            border-bottom-left-radius: 18px;
+        }
+
+        .location-table tbody td:last-child {
+            border-right: 1px solid #e2e8f0;
+            border-top-right-radius: 18px;
+            border-bottom-right-radius: 18px;
         }
 
         .location-name {
-            font-weight: 600;
-            color: #0f3b5f;
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #0f172a;
+        }
+
+        .location-table input[type="date"] {
+            width: 100%;
+            min-width: 140px;
+            height: 42px;
+            padding: 0 12px;
+            border-radius: 12px;
+            border: 1px solid #cbd5e1;
+            background: #fff;
+            font-size: 0.78rem;
+            color: #0f172a;
+            outline: none;
+            transition: 0.2s;
+        }
+
+        .location-table input[type="date"]:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .total-hari {
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: #0f766e;
             white-space: nowrap;
         }
 
-        /* INPUT DATE - UKURAN LEBIH BESAR UNTUK MOBILE */
-        .location-table input[type="date"] {
-            padding: 10px 12px;
-            border-radius: 40px;
-            border: 1px solid #cbd5e1;
-            font-size: 0.8rem;
-            width: 140px;
-            background: white;
-            font-family: inherit;
+        .btn-sm {
+            width: 40px;
+            height: 40px;
+            border: none;
+            border-radius: 12px;
+            background: #fee2e2;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: 0.2s;
         }
 
-        /* Tampilan desktop - input lebih lega */
-        @media (min-width: 768px) {
-            .location-table input[type="date"] {
-                width: 160px;
-                padding: 8px 12px;
+        .btn-sm:hover {
+            background: #fecaca;
+        }
+
+        @media (max-width: 768px) {
+
+            .locations-section {
+                padding: 14px;
+                border-radius: 18px;
+            }
+
+            .section-title {
+                font-size: 0.9rem;
+                margin-bottom: 14px;
+            }
+
+            .section-title span {
+                font-size: 10px;
+                padding: 4px 10px;
+            }
+
+            .table-wrapper {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
             }
 
             .location-table {
-                min-width: auto;
+                min-width: 680px;
             }
-        }
 
-        /* Kolom Jumlah Hari */
-        .days-cell {
-            font-weight: 600;
-            color: #0f172a;
-            background: #f1f5f9;
-            border-radius: 40px;
-            padding: 6px 12px;
-            display: inline-block;
-            font-size: 0.75rem;
-            white-space: nowrap;
-        }
+            .location-table thead th,
+            .location-table tbody td {
+                padding: 12px 10px;
+            }
 
-        /* Tombol Hapus */
-        .btn-sm-remove {
-            background: #fee2e2;
-            border: none;
-            padding: 8px 12px;
-            border-radius: 40px;
-            cursor: pointer;
-            font-size: 0.75rem;
-            font-weight: 500;
-            color: #dc2626;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            transition: 0.1s;
-            white-space: nowrap;
-        }
+            .location-table input[type="date"] {
+                min-width: 130px;
+                height: 40px;
+                font-size: 0.74rem;
+            }
 
-        .btn-sm-remove:active {
-            transform: scale(0.96);
-        }
+            .location-name {
+                font-size: 0.82rem;
+            }
 
-        /* Empty state */
-        .empty-state {
-            text-align: center;
-            padding: 40px 20px;
-            background: #f8fafc;
-            border-radius: 20px;
-        }
+            .total-hari {
+                font-size: 0.74rem;
+            }
 
-        .empty-state p {
-            color: #64748b;
-            margin-bottom: 16px;
-            font-size: 0.9rem;
-        }
-
-        .btn-add {
-            background: #0f172a;
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 40px;
-            font-weight: 600;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 0.85rem;
-        }
-
-        /* Sticky header saat scroll horizontal (opsional) */
-        .location-table th {
-            position: sticky;
-            top: 0;
-            background: #f8fafc;
-            z-index: 1;
+            .btn-sm {
+                width: 36px;
+                height: 36px;
+                font-size: 0.8rem;
+            }
         }
 
         /* campaign footer */
@@ -380,55 +379,48 @@
 
                         <!-- TABLE LOKASI DENGAN TANGGAL MULAI & TANGGAL SELESAI -->
                         <div class="locations-section">
-                            <div class="section-title">
-                                📍 Daftar Lokasi & Jadwal Penayangan
-                                <span>Setiap lokasi punya jadwal sendiri</span>
-                            </div>
-
+                            <div class="section-title"> 📍 Daftar Lokasi & Jadwal Penayangan <span
+                                    style="font-size: 12px; background:#e2e8f0; padding:3px 10px; border-radius:40px;">Setiap
+                                    lokasi punya jadwal sendiri</span> </div>
                             <div class="table-wrapper">
                                 <table class="location-table" id="locationTable">
                                     <thead>
                                         <tr>
-                                            <th style="min-width: 120px;">Lokasi</th>
-                                            <th style="min-width: 150px;">Tanggal Mulai</th>
-                                            <th style="min-width: 150px;">Tanggal Selesai</th>
-                                            <th style="min-width: 80px;">Jumlah</th>
-                                            <th style="min-width: 80px; text-align: center;">Aksi</th>
+                                            <th>Lokasi</th>
+                                            <th>Tanggal Mulai</th>
+                                            <th>Tanggal Selesai</th>
+                                            <th>Jumlah</th>
+                                            <th style="width: 60px;">Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody id="locationTableBody">
                                         @foreach ($lokasis as $lokasi)
                                             <tr data-id="{{ $lokasi->id }}" data-nama="{{ $lokasi->nama }}">
                                                 <td class="location-name">{{ $lokasi->nama }}</td>
-                                                <td>
-                                                    <input type="date" name="tanggal_mulai[{{ $lokasi->id }}]"
+                                                <td> <input type="date" name="tanggal_mulai[{{ $lokasi->id }}]"
                                                         class="tanggal-mulai"
-                                                        value="{{ old('tanggal_mulai.' . $lokasi->id) }}">
+                                                        style="padding: 8px; border-radius: 30px; border: 1px solid #cbd5e1; width: 130px;">
                                                 </td>
-                                                <td>
-                                                    <input type="date" name="tanggal_selesai[{{ $lokasi->id }}]"
+                                                <td> <input type="date" name="tanggal_selesai[{{ $lokasi->id }}]"
                                                         class="tanggal-selesai"
-                                                        value="{{ old('tanggal_selesai.' . $lokasi->id) }}">
+                                                        style="padding: 8px; border-radius: 30px; border: 1px solid #cbd5e1; width: 130px;">
                                                 </td>
-                                                <td>
-                                                    <span class="days-cell" id="days-{{ $lokasi->id }}">0 Hari</span>
-                                                </td>
-                                                <td style="text-align: center;">
-                                                    <button type="button" class="btn-sm-remove remove-location"
-                                                        data-id="{{ $lokasi->id }}">
-                                                        🗑️ Hapus
-                                                    </button>
-                                                </td>
+                                                <td class="location-name">0 Hari</td>
+                                                <td> <button type="button" class="btn-sm remove-location"
+                                                        data-id="{{ $lokasi->id }}"
+                                                        style="background: #fee2e2; cursor: pointer; border: none; padding: 6px 10px; border-radius: 32px;">
+                                                        🗑️ </button> </td>
                                             </tr>
-                                        @endforeach
+                                            @endforeach
                                     </tbody>
                                 </table>
                             </div>
-
                             @if ($lokasis->isEmpty())
-                                <div class="empty-state">
-                                    <p>Belum ada lokasi. Silakan tambah lokasi terlebih dahulu.</p>
-                                    <a href="{{ route('lokasi.index') }}" class="btn-add">+ Tambah Lokasi</a>
+                                <div
+                                    style="text-align: center; padding: 40px; background: #f8fafc; border-radius: 20px;">
+                                    <p style="color: #64748b;">Belum ada lokasi. Silakan tambah lokasi terlebih dahulu.
+                                    </p> <a href="{{ route('lokasi.index') }}" class="btn-add"
+                                        style="display: inline-block; margin-top: 12px;">+ Tambah Lokasi</a>
                                 </div>
                             @endif
                         </div>
