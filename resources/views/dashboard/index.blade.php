@@ -408,7 +408,8 @@
                         <!-- DESKRIPSI IKLAN -->
                         <div class="form-group">
                             <label>Deskripsi Iklan</label>
-                            <textarea name="description" id="ad_description" placeholder="Tentukan pesan utama, target audiens, atau value proposition..."></textarea>
+                            <textarea name="description" id="ad_description"
+                                placeholder="Tentukan pesan utama, target audiens, atau value proposition..."></textarea>
                         </div>
 
                         <!-- FILE (VIDEO/GAMBAR) -->
@@ -418,7 +419,8 @@
                                 📤 Klik atau seret file ke sini<br>
                                 <small style="color:#64748b">Maks 20MB, format JPG, PNG, MP4, MOV</small>
                             </div>
-                            <input type="file" name="media" id="media_file" style="display: none;" accept="image/*,video/*">
+                            <input type="file" name="media" id="media_file" style="display: none;"
+                                accept="image/*,video/*">
                             <div id="filePreviewArea" style="margin-top: 12px;"></div>
                         </div>
 
@@ -930,9 +932,20 @@
 
                 if (!currentRow) return;
 
-                const start = tanggalMulai.value;
+                const start =
+                    tanggalMulai.value;
 
-                const end = tanggalSelesai.value;
+                const end =
+                    tanggalSelesai.value;
+
+                currentRow.dataset.tanggal_mulai =
+                    start;
+
+                currentRow.dataset.tanggal_selesai =
+                    end;
+
+                currentRow.dataset.total =
+                    totalHargaText.innerText.replace(/\D/g, '');
 
                 currentRow.querySelector('.jadwal-text').innerText =
                     start + ' s/d ' + end;
