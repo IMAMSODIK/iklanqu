@@ -86,177 +86,194 @@
         }
 
         /* lokasi table style - rapi & modern */
-        /* =========================================================
-   RESPONSIVE TABLE MOBILE FRIENDLY
-========================================================= */
-
-.locations-section {
-    margin-top: 24px;
-    background: #f8fafc;
-    border-radius: 20px;
-    padding: 14px;
-}
-
-.section-title {
-    font-weight: 700;
-    font-size: 1rem;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 16px;
-    color: #0f172a;
-    flex-wrap: wrap;
-}
-
-.table-wrapper {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    border-radius: 18px;
-    background: white;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.04);
-}
-
-/* =========================================================
-   TABLE
-========================================================= */
-
-.location-table {
-    width: 100%;
-    min-width: 720px;
-    border-collapse: collapse;
-    font-size: 0.85rem;
-}
-
-.location-table th {
-    background: #f8fafc;
-    padding: 14px 12px;
-    text-align: left;
-    font-weight: 700;
-    color: #334155;
-    border-bottom: 1px solid #e2e8f0;
-    white-space: nowrap;
-}
-
-.location-table td {
-    padding: 12px;
-    border-bottom: 1px solid #eef2ff;
-    vertical-align: middle;
-}
-
-.location-table tr:last-child td {
-    border-bottom: none;
-}
-
-.location-name {
-    font-weight: 600;
-    color: #0f172a;
-    white-space: nowrap;
-}
-
-/* =========================================================
-   INPUT
-========================================================= */
-
-.location-table input[type="date"] {
-    width: 100%;
-    min-width: 140px;
-    padding: 10px 12px;
-    border-radius: 12px;
-    border: 1px solid #cbd5e1;
-    background: white;
-    font-size: 0.8rem;
-    outline: none;
-}
-
-.location-table input[type="date"]:focus {
-    border-color: #3b82f6;
-}
-
-/* =========================================================
-   BUTTON
-========================================================= */
-
-.btn-sm {
-    border: none;
-    border-radius: 12px;
-    padding: 8px 12px;
-    font-size: 0.75rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: 0.2s;
-    white-space: nowrap;
-}
-
-/* =========================================================
-   MOBILE
-========================================================= */
-
-@media (max-width: 768px) {
-
+        /* MOBILE-FIRST STYLES */
     .locations-section {
-        padding: 10px;
-        border-radius: 16px;
+        margin-top: 24px;
+        background: #f1f5f9;
+        border-radius: 20px;
+        padding: 16px;
     }
 
     .section-title {
-        font-size: 0.95rem;
+        font-weight: 700;
+        font-size: 1.1rem;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        margin-bottom: 16px;
+        color: #0f172a;
     }
 
     .section-title span {
-        font-size: 10px !important;
+        font-size: 10px;
+        background: #e2e8f0;
+        padding: 4px 10px;
+        border-radius: 40px;
+        white-space: nowrap;
     }
 
-    .table-wrapper {
-
-        /*
-        |--------------------------------------------------------------------------
-        | SCROLL SMOOTH
-        |--------------------------------------------------------------------------
-        */
-
-        overflow-x: auto;
-        scrollbar-width: thin;
+    /* CARD LAYOUT UNTUK MOBILE */
+    .location-cards {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
     }
 
-    .location-table {
-
-        /*
-        |--------------------------------------------------------------------------
-        | PENTING
-        |--------------------------------------------------------------------------
-        |
-        | jangan dibuat width 100%
-        | agar table tetap proper
-        |
-        */
-
-        min-width: 720px;
-        font-size: 0.78rem;
+    .location-card {
+        background: white;
+        border-radius: 20px;
+        padding: 16px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        transition: 0.1s;
     }
 
-    .location-table th {
-        padding: 12px 10px;
-        font-size: 0.75rem;
+    .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 14px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #eef2ff;
     }
 
-    .location-table td {
-        padding: 10px;
+    .location-name {
+        font-weight: 700;
+        font-size: 1rem;
+        color: #0f3b5f;
+        background: #f1f5f9;
+        padding: 4px 12px;
+        border-radius: 40px;
+        display: inline-block;
     }
 
-    .location-table input[type="date"] {
-        min-width: 130px;
-        padding: 8px 10px;
-        font-size: 0.75rem;
-        border-radius: 10px;
+    .remove-location {
+        background: #fee2e2;
+        border: none;
+        padding: 8px 14px;
+        border-radius: 40px;
+        cursor: pointer;
+        font-size: 0.85rem;
+        font-weight: 500;
+        color: #dc2626;
+        display: flex;
+        align-items: center;
+        gap: 6px;
     }
 
-    .btn-sm {
-        padding: 8px 10px;
+    .card-body {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+    }
+
+    .date-field {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    .date-field label {
         font-size: 0.7rem;
-        border-radius: 10px;
+        font-weight: 600;
+        color: #475569;
+        letter-spacing: 0.5px;
     }
 
-}
+    .date-field input {
+        padding: 12px 14px;
+        border-radius: 48px;
+        border: 1px solid #cbd5e1;
+        font-size: 0.85rem;
+        width: 100%;
+        background: white;
+        font-family: inherit;
+        box-sizing: border-box;
+    }
+
+    .days-count {
+        background: #f1f5f9;
+        padding: 8px 12px;
+        border-radius: 40px;
+        text-align: center;
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: #0f172a;
+        margin-top: 6px;
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 40px 20px;
+        background: #f8fafc;
+        border-radius: 20px;
+    }
+
+    .empty-state p {
+        color: #64748b;
+        margin-bottom: 16px;
+        font-size: 0.9rem;
+    }
+
+    .btn-add {
+        background: #0f172a;
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 40px;
+        font-weight: 600;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 0.85rem;
+    }
+
+    /* Tampilan tablet & desktop (>= 640px) */
+    @media (min-width: 640px) {
+        .locations-section {
+            padding: 24px;
+        }
+
+        .location-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 20px;
+        }
+
+        .card-body {
+            flex-direction: row;
+            flex-wrap: wrap;
+            align-items: flex-end;
+        }
+
+        .date-field {
+            flex: 1;
+            min-width: 130px;
+        }
+
+        .days-count {
+            flex: 0 0 auto;
+            width: auto;
+            min-width: 80px;
+            margin-top: 0;
+        }
+    }
+
+    /* INTERAKSI */
+    .remove-location:active {
+        transform: scale(0.97);
+    }
+
+    .btn-add:active {
+        transform: scale(0.98);
+    }
+
+    input:focus {
+        outline: none;
+        border-color: #3b82f6;
+        box-shadow: 0 0 0 2px rgba(59,130,246,0.1);
+    }
 
         /* campaign footer */
         .action-buttons {
@@ -367,61 +384,48 @@
 
                         <!-- TABLE LOKASI DENGAN TANGGAL MULAI & TANGGAL SELESAI -->
                         <div class="locations-section">
-                            <div class="section-title">
-                                📍 Daftar Lokasi & Jadwal Penayangan
-                                <span
-                                    style="font-size: 12px; background:#e2e8f0; padding:3px 10px; border-radius:40px;">Setiap
-                                    lokasi punya jadwal sendiri</span>
-                            </div>
-                            <div class="table-wrapper">
-                                <table class="location-table" id="locationTable">
-                                    <thead>
-                                        <tr>
-                                            <th>Lokasi</th>
-                                            <th>Tanggal Mulai</th>
-                                            <th>Tanggal Selesai</th>
-                                            <th>Jumlah</th>
-                                            <th style="width: 60px;">Aksi</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="locationTableBody">
-                                        @foreach ($lokasis as $lokasi)
-                                            <tr data-id="{{ $lokasi->id }}" data-nama="{{ $lokasi->nama }}">
-                                                <td class="location-name">{{ $lokasi->nama }}</td>
-                                                <td>
-                                                    <input type="date" name="tanggal_mulai[{{ $lokasi->id }}]"
-                                                        class="tanggal-mulai"
-                                                        style="padding: 8px; border-radius: 30px; border: 1px solid #cbd5e1; width: 130px;">
-                                                </td>
-                                                <td>
-                                                    <input type="date" name="tanggal_selesai[{{ $lokasi->id }}]"
-                                                        class="tanggal-selesai"
-                                                        style="padding: 8px; border-radius: 30px; border: 1px solid #cbd5e1; width: 130px;">
-                                                </td>
-                                                <td class="location-name">0 Hari</td>
-                                                <td>
-                                                    <button type="button" class="btn-sm remove-location"
-                                                        data-id="{{ $lokasi->id }}"
-                                                        style="background: #fee2e2; cursor: pointer; border: none; padding: 6px 10px; border-radius: 32px;">
-                                                        🗑️
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
+    <div class="section-title">
+        📍 Daftar Lokasi & Jadwal
+        <span>Setiap lokasi punya jadwal sendiri</span>
+    </div>
 
-                            @if ($lokasis->isEmpty())
-                                <div
-                                    style="text-align: center; padding: 40px; background: #f8fafc; border-radius: 20px;">
-                                    <p style="color: #64748b;">Belum ada lokasi. Silakan tambah lokasi terlebih dahulu.
-                                    </p>
-                                    <a href="{{ route('lokasi.index') }}" class="btn-add"
-                                        style="display: inline-block; margin-top: 12px;">+ Tambah Lokasi</a>
-                                </div>
-                            @endif
+    @if ($lokasis->isEmpty())
+        <div class="empty-state">
+            <p>Belum ada lokasi. Silakan tambah lokasi terlebih dahulu.</p>
+            <a href="{{ route('lokasi.index') }}" class="btn-add">+ Tambah Lokasi</a>
+        </div>
+    @else
+        <div class="location-cards" id="locationCards">
+            @foreach ($lokasis as $lokasi)
+                <div class="location-card" data-id="{{ $lokasi->id }}" data-nama="{{ $lokasi->nama }}">
+                    <div class="card-header">
+                        <span class="location-name">{{ $lokasi->nama }}</span>
+                        <button type="button" class="remove-location" data-id="{{ $lokasi->id }}">
+                            🗑️ Hapus
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <div class="date-field">
+                            <label>📅 Tanggal Mulai</label>
+                            <input type="date" name="tanggal_mulai[{{ $lokasi->id }}]"
+                                   class="tanggal-mulai"
+                                   style="padding: 12px 14px; border-radius: 48px; border: 1px solid #cbd5e1; width: 100%;">
                         </div>
+                        <div class="date-field">
+                            <label>📅 Tanggal Selesai</label>
+                            <input type="date" name="tanggal_selesai[{{ $lokasi->id }}]"
+                                   class="tanggal-selesai"
+                                   style="padding: 12px 14px; border-radius: 48px; border: 1px solid #cbd5e1; width: 100%;">
+                        </div>
+                        <div class="days-count">
+                            ⏱️ <span class="days-value">0</span> Hari
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    @endif
+</div>
 
                         <div class="action-buttons">
                             <button type="submit" class="btn-submit">Simpan Campaign</button>
