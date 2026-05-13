@@ -47,7 +47,7 @@ class KampanyeIklanController extends Controller
                 $start = Carbon::parse($board['tanggal_mulai']);
                 $end = Carbon::parse($board['tanggal_selesai']);
                 $days = $start->diffInDays($end) + 1;
-                $subtotal = $days * $boardModel->harga;
+                $subtotal = $days * $boardModel->price;
                 $totalPrice += $subtotal;
 
                 LokasiKampanyeIklan::create([
