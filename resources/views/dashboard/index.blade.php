@@ -453,7 +453,7 @@
                                         @foreach ($boards as $board)
                                             <tr class="table-row" data-id="{{ $board->id }}"
                                                 data-name="{{ $board->name }}" data-lokasi="{{ $board->lokasi->nama }}"
-                                                data-harga="{{ $board->harga }}">
+                                                data-harga="{{ $board->price }}">
 
                                                 <td>
                                                     <div class="board-name">
@@ -774,51 +774,31 @@
 
 
         function openModal(row) {
-
             currentRow = row;
-
-            modalBoardName.innerText =
-                row.dataset.name;
-
-            modalLokasi.innerText =
-                row.dataset.lokasi;
-
-            hargaPerHari =
-                parseInt(row.dataset.harga);
-
-            modalHarga.innerText =
-                'Rp ' + hargaPerHari.toLocaleString('id-ID');
+            modalBoardName.innerText = row.dataset.name;
+            modalLokasi.innerText = row.dataset.lokasi;
+            hargaPerHari = parseInt(row.dataset.harga);
+            modalHarga.innerText = 'Rp ' + hargaPerHari.toLocaleString('id-ID');
 
             modal.classList.add('active');
-
         }
 
 
 
         document.querySelectorAll('.table-row').forEach(row => {
-
             row.addEventListener('click', function() {
-
                 openModal(this);
-
             });
-
         });
 
 
 
         document.querySelectorAll('.btn-edit').forEach(button => {
-
             button.addEventListener('click', function(e) {
-
                 e.stopPropagation();
-
                 const row = this.closest('.table-row');
-
                 openModal(row);
-
             });
-
         });
 
 
