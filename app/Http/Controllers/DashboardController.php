@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Board;
+use App\Models\KampanyeIklan;
 use App\Models\Lokasi;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -68,8 +69,18 @@ class DashboardController extends Controller
     public function riwayat()
     {
         try {
+
+            $riwayat = KampanyeIklan::with([
+                'lokasiKampanyeIklans.lokasi',
+                'payments'
+            ])
+                ->where('user_id', Auth::id())
+                ->latest()
+                ->get();
+
             $data = [
-                'pageTitle' => 'Daftar Riwayat'
+                'pageTitle' => 'Daftar Riwayat',
+                'riwayat'   => $riwayat
             ];
 
             if (in_array(Auth::user()->role, ['admin', 'verifikator'])) {
@@ -78,7 +89,11 @@ class DashboardController extends Controller
                 return view('dashboard.riwayat', $data);
             }
         } catch (\Exception $e) {
-            return back()->with('error', 'Terjadi kesalahan saat membuka halaman dashboard.');
+
+            return back()->with(
+                'error',
+                'Terjadi kesalahan saat membuka halaman dashboard.'
+            );
         }
     }
 

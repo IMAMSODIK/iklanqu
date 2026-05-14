@@ -167,7 +167,6 @@ $(document).ready(function () {
                         let lokasi = '';
                         item.lokasi_kampanye_iklans.forEach((lok) => {
                             lokasi += `
-                            <div class="border rounded p-2 mb-2">
                                 <table class="table table-borderless table-sm mb-0">
                                     <tr>
                                         <td>
@@ -207,7 +206,6 @@ $(document).ready(function () {
                                         </td>
                                     </tr>
                                 </table>
-                            </div>
                         `;
                         });
 
@@ -245,7 +243,7 @@ $(document).ready(function () {
                                             </div>
                                             <table class="table table-borderless table-sm mb-0">
                                                 <tr>
-                                                    <td width="140">
+                                                    <td>
                                                         <b>Total</b>
                                                     </td>
                                                     <td>
