@@ -4,6 +4,33 @@
 <head>
     @include('dashboard_layouts.head')
     <style>
+        .status-badge {
+            padding: 7px 14px;
+            border-radius: 999px;
+
+            font-size: 12px;
+            font-weight: 600;
+
+            color: white;
+
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .status-paid {
+            background: #16a34a;
+        }
+
+        .status-pending {
+            background: #f59e0b;
+        }
+
+        .status-failed {
+            background: #dc2626;
+        }
+    </style>
+    <style>
         .custom-modal {
             position: fixed;
             inset: 0;
@@ -113,31 +140,31 @@
             font-size: 14px;
         }
 
-        .media-preview{
-    display:flex;
-    justify-content:center;
-    align-items:center;
+        .media-preview {
+            display: flex;
+            justify-content: center;
+            align-items: center;
 
-    background:#f8fafc;
-    border-radius:20px;
-    overflow:hidden;
+            background: #f8fafc;
+            border-radius: 20px;
+            overflow: hidden;
 
-    max-height:420px;
-}
+            max-height: 420px;
+        }
 
-.media-preview img{
-    width:100%;
-    max-height:420px;
-    object-fit:contain;
-}
+        .media-preview img {
+            width: 100%;
+            max-height: 420px;
+            object-fit: contain;
+        }
 
-.media-preview video{
-    width:auto;
-    max-width:100%;
-    max-height:420px;
-    object-fit:contain;
-    background:black;
-}
+        .media-preview video {
+            width: auto;
+            max-width: 100%;
+            max-height: 420px;
+            object-fit: contain;
+            background: black;
+        }
 
         .status-badge {
             padding: 7px 12px;
@@ -257,15 +284,26 @@
 
                                 </div>
 
-                                <span
-                                    class="badge
-                @if ($item->payment_status == 'paid') bg-success
-                @elseif($item->payment_status == 'pending')
-                    bg-warning
-                @else
-                    bg-danger @endif
-            ">
-                                    {{ ucfirst($item->payment_status) }}
+                                @php
+
+                                    $statusClass = match ($item->payment_status) {
+                                        'paid' => 'status-paid',
+                                        'pending' => 'status-pending',
+                                        'failed' => 'status-failed',
+                                        default => 'status-pending',
+                                    };
+
+                                    $statusText = match ($item->payment_status) {
+                                        'paid' => 'Lunas',
+                                        'pending' => 'Menunggu',
+                                        'failed' => 'Gagal',
+                                        default => 'Menunggu',
+                                    };
+
+                                @endphp
+
+                                <span class="status-badge {{ $statusClass }}">
+                                    {{ $statusText }}
                                 </span>
 
                             </div>
@@ -313,80 +351,128 @@
 
     @include('dashboard_layouts.script')
     <script>
+        function formatStatus(status) {
 
-function formatTanggal(dateString){
+            const statuses = {
+                paid: 'Lunas',
+                pending: 'Menunggu',
+                failed: 'Gagal'
+            };
 
-    if(!dateString) return '-';
+            return statuses[status] ?? status;
+        }
 
-    const date = new Date(dateString);
+        function formatTanggal(dateString) {
 
-    return date.toLocaleDateString('id-ID', {
-        weekday: 'long',
-        day: 'numeric',
-        month: 'long',
-        year: 'numeric'
-    });
+            if (!dateString) return '-';
 
-}
+            const date = new Date(dateString);
 
-function hitungDurasi(startDate, endDate){
+            return date.toLocaleDateString('id-ID', {
+                weekday: 'long',
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric'
+            });
 
-    const start = new Date(startDate);
-    const end = new Date(endDate);
+        }
 
-    const diffTime = end - start;
+        function formatMetodePembayaran(method) {
 
-    return Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
-}
+            if (!method) return '-';
 
-function renderMedia(media){
+            const methods = {
 
-    if(!media){
+                bank_transfer: 'Transfer Bank',
+                bca_va: 'BCA Virtual Account',
+                bni_va: 'BNI Virtual Account',
+                bri_va: 'BRI Virtual Account',
+                permata_va: 'Permata Virtual Account',
 
-        return `
+                credit_card: 'Kartu Kredit',
+                gopay: 'GoPay',
+                shopeepay: 'ShopeePay',
+                qris: 'QRIS',
+
+                cstore: 'Convenience Store',
+                alfamart: 'Alfamart',
+                indomaret: 'Indomaret',
+
+                echannel: 'Mandiri Bill',
+                danamon_online: 'Danamon Online',
+                akulaku: 'Akulaku',
+                kredivo: 'Kredivo',
+
+                bca_klikpay: 'BCA KlikPay',
+                bca_klikbca: 'KlikBCA',
+                mandiri_clickpay: 'Mandiri ClickPay',
+
+                paypal: 'PayPal'
+            };
+
+            return methods[method] ?? method
+                .replaceAll('_', ' ')
+                .replace(/\b\w/g, l => l.toUpperCase());
+        }
+
+        function hitungDurasi(startDate, endDate) {
+
+            const start = new Date(startDate);
+            const end = new Date(endDate);
+
+            const diffTime = end - start;
+
+            return Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
+        }
+
+        function renderMedia(media) {
+
+            if (!media) {
+
+                return `
             <div class="text-muted">
                 Tidak ada media
             </div>
         `;
-    }
+            }
 
-    let fileUrl = `/storage/${media}`;
+            let fileUrl = `/storage/${media}`;
 
-    let ext = media.split('.').pop().toLowerCase();
+            let ext = media.split('.').pop().toLowerCase();
 
-    let imageExt = ['jpg','jpeg','png','webp'];
+            let imageExt = ['jpg', 'jpeg', 'png', 'webp'];
 
-    let videoExt = ['mp4','mov','avi'];
+            let videoExt = ['mp4', 'mov', 'avi'];
 
-    if(imageExt.includes(ext)){
+            if (imageExt.includes(ext)) {
 
-        return `
+                return `
             <img src="${fileUrl}">
         `;
 
-    } else if(videoExt.includes(ext)) {
+            } else if (videoExt.includes(ext)) {
 
-        return `
+                return `
             <video controls>
                 <source src="${fileUrl}">
             </video>
         `;
-    }
+            }
 
-    return `
+            return `
         <a href="${fileUrl}" target="_blank">
             Lihat File
         </a>
     `;
-}
+        }
 
-$(document).on('click', '.iklan-item', function(){
+        $(document).on('click', '.iklan-item', function() {
 
-    let id = $(this).data('id');
+            let id = $(this).data('id');
 
-    $('#detailModal').addClass('show');
+            $('#detailModal').addClass('show');
 
-    $('#detailContent').html(`
+            $('#detailContent').html(`
         <div style="
             padding:40px;
             text-align:center;
@@ -395,30 +481,30 @@ $(document).on('click', '.iklan-item', function(){
         </div>
     `);
 
-    $.ajax({
+            $.ajax({
 
-        url: '/riwayat/detail/' + id,
-        type: 'GET',
+                url: '/riwayat/detail/' + id,
+                type: 'GET',
 
-        success: function(res){
+                success: function(res) {
 
-            let item = res.data;
+                    let item = res.data;
 
-            let badgeClass = 'status-pending';
+                    let badgeClass = 'status-pending';
 
-            if(item.payment_status == 'paid'){
-                badgeClass = 'status-paid';
-            }
+                    if (item.payment_status == 'paid') {
+                        badgeClass = 'status-paid';
+                    }
 
-            if(item.payment_status == 'failed'){
-                badgeClass = 'status-failed';
-            }
+                    if (item.payment_status == 'failed') {
+                        badgeClass = 'status-failed';
+                    }
 
-            let lokasiHtml = '';
+                    let lokasiHtml = '';
 
-            item.lokasi_kampanye_iklans.forEach((lok) => {
+                    item.lokasi_kampanye_iklans.forEach((lok) => {
 
-                lokasiHtml += `
+                        lokasiHtml += `
 
                     <div class="lokasi-item">
 
@@ -471,9 +557,9 @@ $(document).on('click', '.iklan-item', function(){
 
                     </div>
                 `;
-            });
+                    });
 
-            let html = `
+                    let html = `
 
                 <div class="media-preview mb-4">
 
@@ -510,7 +596,7 @@ $(document).on('click', '.iklan-item', function(){
                     </div>
 
                     <div class="status-badge ${badgeClass}">
-                        ${item.payment_status}
+                        ${formatStatus(item.payment_status)}
                     </div>
 
                 </div>
@@ -533,6 +619,16 @@ $(document).on('click', '.iklan-item', function(){
 
                                 <td>
                                     Rp ${parseInt(item.total_price).toLocaleString()}
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <b>Metode</b>
+                                </td>
+
+                                <td>
+                                    ${formatMetodePembayaran(item.payment_method)}
                                 </td>
                             </tr>
 
@@ -620,13 +716,13 @@ $(document).on('click', '.iklan-item', function(){
 
             `;
 
-            $('#detailContent').html(html);
+                    $('#detailContent').html(html);
 
-        },
+                },
 
-        error: function(){
+                error: function() {
 
-            $('#detailContent').html(`
+                    $('#detailContent').html(`
                 <div style="
                     padding:40px;
                     text-align:center;
@@ -636,27 +732,26 @@ $(document).on('click', '.iklan-item', function(){
                 </div>
             `);
 
-        }
+                }
 
-    });
+            });
 
-});
+        });
 
-$('#closeModal').click(function(){
+        $('#closeModal').click(function() {
 
-    $('#detailModal').removeClass('show');
+            $('#detailModal').removeClass('show');
 
-});
+        });
 
-$('#detailModal').click(function(e){
+        $('#detailModal').click(function(e) {
 
-    if(e.target === this){
-        $('#detailModal').removeClass('show');
-    }
+            if (e.target === this) {
+                $('#detailModal').removeClass('show');
+            }
 
-});
-
-</script>
+        });
+    </script>
 </body>
 
 </html>
