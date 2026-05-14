@@ -73,6 +73,7 @@ class KampanyeIklanController extends Controller
             \Midtrans\Config::$isProduction = config('midtrans.is_production');
             \Midtrans\Config::$isSanitized = true;
             \Midtrans\Config::$is3ds = true;
+            \Midtrans\Config::$appendNotifUrl = config('midtrans.notification_url');
 
             $params = [
                 'transaction_details' => [
@@ -82,6 +83,10 @@ class KampanyeIklanController extends Controller
                 'customer_details' => [
                     'first_name' => Auth::user()->name,
                     'email' => Auth::user()->email,
+                ],
+                'callbacks' => [
+                    'finish' =>
+                    'https://iklanqu.forumrektorptkin2026.com/payment-success'
                 ]
             ];
 

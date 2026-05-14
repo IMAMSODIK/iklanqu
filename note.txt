@@ -10,7 +10,5 @@ table iklan
 
 
 
-- daftar client belum ada (done)
-- daftar user belum ada (done)
-- design pilih tanggal belum responsive
-- fitur verifikasi detail pesanan belum ada
+pada saat klik checkout beberapa kali, database tidak update, tapi create
+callback midtrans masih gagal
