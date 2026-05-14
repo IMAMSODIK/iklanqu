@@ -12,14 +12,12 @@ class ClientController extends Controller
         try {
             $data = [
                 'pageTitle' => "Client",
-                'data'      => User::where('role', 'user')
+                'clients'      => User::where('role', 'user')
                     ->where('status', 1)
                     ->withCount('kampanyeIklan')
                     ->orderBy('id', 'desc')
                     ->get()
             ];
-
-            dd(User::where('role', 'user')->where('status', 1)->withCount('kampanyeIklan')->orderBy('id', 'desc')->get());
 
             return view('client.index', $data);
         } catch (\Exception $e) {

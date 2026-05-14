@@ -38,7 +38,7 @@
 
                                     <tbody>
                                         @php $i = 1; @endphp
-                                        @foreach ($data as $d)
+                                        @foreach ($clients as $d)
                                             <tr>
                                                 <td class="text-center align-middle">{{ $i++ }}</td>
                                                 <td class="align-middle">
@@ -53,10 +53,10 @@
                                                     </div>
                                                 </td>
                                                 <td class="text-center align-middle">
-                                                    @if ($d->kampanye_iklans_count > 0)
+                                                    @if ($d->kampanye_iklan_count > 0)
                                                         <button class="btn btn-sm btn-success detail-iklan"
                                                             data-id="{{ $d->id }}">
-                                                            {{ $d->kampanye_iklans_count }} Iklan
+                                                            {{ $d->kampanye_iklan_count }} Iklan
                                                         </button>
                                                     @else
                                                         <button class="btn btn-sm btn-danger detail-iklan"
