@@ -35,6 +35,26 @@ function renderMedia(media){
     `;
 }
 
+function formatTanggal(dateString){
+    const date = new Date(dateString);
+
+    return date.toLocaleDateString('id-ID', {
+        weekday: 'long',
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric'
+    });
+}
+
+function hitungDurasi(startDate, endDate){
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    const diffTime = end - start;
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
+
+    return diffDays;
+}
+
 
 $(document).ready(function () {
     $('#tableClient').DataTable({
@@ -134,9 +154,14 @@ $(document).ready(function () {
                                 <div><b>Lokasi:</b> ${lok.lokasi?.nama ?? '-'}</div>
                                 <div>
                                     <b>Tanggal:</b>
-                                    ${lok.tanggal_mulai}
+                                    ${formatTanggal(lok.tanggal_mulai)}
                                     s/d
-                                    ${lok.tanggal_selesai}
+                                    ${formatTanggal(lok.tanggal_selesai)}
+                                </div>
+
+                                <div>
+                                    <b>Durasi:</b>
+                                    ${hitungDurasi(lok.tanggal_mulai, lok.tanggal_selesai)} Hari
                                 </div>
                             </div>
                         `;
@@ -150,7 +175,7 @@ $(document).ready(function () {
                                         <h5 class="mb-1">${item.name}</h5>
                                         <small class="text-muted">
                                             Dibuat:
-                                            ${item.created_at}
+                                            ${formatTanggal(item.created_at)}
                                         </small>
                                     </div>
                                     ${statusBadge}
