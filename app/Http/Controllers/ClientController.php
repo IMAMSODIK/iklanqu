@@ -14,7 +14,7 @@ class ClientController extends Controller
                 'pageTitle' => "Client",
                 'data'      => User::where('role', 'user')
                     ->where('status', 1)
-                    ->withCount('kampanyeIklans')
+                    ->withCount('kampanyeIklan')
                     ->orderBy('id', 'desc')
                     ->get()
             ];
