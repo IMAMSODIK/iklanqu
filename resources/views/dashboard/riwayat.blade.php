@@ -3,6 +3,175 @@
 
 <head>
     @include('dashboard_layouts.head')
+    <style>
+
+.custom-modal{
+    position: fixed;
+    inset: 0;
+    background: rgba(15,23,42,0.65);
+    backdrop-filter: blur(4px);
+    z-index: 99999;
+
+    display: none;
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+}
+
+.custom-modal.show{
+    display: flex;
+}
+
+.custom-modal-content{
+    width: 100%;
+    max-width: 950px;
+    max-height: 92vh;
+
+    background: #fff;
+    border-radius: 24px;
+
+    overflow: hidden;
+
+    display: flex;
+    flex-direction: column;
+
+    animation: modalShow .25s ease;
+}
+
+@keyframes modalShow{
+    from{
+        opacity: 0;
+        transform: translateY(20px) scale(.96);
+    }
+    to{
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.custom-modal-header{
+    padding: 20px 24px;
+    border-bottom: 1px solid #e2e8f0;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.custom-modal-header h3{
+    margin: 0;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.close-modal{
+    border: none;
+    background: #f1f5f9;
+
+    width: 38px;
+    height: 38px;
+
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    font-size: 16px;
+}
+
+.custom-modal-body{
+    padding: 24px;
+    overflow-y: auto;
+}
+
+.detail-grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+}
+
+.detail-box{
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 18px;
+}
+
+.detail-title{
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 14px;
+}
+
+.info-table{
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.info-table td{
+    padding: 7px 0;
+    vertical-align: top;
+    font-size: 14px;
+}
+
+.media-preview img,
+.media-preview video{
+    width: 100%;
+    border-radius: 16px;
+    max-height: 320px;
+    object-fit: cover;
+}
+
+.status-badge{
+    padding: 7px 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    color: white;
+}
+
+.status-paid{
+    background: #16a34a;
+}
+
+.status-pending{
+    background: #f59e0b;
+}
+
+.status-failed{
+    background: #dc2626;
+}
+
+.lokasi-item{
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 12px;
+    margin-bottom: 12px;
+}
+
+@media(max-width:768px){
+
+    .custom-modal{
+        padding: 0;
+    }
+
+    .custom-modal-content{
+        max-width: 100%;
+        height: 100vh;
+        max-height: 100vh;
+        border-radius: 0;
+    }
+
+    .custom-modal-body{
+        padding: 16px;
+    }
+
+    .detail-grid{
+        grid-template-columns: 1fr;
+    }
+
+}
+
+</style>
 </head>
 
 <body>
@@ -102,262 +271,235 @@
             </div>
         </div>
 
-        <div class="modal fade" id="modalDetailIklan" tabindex="-1">
+        <!-- MODAL DETAIL -->
+<div class="custom-modal" id="detailModal">
 
-            <div class="modal-dialog modal-dialog-centered modal-lg modal-fullscreen-sm-down">
+    <div class="custom-modal-content">
 
-                <div class="modal-content border-0">
+        <div class="custom-modal-header">
 
-                    <div class="modal-header">
-
-                        <h5 class="modal-title">
-                            Detail Iklan
-                        </h5>
-
-                        <button type="button" class="btn-close" data-bs-dismiss="modal">
-                        </button>
-
-                    </div>
-
-                    <div class="modal-body">
-
-                        <div id="detailContent"></div>
-
-                    </div>
-
-                </div>
-
+            <div>
+                <h3>Detail Iklan</h3>
             </div>
 
+            <button class="close-modal" id="closeModal">
+                ✕
+            </button>
+
         </div>
+
+        <div class="custom-modal-body" id="detailContent">
+
+        </div>
+
+    </div>
+
+</div>
 
         @include('dashboard_layouts.nav')
     </div>
 
     @include('dashboard_layouts.script')
     <script>
-        function formatTanggal(dateString) {
 
-            if (!dateString) return '-';
+function formatTanggal(dateString){
 
-            const date = new Date(dateString);
+    if(!dateString) return '-';
 
-            return date.toLocaleDateString('id-ID', {
-                weekday: 'long',
-                day: 'numeric',
-                month: 'long',
-                year: 'numeric'
-            });
+    const date = new Date(dateString);
 
-        }
+    return date.toLocaleDateString('id-ID', {
+        weekday: 'long',
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric'
+    });
 
-        $(document).on('click', '.iklan-item', function() {
+}
 
-            let name = $(this).data('name');
-            let description = $(this).data('description');
-            let media = $(this).data('media');
-            let total = $(this).data('total');
-            let status = $(this).data('status');
-            let payment = $(this).data('payment');
-            let paid = $(this).data('paid');
+function hitungDurasi(startDate, endDate){
 
-            let statusBadge = '';
+    const start = new Date(startDate);
+    const end = new Date(endDate);
 
-            if (status == 'paid') {
+    const diffTime = end - start;
 
-                statusBadge = `
-            <span class="badge bg-success">
-                Paid
-            </span>
-        `;
+    return Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
+}
 
-            } else if (status == 'pending') {
+$(document).on('click', '.iklan-item', function(){
 
-                statusBadge = `
-            <span class="badge bg-warning">
-                Pending
-            </span>
-        `;
+    let item = $(this).data('item');
 
-            } else {
+});
 
-                statusBadge = `
-            <span class="badge bg-danger">
-                Failed
-            </span>
-        `;
-            }
+$(document).on('click', '.iklan-item', function(){
 
-            let mediaHtml = `
-        <div class="text-muted">
-            Tidak ada media
-        </div>
+    let data = $(this).data();
+
+    let badgeClass = 'status-pending';
+
+    if(data.status == 'paid'){
+        badgeClass = 'status-paid';
+    }
+
+    if(data.status == 'failed'){
+        badgeClass = 'status-failed';
+    }
+
+    let mediaHtml = `
+        <div>Tidak ada media</div>
     `;
 
-            if (media) {
+    if(data.media){
 
-                if (
-                    media.includes('.jpg') ||
-                    media.includes('.jpeg') ||
-                    media.includes('.png') ||
-                    media.includes('.webp')
-                ) {
+        if(
+            data.media.includes('.jpg') ||
+            data.media.includes('.jpeg') ||
+            data.media.includes('.png') ||
+            data.media.includes('.webp')
+        ){
 
-                    mediaHtml = `
-                <img src="${media}"
-                     class="img-fluid rounded shadow-sm"
-                     style="width:100%; max-height:300px; object-fit:cover;">
+            mediaHtml = `
+                <img src="${data.media}">
             `;
 
-                } else if (
-                    media.includes('.mp4') ||
-                    media.includes('.mov') ||
-                    media.includes('.avi')
-                ) {
+        } else {
 
-                    mediaHtml = `
-                <video controls
-                       class="w-100 rounded shadow-sm"
-                       style="max-height:300px;">
-                    <source src="${media}">
+            mediaHtml = `
+                <video controls>
+                    <source src="${data.media}">
                 </video>
             `;
-                }
-            }
+        }
+    }
 
-            let html = `
+    let html = `
 
-        <div class="mb-4">
+        <div class="media-preview mb-4">
+            ${mediaHtml}
+        </div>
 
-            <div class="d-flex justify-content-between align-items-start mb-3">
+        <div style="display:flex; justify-content:space-between; align-items:start; gap:12px; margin-bottom:20px;">
 
-                <div>
+            <div>
 
-                    <h4 class="fw-bold mb-1">
-                        ${name}
-                    </h4>
+                <h2 style="margin-bottom:8px;">
+                    ${data.name}
+                </h2>
 
-                    <div class="text-muted">
-                        ${description ?? '-'}
-                    </div>
-
+                <div style="color:#64748b;">
+                    ${data.description ?? '-'}
                 </div>
-
-                ${statusBadge}
 
             </div>
 
-            <div class="mb-4">
+            <div class="status-badge ${badgeClass}">
+                ${data.status}
+            </div>
 
-                ${mediaHtml}
+        </div>
+
+        <div class="detail-grid">
+
+            <div class="detail-box">
+
+                <div class="detail-title">
+                    Informasi Pembayaran
+                </div>
+
+                <table class="info-table">
+
+                    <tr>
+                        <td width="130">
+                            <b>Total</b>
+                        </td>
+
+                        <td>
+                            Rp ${data.total}
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <b>Metode</b>
+                        </td>
+
+                        <td>
+                            ${data.payment ?? '-'}
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <b>Waktu Bayar</b>
+                        </td>
+
+                        <td>
+                            ${data.paid ? formatTanggal(data.paid) : '-'}
+                        </td>
+                    </tr>
+
+                </table>
 
             </div>
 
-            <div class="row g-3">
+            <div class="detail-box">
 
-                <div class="col-md-6">
-
-                    <div class="border rounded p-3 h-100">
-
-                        <div class="fw-bold mb-3">
-                            Informasi Pembayaran
-                        </div>
-
-                        <table class="table table-borderless table-sm mb-0">
-
-                            <tr>
-                                <td width="140">
-                                    <b>Total</b>
-                                </td>
-
-                                <td>
-                                    Rp ${total}
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <b>Metode</b>
-                                </td>
-
-                                <td>
-                                    ${payment ?? '-'}
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <b>Status</b>
-                                </td>
-
-                                <td>
-                                    ${statusBadge}
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <b>Waktu Bayar</b>
-                                </td>
-
-                                <td>
-                                    ${paid ? formatTanggal(paid) : '-'}
-                                </td>
-                            </tr>
-
-                        </table>
-
-                    </div>
-
+                <div class="detail-title">
+                    Informasi Iklan
                 </div>
 
-                <div class="col-md-6">
+                <table class="info-table">
 
-                    <div class="border rounded p-3 h-100">
+                    <tr>
+                        <td width="130">
+                            <b>Nama</b>
+                        </td>
 
-                        <div class="fw-bold mb-3">
-                            Informasi Iklan
-                        </div>
+                        <td>
+                            ${data.name}
+                        </td>
+                    </tr>
 
-                        <table class="table table-borderless table-sm mb-0">
+                    <tr>
+                        <td>
+                            <b>Status</b>
+                        </td>
 
-                            <tr>
-                                <td width="120">
-                                    <b>Nama</b>
-                                </td>
+                        <td>
+                            ${data.status}
+                        </td>
+                    </tr>
 
-                                <td>
-                                    ${name}
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <b>Status</b>
-                                </td>
-
-                                <td>
-                                    ${status}
-                                </td>
-                            </tr>
-
-                        </table>
-
-                    </div>
-
-                </div>
+                </table>
 
             </div>
 
         </div>
     `;
 
-            $('#detailContent').html(html);
+    $('#detailContent').html(html);
 
-            $('#modalDetailIklan').modal('show');
+    $('#detailModal').addClass('show');
 
-        });
-    </script>
+});
+
+$('#closeModal').click(function(){
+
+    $('#detailModal').removeClass('show');
+
+});
+
+$('#detailModal').click(function(e){
+
+    if(e.target === this){
+        $('#detailModal').removeClass('show');
+    }
+
+});
+
+</script>
 </body>
 
 </html>
