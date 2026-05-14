@@ -117,11 +117,9 @@ $(document).ready(function () {
     });
 
     $(document).on('click', '.detail-iklan', function () {
-
         let id = $(this).data('id');
 
         $('#modalDetailIklan').modal('show');
-
         $('#listIklan').html(`
         <div class="text-center py-5">
             Loading...
@@ -129,36 +127,27 @@ $(document).ready(function () {
     `);
 
         $.ajax({
-
             url: '/client/detail-iklan/' + id,
             type: 'GET',
-
             success: function (res) {
-
                 let html = '';
 
                 if (res.data.length == 0) {
-
                     html = `
                     <div class="alert alert-danger">
                         Belum ada iklan
                     </div>
                 `;
-
                 } else {
-
                     res.data.forEach((item) => {
-
                         let statusBadge = '';
 
                         if (item.payment_status == 'paid') {
-
                             statusBadge = `
                             <span class="badge bg-success">
                                 Paid
                             </span>
                         `;
-
                         } else if (item.payment_status == 'pending') {
 
                             statusBadge = `
@@ -166,7 +155,6 @@ $(document).ready(function () {
                                 Pending
                             </span>
                         `;
-
                         } else {
 
                             statusBadge = `
@@ -177,39 +165,30 @@ $(document).ready(function () {
                         }
 
                         let lokasi = '';
-
                         item.lokasi_kampanye_iklans.forEach((lok) => {
-
                             lokasi += `
                             <div class="border rounded p-2 mb-2">
-
                                 <table class="table table-borderless table-sm mb-0">
-
                                     <tr>
                                         <td width="120">
                                             <b>Lokasi</b>
                                         </td>
-
                                         <td>
                                             ${lok.lokasi?.nama ?? '-'}
                                         </td>
                                     </tr>
-
                                     <tr>
                                         <td>
                                             <b>Mulai</b>
                                         </td>
-
                                         <td>
                                             ${formatTanggal(lok.tanggal_mulai)}
                                         </td>
                                     </tr>
-
                                     <tr>
                                         <td>
                                             <b>Selesai</b>
                                         </td>
-
                                         <td>
                                             ${formatTanggal(lok.tanggal_selesai)}
                                         </td>
@@ -222,27 +201,21 @@ $(document).ready(function () {
 
                                         <td>
                                             ${hitungDurasi(
-                                lok.tanggal_mulai,
-                                lok.tanggal_selesai
-                            )} Hari
+                                                lok.tanggal_mulai,
+                                                lok.tanggal_selesai
+                                            )} Hari
                                         </td>
                                     </tr>
-
                                 </table>
-
                             </div>
                         `;
                         });
 
                         html += `
                         <div class="card shadow-sm border-0 mb-4">
-
                             <div class="card-body">
-
                                 <div class="d-flex justify-content-between align-items-start mb-3">
-
                                     <div>
-
                                         <h5 class="mb-1 fw-bold">
                                             ${item.name}
                                         </h5>
@@ -251,128 +224,91 @@ $(document).ready(function () {
                                             Dibuat:
                                             ${formatTanggal(item.created_at)}
                                         </small>
-
                                     </div>
-
                                     ${statusBadge}
-
                                 </div>
 
                                 <div class="mb-3">
-
                                     ${item.description ?? '-'}
-
                                 </div>
 
                                 <div class="mb-4">
-
                                     ${renderMedia(item.media)}
-
                                 </div>
 
                                 <div class="row g-3">
-
                                     <!-- INFORMASI PEMBAYARAN -->
                                     <div class="col-md-6">
-
                                         <div class="border rounded p-3 h-100">
-
                                             <div class="fw-bold mb-3">
                                                 Informasi Pembayaran
                                             </div>
-
                                             <table class="table table-borderless table-sm mb-0">
-
                                                 <tr>
                                                     <td width="140">
                                                         <b>Total</b>
                                                     </td>
-
                                                     <td>
                                                         Rp ${parseInt(
-                            item.total_price
-                        ).toLocaleString()}
+                                                            item.total_price
+                                                        ).toLocaleString()}
                                                     </td>
                                                 </tr>
-
                                                 <tr>
                                                     <td>
                                                         <b>Metode</b>
                                                     </td>
-
                                                     <td>
                                                         ${item.payment_method ?? '-'}
                                                     </td>
                                                 </tr>
-
                                                 <tr>
                                                     <td>
                                                         <b>Status</b>
                                                     </td>
-
                                                     <td>
                                                         ${statusBadge}
                                                     </td>
                                                 </tr>
-
                                                 <tr>
                                                     <td>
                                                         <b>Waktu Bayar</b>
                                                     </td>
-
                                                     <td>
                                                         ${item.paid_at
-                                ? formatTanggal(item.paid_at)
-                                : '-'}
+                                                        ? formatTanggal(item.paid_at)
+                                                        : '-'}
                                                     </td>
                                                 </tr>
-
                                             </table>
-
                                         </div>
-
                                     </div>
-
                                     <!-- INFORMASI LOKASI -->
                                     <div class="col-md-6">
-
                                         <div class="border rounded p-3 h-100">
-
                                             <div class="fw-bold mb-3">
                                                 Lokasi Penayangan
                                             </div>
-
                                             ${lokasi}
-
                                         </div>
-
                                     </div>
-
                                 </div>
-
                             </div>
-
                         </div>
                     `;
                     });
-
                 }
 
                 $('#listIklan').html(html);
-
             },
 
             error: function () {
-
                 $('#listIklan').html(`
                 <div class="alert alert-danger">
                     Gagal memuat data iklan
                 </div>
             `);
-
             }
-
         });
-
     });
 });
