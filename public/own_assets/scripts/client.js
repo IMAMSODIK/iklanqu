@@ -1,5 +1,5 @@
-function renderMedia(media){
-    if(!media){
+function renderMedia(media) {
+    if (!media) {
         return `
             <div class="text-muted">
                 Tidak ada media
@@ -12,13 +12,13 @@ function renderMedia(media){
     let imageExt = ['jpg', 'jpeg', 'png', 'webp'];
     let videoExt = ['mp4', 'mov', 'avi'];
 
-    if(imageExt.includes(extension)){
+    if (imageExt.includes(extension)) {
         return `
             <img src="${fileUrl}"
                  class="img-fluid rounded shadow-sm"
                  style="max-height:250px; width:100%; object-fit:cover;">
         `;
-    } else if(videoExt.includes(extension)) {
+    } else if (videoExt.includes(extension)) {
         return `
             <video controls
                    class="w-100 rounded shadow-sm"
@@ -35,7 +35,7 @@ function renderMedia(media){
     `;
 }
 
-function formatTanggal(dateString){
+function formatTanggal(dateString) {
     const date = new Date(dateString);
 
     return date.toLocaleDateString('id-ID', {
@@ -46,7 +46,7 @@ function formatTanggal(dateString){
     });
 }
 
-function hitungDurasi(startDate, endDate){
+function hitungDurasi(startDate, endDate) {
     const start = new Date(startDate);
     const end = new Date(endDate);
     const diffTime = end - start;
@@ -117,9 +117,11 @@ $(document).ready(function () {
     });
 
     $(document).on('click', '.detail-iklan', function () {
+
         let id = $(this).data('id');
 
         $('#modalDetailIklan').modal('show');
+
         $('#listIklan').html(`
         <div class="text-center py-5">
             Loading...
@@ -127,93 +129,249 @@ $(document).ready(function () {
     `);
 
         $.ajax({
+
             url: '/client/detail-iklan/' + id,
             type: 'GET',
+
             success: function (res) {
+
                 let html = '';
+
                 if (res.data.length == 0) {
+
                     html = `
                     <div class="alert alert-danger">
                         Belum ada iklan
                     </div>
                 `;
+
                 } else {
-                    res.data.forEach((item, index) => {
+
+                    res.data.forEach((item) => {
+
                         let statusBadge = '';
+
                         if (item.payment_status == 'paid') {
-                            statusBadge = `<span class="badge bg-success">Paid</span>`;
+
+                            statusBadge = `
+                            <span class="badge bg-success">
+                                Paid
+                            </span>
+                        `;
+
                         } else if (item.payment_status == 'pending') {
-                            statusBadge = `<span class="badge bg-warning">Pending</span>`;
+
+                            statusBadge = `
+                            <span class="badge bg-warning">
+                                Pending
+                            </span>
+                        `;
+
                         } else {
-                            statusBadge = `<span class="badge bg-danger">Failed</span>`;
+
+                            statusBadge = `
+                            <span class="badge bg-danger">
+                                Failed
+                            </span>
+                        `;
                         }
+
                         let lokasi = '';
+
                         item.lokasi_kampanye_iklans.forEach((lok) => {
+
                             lokasi += `
                             <div class="border rounded p-2 mb-2">
-                                <table>
+
+                                <table class="table table-borderless table-sm mb-0">
+
                                     <tr>
-                                        <td><b>Nama Lokasi</b></td>
-                                        <td>: ${lok.lokasi?.nama ?? '-'}</td>
+                                        <td width="120">
+                                            <b>Lokasi</b>
+                                        </td>
+
+                                        <td>
+                                            ${lok.lokasi?.nama ?? '-'}
+                                        </td>
                                     </tr>
+
                                     <tr>
-                                        <td><b>Tanggal Mulai</b></td>
-                                        <td>: ${formatTanggal(lok.tanggal_mulai)}</td>
+                                        <td>
+                                            <b>Mulai</b>
+                                        </td>
+
+                                        <td>
+                                            ${formatTanggal(lok.tanggal_mulai)}
+                                        </td>
                                     </tr>
+
                                     <tr>
-                                        <td><b>Tanggal Selesai</b></td>
-                                        <td>: ${formatTanggal(lok.tanggal_selesai)}</td>
+                                        <td>
+                                            <b>Selesai</b>
+                                        </td>
+
+                                        <td>
+                                            ${formatTanggal(lok.tanggal_selesai)}
+                                        </td>
                                     </tr>
+
                                     <tr>
-                                        <td><b>Durasi</b></td>
-                                        <td>: ${hitungDurasi(lok.tanggal_mulai, lok.tanggal_selesai)}</td>
+                                        <td>
+                                            <b>Durasi</b>
+                                        </td>
+
+                                        <td>
+                                            ${hitungDurasi(
+                                lok.tanggal_mulai,
+                                lok.tanggal_selesai
+                            )} Hari
+                                        </td>
                                     </tr>
+
                                 </table>
+
                             </div>
                         `;
                         });
 
                         html += `
-                        <div class="card shadow-sm mb-3">
+                        <div class="card shadow-sm border-0 mb-4">
+
                             <div class="card-body">
+
                                 <div class="d-flex justify-content-between align-items-start mb-3">
+
                                     <div>
-                                        <h5 class="mb-1">${item.name}</h5>
+
+                                        <h5 class="mb-1 fw-bold">
+                                            ${item.name}
+                                        </h5>
+
                                         <small class="text-muted">
                                             Dibuat:
                                             ${formatTanggal(item.created_at)}
                                         </small>
+
                                     </div>
+
                                     ${statusBadge}
+
                                 </div>
+
                                 <div class="mb-3">
+
                                     ${item.description ?? '-'}
+
                                 </div>
-                                <div class="mb-3">
+
+                                <div class="mb-4">
+
                                     ${renderMedia(item.media)}
+
                                 </div>
-                                <div class="row">
+
+                                <div class="row g-3">
+
+                                    <!-- INFORMASI PEMBAYARAN -->
                                     <div class="col-md-6">
-                                        <table>
-                                            <tr>
-                                                <td><b>Total Pembayaran</b></td>
-                                                <td>: Rp ${parseInt(item.total_price).toLocaleString()}</td>
-                                            </tr>
-                                            <tr>
-                                                <td><b>Waktu Bayar</b></td>
-                                                <td>: ${item.paid_at ?? '-'}</td>
-                                            </tr>
-                                        </table>
+
+                                        <div class="border rounded p-3 h-100">
+
+                                            <div class="fw-bold mb-3">
+                                                Informasi Pembayaran
+                                            </div>
+
+                                            <table class="table table-borderless table-sm mb-0">
+
+                                                <tr>
+                                                    <td width="140">
+                                                        <b>Total</b>
+                                                    </td>
+
+                                                    <td>
+                                                        Rp ${parseInt(
+                            item.total_price
+                        ).toLocaleString()}
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>
+                                                        <b>Metode</b>
+                                                    </td>
+
+                                                    <td>
+                                                        ${item.payment_method ?? '-'}
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>
+                                                        <b>Status</b>
+                                                    </td>
+
+                                                    <td>
+                                                        ${statusBadge}
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>
+                                                        <b>Waktu Bayar</b>
+                                                    </td>
+
+                                                    <td>
+                                                        ${item.paid_at
+                                ? formatTanggal(item.paid_at)
+                                : '-'}
+                                                    </td>
+                                                </tr>
+
+                                            </table>
+
+                                        </div>
+
                                     </div>
+
+                                    <!-- INFORMASI LOKASI -->
+                                    <div class="col-md-6">
+
+                                        <div class="border rounded p-3 h-100">
+
+                                            <div class="fw-bold mb-3">
+                                                Lokasi Penayangan
+                                            </div>
+
+                                            ${lokasi}
+
+                                        </div>
+
+                                    </div>
+
                                 </div>
+
                             </div>
+
                         </div>
                     `;
                     });
+
                 }
 
                 $('#listIklan').html(html);
+
+            },
+
+            error: function () {
+
+                $('#listIklan').html(`
+                <div class="alert alert-danger">
+                    Gagal memuat data iklan
+                </div>
+            `);
+
             }
+
         });
 
     });
