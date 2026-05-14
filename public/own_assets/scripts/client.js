@@ -170,7 +170,7 @@ $(document).ready(function () {
                             <div class="border rounded p-2 mb-2">
                                 <table class="table table-borderless table-sm mb-0">
                                     <tr>
-                                        <td width="120">
+                                        <td>
                                             <b>Lokasi</b>
                                         </td>
                                         <td>
