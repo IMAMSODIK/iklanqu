@@ -538,16 +538,6 @@ $(document).on('click', '.iklan-item', function(){
 
                             <tr>
                                 <td>
-                                    <b>Metode</b>
-                                </td>
-
-                                <td>
-                                    ${item.payment_method ?? '-'}
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>
                                     <b>Status</b>
                                 </td>
 
