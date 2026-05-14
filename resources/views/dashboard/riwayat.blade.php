@@ -294,10 +294,10 @@
                                     };
 
                                     $statusText = match ($item->payment_status) {
-                                        'paid' => 'Lunas',
-                                        'pending' => 'Menunggu',
+                                        'paid' => 'Sudah Bayar',
+                                        'pending' => 'Menunggu Pembayaran',
                                         'failed' => 'Gagal',
-                                        default => 'Menunggu',
+                                        default => 'Menunggu Pembayaran',
                                     };
 
                                 @endphp
@@ -354,8 +354,8 @@
         function formatStatus(status) {
 
             const statuses = {
-                paid: 'Lunas',
-                pending: 'Menunggu',
+                paid: 'Sudah Bayar',
+                pending: 'Menunggu Pembayaran',
                 failed: 'Gagal'
             };
 
