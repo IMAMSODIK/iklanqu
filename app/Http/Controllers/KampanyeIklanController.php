@@ -144,7 +144,8 @@ class KampanyeIklanController extends Controller
             ]);
 
             $payment->campaign->update([
-                'is_active' => true
+                'is_active' => true,
+                'payment_status' => 'paid',
             ]);
         }
 
