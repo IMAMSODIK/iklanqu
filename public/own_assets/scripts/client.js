@@ -1,3 +1,41 @@
+function renderMedia(media){
+    if(!media){
+        return `
+            <div class="text-muted">
+                Tidak ada media
+            </div>
+        `;
+    }
+
+    let fileUrl = `/storage/${media}`;
+    let extension = media.split('.').pop().toLowerCase();
+    let imageExt = ['jpg', 'jpeg', 'png', 'webp'];
+    let videoExt = ['mp4', 'mov', 'avi'];
+
+    if(imageExt.includes(extension)){
+        return `
+            <img src="${fileUrl}"
+                 class="img-fluid rounded shadow-sm"
+                 style="max-height:250px; width:100%; object-fit:cover;">
+        `;
+    } else if(videoExt.includes(extension)) {
+        return `
+            <video controls
+                   class="w-100 rounded shadow-sm"
+                   style="max-height:300px;">
+                <source src="${fileUrl}">
+            </video>
+        `;
+    }
+
+    return `
+        <a href="${fileUrl}" target="_blank" class="btn btn-sm btn-primary">
+            Lihat File
+        </a>
+    `;
+}
+
+
 $(document).ready(function () {
     $('#tableClient').DataTable({
         responsive: true,
@@ -119,6 +157,9 @@ $(document).ready(function () {
                                 </div>
                                 <div class="mb-3">
                                     ${item.description ?? '-'}
+                                </div>
+                                <div class="mb-3">
+                                    ${renderMedia(item.media)}
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
