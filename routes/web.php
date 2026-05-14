@@ -57,6 +57,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/client/detail', [ClientController::class, 'detail']);
     Route::post('/client/delete', [ClientController::class, 'delete']);
     Route::post('/client/activate', [ClientController::class, 'activate']);
+    Route::get('/client/detail-iklan/{id}', [ClientController::class, 'detailIklan']);
 
     Route::post('/campaigns', [KampanyeIklanController::class, 'store'])->name('campaign.store');
 

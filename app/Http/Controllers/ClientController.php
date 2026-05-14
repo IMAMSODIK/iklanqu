@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\KampanyeIklan;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -78,4 +79,29 @@ class ClientController extends Controller
     //         ], 500);
     //     }
     // }
+
+    public function detailIklan($id)
+    {
+        try {
+
+            $data = KampanyeIklan::with([
+                'payments',
+                'lokasiKampanyeIklans.lokasi'
+            ])
+                ->where('user_id', $id)
+                ->latest()
+                ->get();
+
+            return response()->json([
+                'success' => true,
+                'data'    => $data
+            ]);
+        } catch (\Exception $e) {
+
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage()
+            ]);
+        }
+    }
 }

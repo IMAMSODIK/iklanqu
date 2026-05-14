@@ -29,4 +29,9 @@ class KampanyeIklan extends Model
             ->withPivot('tanggal_mulai', 'tanggal_selesai')
             ->withTimestamps();
     }
+
+    public function lokasiKampanyeIklans()
+    {
+        return $this->hasMany(LokasiKampanyeIklan::class, 'kampanye_iklan_id');
+    }
 }
