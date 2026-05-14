@@ -4,174 +4,191 @@
 <head>
     @include('dashboard_layouts.head')
     <style>
+        .custom-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.65);
+            backdrop-filter: blur(4px);
+            z-index: 99999;
 
-.custom-modal{
-    position: fixed;
-    inset: 0;
-    background: rgba(15,23,42,0.65);
-    backdrop-filter: blur(4px);
-    z-index: 99999;
+            display: none;
+            align-items: center;
+            justify-content: center;
 
-    display: none;
-    align-items: center;
-    justify-content: center;
+            padding: 20px;
+        }
 
-    padding: 20px;
+        .custom-modal.show {
+            display: flex;
+        }
+
+        .custom-modal-content {
+            width: 100%;
+            max-width: 950px;
+            max-height: 92vh;
+
+            background: #fff;
+            border-radius: 24px;
+
+            overflow: hidden;
+
+            display: flex;
+            flex-direction: column;
+
+            animation: modalShow .25s ease;
+        }
+
+        @keyframes modalShow {
+            from {
+                opacity: 0;
+                transform: translateY(20px) scale(.96);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .custom-modal-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid #e2e8f0;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .custom-modal-header h3 {
+            margin: 0;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .close-modal {
+            border: none;
+            background: #f1f5f9;
+
+            width: 38px;
+            height: 38px;
+
+            border-radius: 10px;
+
+            cursor: pointer;
+
+            font-size: 16px;
+        }
+
+        .custom-modal-body {
+            padding: 24px;
+            overflow-y: auto;
+        }
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+
+        .detail-box {
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 18px;
+        }
+
+        .detail-title {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 14px;
+        }
+
+        .info-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .info-table td {
+            padding: 7px 0;
+            vertical-align: top;
+            font-size: 14px;
+        }
+
+        .media-preview{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    background:#f8fafc;
+    border-radius:20px;
+    overflow:hidden;
+
+    max-height:420px;
 }
 
-.custom-modal.show{
-    display: flex;
+.media-preview img{
+    width:100%;
+    max-height:420px;
+    object-fit:contain;
 }
 
-.custom-modal-content{
-    width: 100%;
-    max-width: 950px;
-    max-height: 92vh;
-
-    background: #fff;
-    border-radius: 24px;
-
-    overflow: hidden;
-
-    display: flex;
-    flex-direction: column;
-
-    animation: modalShow .25s ease;
-}
-
-@keyframes modalShow{
-    from{
-        opacity: 0;
-        transform: translateY(20px) scale(.96);
-    }
-    to{
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
-}
-
-.custom-modal-header{
-    padding: 20px 24px;
-    border-bottom: 1px solid #e2e8f0;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.custom-modal-header h3{
-    margin: 0;
-    font-size: 20px;
-    font-weight: 700;
-}
-
-.close-modal{
-    border: none;
-    background: #f1f5f9;
-
-    width: 38px;
-    height: 38px;
-
-    border-radius: 10px;
-
-    cursor: pointer;
-
-    font-size: 16px;
-}
-
-.custom-modal-body{
-    padding: 24px;
-    overflow-y: auto;
-}
-
-.detail-grid{
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 18px;
-}
-
-.detail-box{
-    border: 1px solid #e2e8f0;
-    border-radius: 16px;
-    padding: 18px;
-}
-
-.detail-title{
-    font-size: 15px;
-    font-weight: 700;
-    margin-bottom: 14px;
-}
-
-.info-table{
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.info-table td{
-    padding: 7px 0;
-    vertical-align: top;
-    font-size: 14px;
-}
-
-.media-preview img,
 .media-preview video{
-    width: 100%;
-    border-radius: 16px;
-    max-height: 320px;
-    object-fit: cover;
+    width:auto;
+    max-width:100%;
+    max-height:420px;
+    object-fit:contain;
+    background:black;
 }
 
-.status-badge{
-    padding: 7px 12px;
-    border-radius: 999px;
-    font-size: 12px;
-    font-weight: 600;
-    color: white;
-}
+        .status-badge {
+            padding: 7px 12px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 600;
+            color: white;
+        }
 
-.status-paid{
-    background: #16a34a;
-}
+        .status-paid {
+            background: #16a34a;
+        }
 
-.status-pending{
-    background: #f59e0b;
-}
+        .status-pending {
+            background: #f59e0b;
+        }
 
-.status-failed{
-    background: #dc2626;
-}
+        .status-failed {
+            background: #dc2626;
+        }
 
-.lokasi-item{
-    border: 1px solid #e2e8f0;
-    border-radius: 12px;
-    padding: 12px;
-    margin-bottom: 12px;
-}
+        .lokasi-item {
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 12px;
+            margin-bottom: 12px;
+        }
 
-@media(max-width:768px){
+        @media(max-width:768px) {
 
-    .custom-modal{
-        padding: 0;
-    }
+            .custom-modal {
+                padding: 0;
+            }
 
-    .custom-modal-content{
-        max-width: 100%;
-        height: 100vh;
-        max-height: 100vh;
-        border-radius: 0;
-    }
+            .custom-modal-content {
+                max-width: 100%;
+                height: 100vh;
+                max-height: 100vh;
+                border-radius: 0;
+            }
 
-    .custom-modal-body{
-        padding: 16px;
-    }
+            .custom-modal-body {
+                padding: 16px;
+            }
 
-    .detail-grid{
-        grid-template-columns: 1fr;
-    }
+            .detail-grid {
+                grid-template-columns: 1fr;
+            }
 
-}
-
-</style>
+        }
+    </style>
 </head>
 
 <body>
@@ -205,7 +222,17 @@
                                 data-media="{{ asset('storage/' . $item->media) }}"
                                 data-total="{{ number_format($item->total_price, 0, ',', '.') }}"
                                 data-status="{{ $item->payment_status }}" data-payment="{{ $item->payment_method }}"
-                                data-paid="{{ $item->paid_at }}">
+                                data-paid="{{ $item->paid_at }}"
+                                data-created="{{ $item->created_at }}"
+                                data-lokasi='@json(
+    $item->lokasiKampanyeIklans->map(function($lok){
+        return [
+            "nama" => $lok->lokasi->nama ?? "-",
+            "tanggal_mulai" => $lok->tanggal_mulai,
+            "tanggal_selesai" => $lok->tanggal_selesai,
+        ];
+    })
+)'>
 
                                 <div class="item-icon">
 
@@ -272,234 +299,359 @@
         </div>
 
         <!-- MODAL DETAIL -->
-<div class="custom-modal" id="detailModal">
+        <div class="custom-modal" id="detailModal">
 
-    <div class="custom-modal-content">
+            <div class="custom-modal-content">
 
-        <div class="custom-modal-header">
+                <div class="custom-modal-header">
 
-            <div>
-                <h3>Detail Iklan</h3>
+                    <div>
+                        <h3>Detail Iklan</h3>
+                    </div>
+
+                    <button class="close-modal" id="closeModal">
+                        ✕
+                    </button>
+
+                </div>
+
+                <div class="custom-modal-body" id="detailContent">
+
+                </div>
+
             </div>
 
-            <button class="close-modal" id="closeModal">
-                ✕
-            </button>
-
         </div>
-
-        <div class="custom-modal-body" id="detailContent">
-
-        </div>
-
-    </div>
-
-</div>
 
         @include('dashboard_layouts.nav')
     </div>
 
     @include('dashboard_layouts.script')
     <script>
+        function formatTanggal(dateString) {
 
-function formatTanggal(dateString){
+            if (!dateString) return '-';
 
-    if(!dateString) return '-';
+            const date = new Date(dateString);
 
-    const date = new Date(dateString);
+            return date.toLocaleDateString('id-ID', {
+                weekday: 'long',
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric'
+            });
 
-    return date.toLocaleDateString('id-ID', {
-        weekday: 'long',
-        day: 'numeric',
-        month: 'long',
-        year: 'numeric'
-    });
+        }
 
-}
+        function hitungDurasi(startDate, endDate) {
 
-function hitungDurasi(startDate, endDate){
+            const start = new Date(startDate);
+            const end = new Date(endDate);
 
-    const start = new Date(startDate);
-    const end = new Date(endDate);
+            const diffTime = end - start;
 
-    const diffTime = end - start;
+            return Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
+        }
 
-    return Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
-}
+        $(document).on('click', '.iklan-item', function() {
 
-$(document).on('click', '.iklan-item', function(){
+            let item = $(this).data('item');
 
-    let item = $(this).data('item');
+        });
 
-});
+        $(document).on('click', '.iklan-item', function() {
 
-$(document).on('click', '.iklan-item', function(){
+            let data = $(this).data();
 
-    let data = $(this).data();
+            let badgeClass = 'status-pending';
 
-    let badgeClass = 'status-pending';
+            if (data.status == 'paid') {
+                badgeClass = 'status-paid';
+            }
 
-    if(data.status == 'paid'){
-        badgeClass = 'status-paid';
-    }
+            if (data.status == 'failed') {
+                badgeClass = 'status-failed';
+            }
 
-    if(data.status == 'failed'){
-        badgeClass = 'status-failed';
-    }
-
-    let mediaHtml = `
+            let mediaHtml = `
         <div>Tidak ada media</div>
     `;
 
-    if(data.media){
+            if (data.media) {
 
-        if(
-            data.media.includes('.jpg') ||
-            data.media.includes('.jpeg') ||
-            data.media.includes('.png') ||
-            data.media.includes('.webp')
-        ){
+                if (
+                    data.media.includes('.jpg') ||
+                    data.media.includes('.jpeg') ||
+                    data.media.includes('.png') ||
+                    data.media.includes('.webp')
+                ) {
 
-            mediaHtml = `
+                    mediaHtml = `
                 <img src="${data.media}">
             `;
 
-        } else {
+                } else {
 
-            mediaHtml = `
+                    mediaHtml = `
                 <video controls>
                     <source src="${data.media}">
                 </video>
             `;
-        }
-    }
+                }
+            }
 
-    let html = `
+            let lokasiHtml = '';
 
-        <div class="media-preview mb-4">
-            ${mediaHtml}
-        </div>
+            if (data.lokasi) {
 
-        <div style="display:flex; justify-content:space-between; align-items:start; gap:12px; margin-bottom:20px;">
+                try {
 
-            <div>
+                    let lokasiData = JSON.parse(data.lokasi);
 
-                <h2 style="margin-bottom:8px;">
-                    ${data.name}
-                </h2>
+                    lokasiData.forEach((lok) => {
 
-                <div style="color:#64748b;">
-                    ${data.description ?? '-'}
+                        lokasiHtml += `
+
+                <div class="lokasi-item">
+
+                    <table class="info-table">
+
+                        <tr>
+                            <td width="120">
+                                <b>Lokasi</b>
+                            </td>
+
+                            <td>
+                                ${lok.nama}
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <b>Mulai</b>
+                            </td>
+
+                            <td>
+                                ${formatTanggal(lok.tanggal_mulai)}
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <b>Selesai</b>
+                            </td>
+
+                            <td>
+                                ${formatTanggal(lok.tanggal_selesai)}
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <b>Durasi</b>
+                            </td>
+
+                            <td>
+                                ${hitungDurasi(
+                                    lok.tanggal_mulai,
+                                    lok.tanggal_selesai
+                                )} Hari
+                            </td>
+                        </tr>
+
+                    </table>
+
                 </div>
 
-            </div>
+            `;
+                    });
 
-            <div class="status-badge ${badgeClass}">
-                ${data.status}
-            </div>
+                } catch (err) {
 
-        </div>
+                    lokasiHtml = `
+            <div>Tidak ada lokasi</div>
+        `;
+                }
 
-        <div class="detail-grid">
+            }
 
-            <div class="detail-box">
+            let html = `
 
-                <div class="detail-title">
-                    Informasi Pembayaran
-                </div>
+    <div class="media-preview mb-4">
 
-                <table class="info-table">
+        ${mediaHtml}
 
-                    <tr>
-                        <td width="130">
-                            <b>Total</b>
-                        </td>
+    </div>
 
-                        <td>
-                            Rp ${data.total}
-                        </td>
-                    </tr>
+    <div style="
+        display:flex;
+        justify-content:space-between;
+        align-items:start;
+        gap:12px;
+        margin-bottom:20px;
+        flex-wrap:wrap;
+    ">
 
-                    <tr>
-                        <td>
-                            <b>Metode</b>
-                        </td>
+        <div>
 
-                        <td>
-                            ${data.payment ?? '-'}
-                        </td>
-                    </tr>
+            <h2 style="
+                margin-bottom:8px;
+                font-size:24px;
+                font-weight:700;
+            ">
+                ${data.name}
+            </h2>
 
-                    <tr>
-                        <td>
-                            <b>Waktu Bayar</b>
-                        </td>
-
-                        <td>
-                            ${data.paid ? formatTanggal(data.paid) : '-'}
-                        </td>
-                    </tr>
-
-                </table>
-
-            </div>
-
-            <div class="detail-box">
-
-                <div class="detail-title">
-                    Informasi Iklan
-                </div>
-
-                <table class="info-table">
-
-                    <tr>
-                        <td width="130">
-                            <b>Nama</b>
-                        </td>
-
-                        <td>
-                            ${data.name}
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>
-                            <b>Status</b>
-                        </td>
-
-                        <td>
-                            ${data.status}
-                        </td>
-                    </tr>
-
-                </table>
-
+            <div style="
+                color:#64748b;
+                line-height:1.7;
+            ">
+                ${data.description ?? '-'}
             </div>
 
         </div>
-    `;
 
-    $('#detailContent').html(html);
+        <div class="status-badge ${badgeClass}">
+            ${data.status}
+        </div>
 
-    $('#detailModal').addClass('show');
+    </div>
 
-});
+    <div class="detail-grid">
 
-$('#closeModal').click(function(){
+        <!-- PEMBAYARAN -->
+        <div class="detail-box">
 
-    $('#detailModal').removeClass('show');
+            <div class="detail-title">
+                Informasi Pembayaran
+            </div>
 
-});
+            <table class="info-table">
 
-$('#detailModal').click(function(e){
+                <tr>
+                    <td width="140">
+                        <b>Total</b>
+                    </td>
 
-    if(e.target === this){
-        $('#detailModal').removeClass('show');
-    }
+                    <td>
+                        Rp ${data.total}
+                    </td>
+                </tr>
 
-});
+                <tr>
+                    <td>
+                        <b>Metode</b>
+                    </td>
 
-</script>
+                    <td>
+                        ${data.payment ?? '-'}
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <b>Status</b>
+                    </td>
+
+                    <td>
+                        ${data.status}
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <b>Waktu Bayar</b>
+                    </td>
+
+                    <td>
+                        ${data.paid
+                            ? formatTanggal(data.paid)
+                            : '-'}
+                    </td>
+                </tr>
+
+            </table>
+
+        </div>
+
+        <!-- INFORMASI IKLAN -->
+        <div class="detail-box">
+
+            <div class="detail-title">
+                Informasi Campaign
+            </div>
+
+            <table class="info-table">
+
+                <tr>
+                    <td width="140">
+                        <b>Nama</b>
+                    </td>
+
+                    <td>
+                        ${data.name}
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <b>Dibuat</b>
+                    </td>
+
+                    <td>
+                        ${formatTanggal(data.created)}
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <b>Status</b>
+                    </td>
+
+                    <td>
+                        ${data.status}
+                    </td>
+                </tr>
+
+            </table>
+
+        </div>
+
+    </div>
+
+    <!-- LOKASI -->
+    <div class="detail-box" style="margin-top:18px;">
+
+        <div class="detail-title">
+            Lokasi Penayangan
+        </div>
+
+        ${lokasiHtml}
+
+    </div>
+
+`;
+
+            $('#detailContent').html(html);
+
+            $('#detailModal').addClass('show');
+
+        });
+
+        $('#closeModal').click(function() {
+
+            $('#detailModal').removeClass('show');
+
+        });
+
+        $('#detailModal').click(function(e) {
+
+            if (e.target === this) {
+                $('#detailModal').removeClass('show');
+            }
+
+        });
+    </script>
 </body>
 
 </html>
