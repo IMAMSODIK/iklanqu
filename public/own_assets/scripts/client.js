@@ -131,7 +131,7 @@ $(document).ready(function () {
                         item.lokasi_kampanye_iklans.forEach((lok) => {
                             lokasi += `
                             <div class="border rounded p-2 mb-2">
-                                <div><b>Lokasi:</b> ${lok.lokasi?.name ?? '-'}</div>
+                                <div><b>Lokasi:</b> ${lok.lokasi?.nama ?? '-'}</div>
                                 <div>
                                     <b>Tanggal:</b>
                                     ${lok.tanggal_mulai}
@@ -166,10 +166,6 @@ $(document).ready(function () {
                                         <div class="mb-2">
                                             <b>Total Pembayaran:</b>
                                             Rp ${parseInt(item.total_price).toLocaleString()}
-                                        </div>
-                                        <div class="mb-2">
-                                            <b>Metode:</b>
-                                            ${item.payment_method ?? '-'}
                                         </div>
                                         <div class="mb-2">
                                             <b>Waktu Bayar:</b>
