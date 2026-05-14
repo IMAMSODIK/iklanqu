@@ -53,8 +53,18 @@
                                                     </div>
                                                 </td>
                                                 <td class="text-center align-middle">
-                                                    <button class="btn btn-sm btn-danger detail-iklan"
-                                                            data-id="{{ $d->id }}">Belum Ada</button>
+                                                    @if ($d->kampanye_iklans_count > 0)
+                                                        <button class="btn btn-sm btn-success detail-iklan"
+                                                            data-id="{{ $d->id }}">
+                                                            {{ $d->kampanye_iklans_count }} Iklan
+                                                        </button>
+                                                    @else
+                                                        <button class="btn btn-sm btn-danger detail-iklan"
+                                                            data-id="{{ $d->id }}">
+                                                            Belum Ada
+                                                        </button>
+                                                    @endif
+                                                </td>
                                                 </td>
                                                 <td class="text-center align-middle">
                                                     <div class="d-flex justify-content-center gap-1">
@@ -75,8 +85,8 @@
         </div>
     </div>
 
-    <div class="modal fade modal-alert" id="alert" tabindex="-1" role="dialog"
-        aria-labelledby="exampleModalCenter1" aria-hidden="true">
+    <div class="modal fade modal-alert" id="alert" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenter1"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-body">
