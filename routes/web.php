@@ -8,6 +8,7 @@ use App\Http\Controllers\GetInTouchController;
 use App\Http\Controllers\KampanyeIklanController;
 use App\Http\Controllers\LokasiController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RiwayatIklan;
 use App\Http\Controllers\UserController;
 use App\Models\KampanyeIklan;
 use Illuminate\Support\Facades\Route;
@@ -76,6 +77,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/get-in-touch', [GetInTouchController::class, 'index']);
     Route::post('/get-in-touch/store', [GetInTouchController::class, 'store']);
     Route::post('/get-in-touch/delete', [GetInTouchController::class, 'delete']);
+
+    Route::get('/riwayat/detail/{id}', [RiwayatIklan::class, 'detailRiwayat']);
 
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 });

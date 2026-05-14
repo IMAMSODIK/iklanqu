@@ -217,22 +217,7 @@
 
                             @endphp
 
-                            <div class="card-item iklan-item" data-id="{{ $item->id }}"
-                                data-name="{{ $item->name }}" data-description="{{ $item->description }}"
-                                data-media="{{ asset('storage/' . $item->media) }}"
-                                data-total="{{ number_format($item->total_price, 0, ',', '.') }}"
-                                data-status="{{ $item->payment_status }}" data-payment="{{ $item->payment_method }}"
-                                data-paid="{{ $item->paid_at }}"
-                                data-created="{{ $item->created_at }}"
-                                data-lokasi='@json(
-    $item->lokasiKampanyeIklans->map(function($lok){
-        return [
-            "nama" => $lok->lokasi->nama ?? "-",
-            "tanggal_mulai" => $lok->tanggal_mulai,
-            "tanggal_selesai" => $lok->tanggal_selesai,
-        ];
-    })
-)'>
+                            <div class="card-item iklan-item" data-id="{{ $item->id }}">
 
                                 <div class="item-icon">
 
@@ -328,330 +313,360 @@
 
     @include('dashboard_layouts.script')
     <script>
-        function formatTanggal(dateString) {
 
-            if (!dateString) return '-';
+function formatTanggal(dateString){
 
-            const date = new Date(dateString);
+    if(!dateString) return '-';
 
-            return date.toLocaleDateString('id-ID', {
-                weekday: 'long',
-                day: 'numeric',
-                month: 'long',
-                year: 'numeric'
-            });
+    const date = new Date(dateString);
 
-        }
+    return date.toLocaleDateString('id-ID', {
+        weekday: 'long',
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric'
+    });
 
-        function hitungDurasi(startDate, endDate) {
+}
 
-            const start = new Date(startDate);
-            const end = new Date(endDate);
+function hitungDurasi(startDate, endDate){
 
-            const diffTime = end - start;
+    const start = new Date(startDate);
+    const end = new Date(endDate);
 
-            return Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
-        }
+    const diffTime = end - start;
 
-        $(document).on('click', '.iklan-item', function() {
+    return Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
+}
 
-            let item = $(this).data('item');
+function renderMedia(media){
 
-        });
+    if(!media){
 
-        $(document).on('click', '.iklan-item', function() {
+        return `
+            <div class="text-muted">
+                Tidak ada media
+            </div>
+        `;
+    }
 
-            let data = $(this).data();
+    let fileUrl = `/storage/${media}`;
+
+    let ext = media.split('.').pop().toLowerCase();
+
+    let imageExt = ['jpg','jpeg','png','webp'];
+
+    let videoExt = ['mp4','mov','avi'];
+
+    if(imageExt.includes(ext)){
+
+        return `
+            <img src="${fileUrl}">
+        `;
+
+    } else if(videoExt.includes(ext)) {
+
+        return `
+            <video controls>
+                <source src="${fileUrl}">
+            </video>
+        `;
+    }
+
+    return `
+        <a href="${fileUrl}" target="_blank">
+            Lihat File
+        </a>
+    `;
+}
+
+$(document).on('click', '.iklan-item', function(){
+
+    let id = $(this).data('id');
+
+    $('#detailModal').addClass('show');
+
+    $('#detailContent').html(`
+        <div style="
+            padding:40px;
+            text-align:center;
+        ">
+            Loading...
+        </div>
+    `);
+
+    $.ajax({
+
+        url: '/riwayat/detail/' + id,
+        type: 'GET',
+
+        success: function(res){
+
+            let item = res.data;
 
             let badgeClass = 'status-pending';
 
-            if (data.status == 'paid') {
+            if(item.payment_status == 'paid'){
                 badgeClass = 'status-paid';
             }
 
-            if (data.status == 'failed') {
+            if(item.payment_status == 'failed'){
                 badgeClass = 'status-failed';
-            }
-
-            let mediaHtml = `
-        <div>Tidak ada media</div>
-    `;
-
-            if (data.media) {
-
-                if (
-                    data.media.includes('.jpg') ||
-                    data.media.includes('.jpeg') ||
-                    data.media.includes('.png') ||
-                    data.media.includes('.webp')
-                ) {
-
-                    mediaHtml = `
-                <img src="${data.media}">
-            `;
-
-                } else {
-
-                    mediaHtml = `
-                <video controls>
-                    <source src="${data.media}">
-                </video>
-            `;
-                }
             }
 
             let lokasiHtml = '';
 
-            if (data.lokasi) {
+            item.lokasi_kampanye_iklans.forEach((lok) => {
 
-                try {
+                lokasiHtml += `
 
-                    let lokasiData = JSON.parse(data.lokasi);
+                    <div class="lokasi-item">
 
-                    lokasiData.forEach((lok) => {
+                        <table class="info-table">
 
-                        lokasiHtml += `
+                            <tr>
+                                <td width="120">
+                                    <b>Lokasi</b>
+                                </td>
 
-                <div class="lokasi-item">
+                                <td>
+                                    ${lok.lokasi?.nama ?? '-'}
+                                </td>
+                            </tr>
 
-                    <table class="info-table">
+                            <tr>
+                                <td>
+                                    <b>Mulai</b>
+                                </td>
 
-                        <tr>
-                            <td width="120">
-                                <b>Lokasi</b>
-                            </td>
+                                <td>
+                                    ${formatTanggal(lok.tanggal_mulai)}
+                                </td>
+                            </tr>
 
-                            <td>
-                                ${lok.nama}
-                            </td>
-                        </tr>
+                            <tr>
+                                <td>
+                                    <b>Selesai</b>
+                                </td>
 
-                        <tr>
-                            <td>
-                                <b>Mulai</b>
-                            </td>
+                                <td>
+                                    ${formatTanggal(lok.tanggal_selesai)}
+                                </td>
+                            </tr>
 
-                            <td>
-                                ${formatTanggal(lok.tanggal_mulai)}
-                            </td>
-                        </tr>
+                            <tr>
+                                <td>
+                                    <b>Durasi</b>
+                                </td>
 
-                        <tr>
-                            <td>
-                                <b>Selesai</b>
-                            </td>
+                                <td>
+                                    ${hitungDurasi(
+                                        lok.tanggal_mulai,
+                                        lok.tanggal_selesai
+                                    )} Hari
+                                </td>
+                            </tr>
 
-                            <td>
-                                ${formatTanggal(lok.tanggal_selesai)}
-                            </td>
-                        </tr>
+                        </table>
 
-                        <tr>
-                            <td>
-                                <b>Durasi</b>
-                            </td>
+                    </div>
+                `;
+            });
 
-                            <td>
-                                ${hitungDurasi(
-                                    lok.tanggal_mulai,
-                                    lok.tanggal_selesai
-                                )} Hari
-                            </td>
-                        </tr>
+            let html = `
 
-                    </table>
+                <div class="media-preview mb-4">
+
+                    ${renderMedia(item.media)}
+
+                </div>
+
+                <div style="
+                    display:flex;
+                    justify-content:space-between;
+                    align-items:start;
+                    gap:12px;
+                    margin-bottom:20px;
+                    flex-wrap:wrap;
+                ">
+
+                    <div>
+
+                        <h2 style="
+                            margin-bottom:8px;
+                            font-size:24px;
+                            font-weight:700;
+                        ">
+                            ${item.name}
+                        </h2>
+
+                        <div style="
+                            color:#64748b;
+                            line-height:1.7;
+                        ">
+                            ${item.description ?? '-'}
+                        </div>
+
+                    </div>
+
+                    <div class="status-badge ${badgeClass}">
+                        ${item.payment_status}
+                    </div>
+
+                </div>
+
+                <div class="detail-grid">
+
+                    <!-- PEMBAYARAN -->
+                    <div class="detail-box">
+
+                        <div class="detail-title">
+                            Informasi Pembayaran
+                        </div>
+
+                        <table class="info-table">
+
+                            <tr>
+                                <td width="140">
+                                    <b>Total</b>
+                                </td>
+
+                                <td>
+                                    Rp ${parseInt(item.total_price).toLocaleString()}
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <b>Metode</b>
+                                </td>
+
+                                <td>
+                                    ${item.payment_method ?? '-'}
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <b>Status</b>
+                                </td>
+
+                                <td>
+                                    ${item.payment_status}
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <b>Waktu Bayar</b>
+                                </td>
+
+                                <td>
+                                    ${item.paid_at
+                                        ? formatTanggal(item.paid_at)
+                                        : '-'}
+                                </td>
+                            </tr>
+
+                        </table>
+
+                    </div>
+
+                    <!-- INFORMASI CAMPAIGN -->
+                    <div class="detail-box">
+
+                        <div class="detail-title">
+                            Informasi Campaign
+                        </div>
+
+                        <table class="info-table">
+
+                            <tr>
+                                <td width="140">
+                                    <b>Nama</b>
+                                </td>
+
+                                <td>
+                                    ${item.name}
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <b>Dibuat</b>
+                                </td>
+
+                                <td>
+                                    ${formatTanggal(item.created_at)}
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <b>Status</b>
+                                </td>
+
+                                <td>
+                                    ${item.is_active ? 'Aktif' : 'Tidak Aktif'}
+                                </td>
+                            </tr>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+                <!-- LOKASI -->
+                <div class="detail-box" style="margin-top:18px;">
+
+                    <div class="detail-title">
+                        Lokasi Penayangan
+                    </div>
+
+                    ${lokasiHtml}
 
                 </div>
 
             `;
-                    });
-
-                } catch (err) {
-
-                    lokasiHtml = `
-            <div>Tidak ada lokasi</div>
-        `;
-                }
-
-            }
-
-            let html = `
-
-    <div class="media-preview mb-4">
-
-        ${mediaHtml}
-
-    </div>
-
-    <div style="
-        display:flex;
-        justify-content:space-between;
-        align-items:start;
-        gap:12px;
-        margin-bottom:20px;
-        flex-wrap:wrap;
-    ">
-
-        <div>
-
-            <h2 style="
-                margin-bottom:8px;
-                font-size:24px;
-                font-weight:700;
-            ">
-                ${data.name}
-            </h2>
-
-            <div style="
-                color:#64748b;
-                line-height:1.7;
-            ">
-                ${data.description ?? '-'}
-            </div>
-
-        </div>
-
-        <div class="status-badge ${badgeClass}">
-            ${data.status}
-        </div>
-
-    </div>
-
-    <div class="detail-grid">
-
-        <!-- PEMBAYARAN -->
-        <div class="detail-box">
-
-            <div class="detail-title">
-                Informasi Pembayaran
-            </div>
-
-            <table class="info-table">
-
-                <tr>
-                    <td width="140">
-                        <b>Total</b>
-                    </td>
-
-                    <td>
-                        Rp ${data.total}
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>
-                        <b>Metode</b>
-                    </td>
-
-                    <td>
-                        ${data.payment ?? '-'}
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>
-                        <b>Status</b>
-                    </td>
-
-                    <td>
-                        ${data.status}
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>
-                        <b>Waktu Bayar</b>
-                    </td>
-
-                    <td>
-                        ${data.paid
-                            ? formatTanggal(data.paid)
-                            : '-'}
-                    </td>
-                </tr>
-
-            </table>
-
-        </div>
-
-        <!-- INFORMASI IKLAN -->
-        <div class="detail-box">
-
-            <div class="detail-title">
-                Informasi Campaign
-            </div>
-
-            <table class="info-table">
-
-                <tr>
-                    <td width="140">
-                        <b>Nama</b>
-                    </td>
-
-                    <td>
-                        ${data.name}
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>
-                        <b>Dibuat</b>
-                    </td>
-
-                    <td>
-                        ${formatTanggal(data.created)}
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>
-                        <b>Status</b>
-                    </td>
-
-                    <td>
-                        ${data.status}
-                    </td>
-                </tr>
-
-            </table>
-
-        </div>
-
-    </div>
-
-    <!-- LOKASI -->
-    <div class="detail-box" style="margin-top:18px;">
-
-        <div class="detail-title">
-            Lokasi Penayangan
-        </div>
-
-        ${lokasiHtml}
-
-    </div>
-
-`;
 
             $('#detailContent').html(html);
 
-            $('#detailModal').addClass('show');
+        },
 
-        });
+        error: function(){
 
-        $('#closeModal').click(function() {
+            $('#detailContent').html(`
+                <div style="
+                    padding:40px;
+                    text-align:center;
+                    color:red;
+                ">
+                    Gagal memuat detail iklan
+                </div>
+            `);
 
-            $('#detailModal').removeClass('show');
+        }
 
-        });
+    });
 
-        $('#detailModal').click(function(e) {
+});
 
-            if (e.target === this) {
-                $('#detailModal').removeClass('show');
-            }
+$('#closeModal').click(function(){
 
-        });
-    </script>
+    $('#detailModal').removeClass('show');
+
+});
+
+$('#detailModal').click(function(e){
+
+    if(e.target === this){
+        $('#detailModal').removeClass('show');
+    }
+
+});
+
+</script>
 </body>
 
 </html>
