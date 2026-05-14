@@ -22,7 +22,7 @@ class KampanyeIklanController extends Controller
             $request->validate([
                 'name' => 'required',
                 'description' => 'nullable',
-                'media' => 'nullable',
+                'media' => 'nullable|file|mimes:jpg,jpeg,png,mp4,mov,avi|max:40960',
                 'boards' => 'required',
             ]);
 
@@ -32,12 +32,23 @@ class KampanyeIklanController extends Controller
             }
 
             $totalPrice = 0;
+            $mediaPath = null;
+            if ($request->hasFile('media')) {
+                $file = $request->file('media');
+                $filename = time() . '_' . $file->getClientOriginalName();
+
+                $mediaPath = $file->storeAs(
+                    'campaigns',
+                    $filename,
+                    'public'
+                );
+            }
 
             $campaign = KampanyeIklan::create([
                 'user_id' => Auth::id(),
                 'name' => $request->name,
                 'description' => $request->description,
-                'media' => $request->media,
+                'media' => $mediaPath,
                 'payment_status' => 'pending',
                 'is_active' => false,
             ]);

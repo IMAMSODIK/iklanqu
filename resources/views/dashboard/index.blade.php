@@ -398,7 +398,7 @@
                 </div>
 
                 <div class="campaign-card">
-                    <form id="campaignForm">
+                    <form id="campaignForm" enctype="multipart/form-data">
                         <div class="form-group">
                             <label>Nama Campaign <span class="required-star">*</span></label>
                             <input type="text" id="campaign_name"
@@ -820,28 +820,17 @@
 
     <script>
         const modal = document.getElementById('scheduleModal');
-
         const closeModal = document.getElementById('closeModal');
-
         const tanggalMulai = document.getElementById('tanggalMulai');
-
         const tanggalSelesai = document.getElementById('tanggalSelesai');
-
         const totalHariText = document.getElementById('totalHari');
-
         const totalHargaText = document.getElementById('totalHarga');
-
         const modalBoardName = document.getElementById('modalBoardName');
-
         const modalLokasi = document.getElementById('modalLokasi');
-
         const modalHarga = document.getElementById('modalHarga');
 
         let currentRow = null;
-
         let hargaPerHari = 0;
-
-
 
         function openModal(row) {
             currentRow = row;
@@ -853,15 +842,11 @@
             modal.classList.add('active');
         }
 
-
-
         document.querySelectorAll('.table-row').forEach(row => {
             row.addEventListener('click', function() {
                 openModal(this);
             });
         });
-
-
 
         document.querySelectorAll('.btn-edit').forEach(button => {
             button.addEventListener('click', function(e) {
@@ -871,38 +856,22 @@
             });
         });
 
-
-
         closeModal.addEventListener('click', function() {
-
             modal.classList.remove('active');
-
         });
-
-
 
         modal.addEventListener('click', function(e) {
-
             if (e.target === modal) {
-
                 modal.classList.remove('active');
-
             }
-
         });
 
-
-
         function calculateTotal() {
-
             if (!tanggalMulai.value || !tanggalSelesai.value) return;
 
             const start = new Date(tanggalMulai.value);
-
             const end = new Date(tanggalSelesai.value);
-
             const diff = end - start;
-
             const totalHari = Math.floor(
                 diff / (1000 * 60 * 60 * 24)
             ) + 1;
@@ -919,120 +888,67 @@
 
         }
 
-
-
         tanggalMulai.addEventListener('change', calculateTotal);
-
         tanggalSelesai.addEventListener('change', calculateTotal);
-
-
 
         document.getElementById('saveSchedule')
             .addEventListener('click', function() {
-
                 if (!currentRow) return;
+                const start = tanggalMulai.value;
+                const end = tanggalSelesai.value;
 
-                const start =
-                    tanggalMulai.value;
-
-                const end =
-                    tanggalSelesai.value;
-
-                currentRow.dataset.tanggal_mulai =
-                    start;
-
-                currentRow.dataset.tanggal_selesai =
-                    end;
-
-                currentRow.dataset.total =
-                    totalHargaText.innerText.replace(/\D/g, '');
-
-                currentRow.querySelector('.jadwal-text').innerText =
-                    start + ' s/d ' + end;
-
-                currentRow.querySelector('.durasi-text').innerText =
-                    totalHariText.innerText;
-
-                currentRow.querySelector('.harga-text').innerText =
-                    totalHargaText.innerText;
+                currentRow.dataset.tanggal_mulai = start;
+                currentRow.dataset.tanggal_selesai = end;
+                currentRow.dataset.total = totalHargaText.innerText.replace(/\D/g, '');
+                currentRow.querySelector('.jadwal-text').innerText = start + ' s/d ' + end;
+                currentRow.querySelector('.durasi-text').innerText = totalHariText.innerText;
+                currentRow.querySelector('.harga-text').innerText = totalHargaText.innerText;
 
                 modal.classList.remove('active');
-
             });
 
-
-
-        document.getElementById('clearSchedule')
-            .addEventListener('click', function() {
+        document.getElementById('clearSchedule').addEventListener('click', function() {
 
                 if (!currentRow) return;
-
-                currentRow.querySelector('.jadwal-text').innerText =
-                    'Belum dipilih';
-
-                currentRow.querySelector('.durasi-text').innerText =
-                    '-';
-
-                currentRow.querySelector('.harga-text').innerText =
-                    '-';
+                currentRow.querySelector('.jadwal-text').innerText = 'Belum dipilih';
+                currentRow.querySelector('.durasi-text').innerText = '-';
+                currentRow.querySelector('.harga-text').innerText = '-';
 
                 tanggalMulai.value = '';
-
                 tanggalSelesai.value = '';
-
-                totalHariText.innerText =
-                    '0 Hari';
-
-                totalHargaText.innerText =
-                    'Rp 0';
-
+                totalHariText.innerText = '0 Hari';
+                totalHargaText.innerText ='Rp 0';
             });
-    </script>
-
-    <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ config('midtrans.client_key') }}">
     </script>
 
     <script>
         const form = document.getElementById('campaignForm');
-
-        const orderModal =
-            document.getElementById('orderModal');
-
-        const closeOrderModal =
-            document.getElementById('closeOrderModal');
+        const orderModal = document.getElementById('orderModal');
+        const closeOrderModal = document.getElementById('closeOrderModal');
 
         let currentSnapToken = null;
-
         form.addEventListener('submit', async function(e) {
-
             e.preventDefault();
-
             const boards = [];
 
-            document.querySelectorAll('.table-row')
-                .forEach(row => {
+            document.querySelectorAll('.table-row').forEach(row => {
+                const jadwal = row.querySelector('.jadwal-text').innerText;
 
-                    const jadwal =
-                        row.querySelector('.jadwal-text').innerText;
+                if (jadwal === 'Belum dipilih') return;
 
-                    if (jadwal === 'Belum dipilih') return;
-
-                    boards.push({
-                        board_id: row.dataset.id,
-                        tanggal_mulai: row.dataset.tanggal_mulai,
-                        tanggal_selesai: row.dataset.tanggal_selesai,
-                        total: row.dataset.total
-                    });
-
+                boards.push({
+                    board_id: row.dataset.id,
+                    tanggal_mulai: row.dataset.tanggal_mulai,
+                    tanggal_selesai: row.dataset.tanggal_selesai,
+                    total: row.dataset.total
                 });
+            });
 
-            document.getElementById('boardsInput').value =
-                JSON.stringify(boards);
+            document.getElementById('boardsInput').value = JSON.stringify(boards);
 
             const formData = new FormData(form);
 
             try {
-
                 const response = await fetch(
                     "{{ route('campaign.store') }}", {
                         method: 'POST',
@@ -1046,81 +962,43 @@
                 const result = await response.json();
 
                 if (!result.success) {
-
                     alert(result.message);
                     return;
-
                 }
 
-                currentSnapToken =
-                    result.snap_token;
+                currentSnapToken = result.snap_token;
 
-                document.getElementById('detailInvoice')
-                    .innerText =
-                    result.invoice;
+                document.getElementById('detailInvoice').innerText = result.invoice;
 
-                document.getElementById('detailTotal')
-                    .innerText =
-                    'Rp ' + parseInt(result.total)
-                    .toLocaleString('id-ID');
-
+                document.getElementById('detailTotal').innerText = 'Rp ' + parseInt(result.total).toLocaleString('id-ID');
                 orderModal.classList.add('active');
-
             } catch (error) {
-
                 alert('Terjadi kesalahan');
-
             }
-
         });
-
-
 
         closeOrderModal.addEventListener('click', function() {
-
             orderModal.classList.remove('active');
-
         });
 
+        document.getElementById('btnEditCampaign').addEventListener('click', function() {
+            orderModal.classList.remove('active');
+        });
 
-
-        document.getElementById('btnEditCampaign')
-            .addEventListener('click', function() {
-
-                orderModal.classList.remove('active');
-
+        document.getElementById('btnCheckout').addEventListener('click', function() {
+            orderModal.classList.remove('active');
+            snap.pay(currentSnapToken, {
+                onSuccess: function(result) {
+                    window.location.reload();
+                },
+                onPending: function(result) {
+                    window.location.reload();
+                },
+                onError: function(result) {
+                    alert('Pembayaran gagal');
+                }
             });
-
-
-
-        document.getElementById('btnCheckout')
-            .addEventListener('click', function() {
-
-                orderModal.classList.remove('active');
-
-                snap.pay(currentSnapToken, {
-
-                    onSuccess: function(result) {
-
-                        window.location.reload();
-
-                    },
-
-                    onPending: function(result) {
-
-                        window.location.reload();
-
-                    },
-
-                    onError: function(result) {
-
-                        alert('Pembayaran gagal');
-
-                    }
-
-                });
-
-            });
+        });
     </script>
 </body>
 
