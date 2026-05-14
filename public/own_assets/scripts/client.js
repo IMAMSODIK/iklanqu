@@ -151,18 +151,24 @@ $(document).ready(function () {
                         item.lokasi_kampanye_iklans.forEach((lok) => {
                             lokasi += `
                             <div class="border rounded p-2 mb-2">
-                                <div><b>Lokasi:</b> ${lok.lokasi?.nama ?? '-'}</div>
-                                <div>
-                                    <b>Tanggal:</b>
-                                    ${formatTanggal(lok.tanggal_mulai)}
-                                    s/d
-                                    ${formatTanggal(lok.tanggal_selesai)}
-                                </div>
-
-                                <div>
-                                    <b>Durasi:</b>
-                                    ${hitungDurasi(lok.tanggal_mulai, lok.tanggal_selesai)} Hari
-                                </div>
+                                <table>
+                                    <tr>
+                                        <td><b>Nama Lokasi</b></td>
+                                        <td>: ${lok.lokasi?.nama ?? '-'}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Tanggal Mulai</b></td>
+                                        <td>: ${formatTanggal(lok.tanggal_mulai)}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Tanggal Selesai</b></td>
+                                        <td>: ${formatTanggal(lok.tanggal_selesai)}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Durasi</b></td>
+                                        <td>: ${hitungDurasi(lok.tanggal_mulai, lok.tanggal_selesai)}</td>
+                                    </tr>
+                                </table>
                             </div>
                         `;
                         });
@@ -188,17 +194,16 @@ $(document).ready(function () {
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <div class="mb-2">
-                                            <b>Total Pembayaran:</b>
-                                            Rp ${parseInt(item.total_price).toLocaleString()}
-                                        </div>
-                                        <div class="mb-2">
-                                            <b>Waktu Bayar:</b>
-                                            ${item.paid_at ?? '-'}
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        ${lokasi}
+                                        <table>
+                                            <tr>
+                                                <td><b>Total Pembayaran</b></td>
+                                                <td>: Rp ${parseInt(item.total_price).toLocaleString()}</td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>Waktu Bayar</b></td>
+                                                <td>: ${item.paid_at ?? '-'}</td>
+                                            </tr>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
