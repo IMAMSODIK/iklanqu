@@ -66,6 +66,39 @@ function formatStatus(status){
     return statuses[status] ?? status;
 }
 
+function formatMetodePembayaran(method){
+
+    if(!method) return '-';
+
+    const methods = {
+
+        bank_transfer: 'Transfer Bank',
+        bca_va: 'BCA Virtual Account',
+        bni_va: 'BNI Virtual Account',
+        bri_va: 'BRI Virtual Account',
+        permata_va: 'Permata Virtual Account',
+
+        credit_card: 'Kartu Kredit',
+        gopay: 'GoPay',
+        shopeepay: 'ShopeePay',
+        qris: 'QRIS',
+
+        cstore: 'Convenience Store',
+        alfamart: 'Alfamart',
+        indomaret: 'Indomaret',
+
+        echannel: 'Mandiri Bill',
+        danamon_online: 'Danamon Online',
+
+        akulaku: 'Akulaku',
+        kredivo: 'Kredivo',
+    };
+
+    return methods[method] ?? method
+        .replaceAll('_', ' ')
+        .replace(/\b\w/g, l => l.toUpperCase());
+}
+
 $(document).ready(function () {
     $('#tableClient').DataTable({
         responsive: true,
