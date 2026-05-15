@@ -331,7 +331,7 @@ $(document).ready(function () {
 
                                 </div>
 
-                                <div class="row g-3">
+                                <div class="row">
 
                                     <!-- INFORMASI PEMBAYARAN -->
                                     <div class="col-md-6">
