@@ -336,7 +336,7 @@ $(document).ready(function () {
                                     <!-- INFORMASI PEMBAYARAN -->
                                     <div class="col-md-6">
 
-                                        <div class="border rounded p-3 h-100">
+                                        <div class="border rounded h-100">
 
                                             <div class="fw-bold mb-3">
                                                 Informasi Pembayaran
@@ -399,7 +399,7 @@ $(document).ready(function () {
                                     <!-- INFORMASI LOKASI -->
                                     <div class="col-md-6">
 
-                                        <div class="border rounded p-3 h-100">
+                                        <div class="border rounded h-100">
 
                                             <div class="fw-bold mb-3">
                                                 Lokasi Penayangan
