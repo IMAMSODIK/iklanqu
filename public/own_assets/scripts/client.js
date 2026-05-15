@@ -55,6 +55,16 @@ function hitungDurasi(startDate, endDate) {
     return diffDays;
 }
 
+function formatStatus(status){
+
+    const statuses = {
+        paid: 'Lunas',
+        pending: 'Menunggu',
+        failed: 'Gagal'
+    };
+
+    return statuses[status] ?? status;
+}
 
 $(document).ready(function () {
     $('#tableClient').DataTable({
