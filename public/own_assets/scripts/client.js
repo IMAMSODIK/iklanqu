@@ -258,7 +258,7 @@ $(document).ready(function () {
                                 <table class="table table-borderless table-sm mb-0">
 
                                     <tr>
-                                        <td width="100">
+                                        <td>
                                             <b>Lokasi</b>
                                         </td>
 
@@ -345,7 +345,7 @@ $(document).ready(function () {
                                             <table class="table table-borderless table-sm mb-0">
 
                                                 <tr>
-                                                    <td width="120">
+                                                    <td>
                                                         <b>Total</b>
                                                     </td>
 
