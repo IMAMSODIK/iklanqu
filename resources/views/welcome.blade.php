@@ -149,8 +149,8 @@
         <span>l</span>
         <span>a</span>
         <span>n</span>
-        <span>Q</span>
-        <span>u</span>
+        <span>i</span>
+        <span>n</span>
     </div>
     <div id="preloader"></div>
 
