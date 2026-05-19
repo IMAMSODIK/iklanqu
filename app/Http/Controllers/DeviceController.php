@@ -138,57 +138,100 @@ class DeviceController extends Controller
     public function uploadImpressions(Request $request)
     {
         try {
+
             $board = $request->attributes->get('board');
 
-            $rows = $request->input('rows', []);
-            $batchId = $request->input('batch_id', uniqid('batch_'));
+            $rows = $request->rows ?? [];
 
             DB::beginTransaction();
 
             foreach ($rows as $row) {
 
-                if (!isset($row['asset_id'], $row['minute_utc'])) {
+                if (!isset($row['asset_id'])) {
                     continue;
                 }
 
-                $campaign = KampanyeIklan::where('asset_id', $row['asset_id'])->first();
+                $campaign = KampanyeIklan::where(
+                    'asset_id',
+                    $row['asset_id']
+                )->first();
 
                 if (!$campaign) {
                     continue;
                 }
 
-                $minuteUtc = Carbon::parse($row['minute_utc'])
-                    ->format('Y-m-d H:i:00'); // penting: normalize per menit
+                // AGREGASI PER HARI
+                $tanggal = now()->format('Y-m-d');
 
-                // UPSERT LOGIC (INI KUNCI)
-                Impresion::updateOrCreate(
-                    [
+                // CARI DATA HARI INI
+                $impression = Impresion::where(
+                    'board_id',
+                    $board->id
+                )
+                    ->where(
+                        'kampanye_iklan_id',
+                        $campaign->id
+                    )
+                    ->whereDate(
+                        'tanggal',
+                        $tanggal
+                    )
+                    ->first();
+
+                // JIKA SUDAH ADA = UPDATE
+                if ($impression) {
+
+                    $impression->play_count += (int) (
+                        $row['play_count'] ?? 0
+                    );
+
+                    $impression->people_count += (int) (
+                        $row['people_count'] ?? 0
+                    );
+
+                    $impression->save();
+                } else {
+
+                    // JIKA BELUM ADA = CREATE
+                    Impresion::create([
+
                         'board_id' => $board->id,
+
                         'kampanye_iklan_id' => $campaign->id,
-                        'batch_id' => $batchId,
-                        'minute_utc' => $minuteUtc,
-                    ],
-                    [
-                        'play_count' => DB::raw('COALESCE(play_count,0) + ' . (int) ($row['play_count'] ?? 0)),
-                        'people_count' => (int) ($row['people_count'] ?? 0),
-                    ]
-                );
+
+                        'tanggal' => $tanggal,
+
+                        'play_count' => (int) (
+                            $row['play_count'] ?? 0
+                        ),
+
+                        'people_count' => (int) (
+                            $row['people_count'] ?? 0
+                        ),
+
+                    ]);
+                }
             }
 
             DB::commit();
 
             return response()->json([
-                'ok' => true,
-                'batch_id' => $batchId
+                'ok' => true
             ]);
         } catch (\Exception $e) {
 
             DB::rollBack();
 
             return response()->json([
+
                 'error' => true,
+
                 'message' => $e->getMessage(),
+
                 'line' => $e->getLine(),
+
+                'file' => $e->getFile()
+
             ], 500);
         }
     }
