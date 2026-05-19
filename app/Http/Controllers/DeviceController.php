@@ -141,21 +141,7 @@ class DeviceController extends Controller
 
             $board = $request->attributes->get('board');
 
-            if (!$board) {
-                return response()->json([
-                    'error' => true,
-                    'message' => 'Board not found'
-                ], 400);
-            }
-
             $rows = $request->input('rows', []);
-
-            if (!is_array($rows) || count($rows) === 0) {
-                return response()->json([
-                    'ok' => true,
-                    'message' => 'No data to process'
-                ]);
-            }
 
             foreach ($rows as $row) {
 
@@ -170,21 +156,20 @@ class DeviceController extends Controller
                 }
 
                 /**
-                 * NORMALISASI TIME
-                 * dibulatkan ke menit (anti spam per detik)
+                 * NORMALISASI TIME (WAJIB SAMA FORMAT)
                  */
                 $minute = Carbon::parse($row['minute_utc'])
                     ->setSecond(0)
                     ->format('Y-m-d H:i:00');
 
                 /**
-                 * UPSERT / AGGREGATION ROW
+                 * FIND OR CREATE TANPA batch_id
+                 * (INI KUNCI FIX UTAMA)
                  */
                 $impression = Impresion::firstOrCreate(
                     [
                         'board_id' => $board->id,
                         'kampanye_iklan_id' => $campaign->id,
-                        'batch_id' => $request->batch_id,
                         'minute_utc' => $minute,
                     ],
                     [
@@ -194,23 +179,20 @@ class DeviceController extends Controller
                 );
 
                 /**
-                 * AKUMULASI DATA (BUKAN OVERWRITE)
+                 * AKUMULASI DATA
                  */
                 $impression->increment('play_count', (int) ($row['play_count'] ?? 0));
 
                 $impression->increment('people_count', (int) ($row['people_count'] ?? 0));
             }
 
-            return response()->json([
-                'ok' => true
-            ]);
+            return response()->json(['ok' => true]);
         } catch (\Exception $e) {
 
             return response()->json([
                 'error' => true,
                 'message' => $e->getMessage(),
                 'line' => $e->getLine(),
-                'file' => $e->getFile()
             ], 500);
         }
     }
