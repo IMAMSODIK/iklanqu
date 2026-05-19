@@ -100,41 +100,79 @@ class DashboardController extends Controller
     public function pantau()
     {
         try {
+
             $data = [
                 'pageTitle' => 'Daftar Pantau'
             ];
 
             if (in_array(Auth::user()->role, ['admin', 'verifikator'])) {
-                return view('dashboard.index_admin', $data);
-            } else {
-                return view('dashboard.pantau', $data);
+
+                return view(
+                    'dashboard.index_admin',
+                    $data
+                );
             }
+
+            return view(
+                'dashboard.pantau',
+                $data
+            );
         } catch (\Exception $e) {
-            return back()->with('error', 'Terjadi kesalahan saat membuka halaman dashboard.');
+
+            return back()->with(
+                'error',
+                'Terjadi kesalahan saat membuka halaman dashboard.'
+            );
         }
     }
 
     public function pantauRealtime()
     {
         try {
+
             $user = Auth::user();
 
             $campaigns = KampanyeIklan::query()
-                ->withSum('impresions as total_play_count', 'play_count')
-                ->withSum('impresions as total_people_count', 'people_count')
+
+                // hanya milik user login
+                ->where('user_id', $user->id)
+
+                // hanya yang punya impresi
+                ->whereHas('impresions')
+
+                // sum total play
+                ->withSum(
+                    'impresions as total_play_count',
+                    'play_count'
+                )
+
+                // sum total people
+                ->withSum(
+                    'impresions as total_people_count',
+                    'people_count'
+                )
+
+                ->latest()
+
                 ->get();
 
             $rows = [];
 
             $totalPlay = 0;
+
             $totalPeople = 0;
+
             $totalImpression = 0;
 
             foreach ($campaigns as $campaign) {
 
-                $playCount = (int) ($campaign->total_play_count ?? 0);
+                $playCount = (int) (
+                    $campaign->total_play_count ?? 0
+                );
 
-                $peopleCount = (int) ($campaign->total_people_count ?? 0);
+                $peopleCount = (int) (
+                    $campaign->total_people_count ?? 0
+                );
 
                 $impression = $playCount + $peopleCount;
 
@@ -148,13 +186,26 @@ class DashboardController extends Controller
 
                     'id' => $campaign->id,
 
-                    'nama' => $campaign->nama_kampanye,
+                    'nama' =>
+                    $campaign->nama_kampanye
+                        ?? 'Tanpa Nama',
 
                     'play_count' => $playCount,
 
                     'people_count' => $peopleCount,
 
                     'impression' => $impression,
+
+                    'status' => $campaign->is_active
+                        ? 'Aktif'
+                        : 'Nonaktif',
+
+                    'payment_status' =>
+                    $campaign->payment_status,
+
+                    'created_at' =>
+                    optional($campaign->created_at)
+                        ->format('d M Y H:i')
 
                 ];
             }
@@ -165,11 +216,14 @@ class DashboardController extends Controller
 
                 'data' => [
 
-                    'total_play_count' => $totalPlay,
+                    'total_play_count' =>
+                    $totalPlay,
 
-                    'total_people_count' => $totalPeople,
+                    'total_people_count' =>
+                    $totalPeople,
 
-                    'total_impression' => $totalImpression,
+                    'total_impression' =>
+                    $totalImpression,
 
                     'campaigns' => $rows
 
@@ -182,7 +236,11 @@ class DashboardController extends Controller
 
                 'success' => false,
 
-                'message' => $e->getMessage()
+                'message' => $e->getMessage(),
+
+                'line' => $e->getLine(),
+
+                'file' => $e->getFile()
 
             ], 500);
         }
