@@ -15,6 +15,12 @@ return new class extends Migration
             $table->id();
             $table->string('name')->unique();
             $table->string('kode')->unique();
+            $table->string('device_token')->unique()->nullable();
+            $table->string('ip')->nullable();
+            $table->string('stream_url')->nullable();
+            $table->integer('free_disk_mb')->nullable();
+            $table->string('app_version')->nullable();
+            $table->timestamp('last_seen_at')->nullable();
             $table->string('pin');
             $table->foreignId('lokasi_id');
             $table->decimal('harga', 15, 2);

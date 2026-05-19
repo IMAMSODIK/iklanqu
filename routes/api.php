@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\KampanyeIklanController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -9,3 +10,8 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::post('/midtrans/callback', [KampanyeIklanController::class, 'callback']);
+
+
+Route::prefix('device')->middleware('device.auth')->group(function () {
+    Route::post('/sync', [DeviceController::class, 'sync']);
+});

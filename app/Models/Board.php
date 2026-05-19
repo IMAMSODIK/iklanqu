@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Board extends Model
 {
@@ -11,6 +12,16 @@ class Board extends Model
     use HasFactory;
 
     protected $guarded = ['id'];
+
+    protected static function booted()
+    {
+        static::creating(function ($board) {
+
+            if (!$board->device_token) {
+                $board->device_token = Str::random(64);
+            }
+        });
+    }
 
     public function photos()
     {

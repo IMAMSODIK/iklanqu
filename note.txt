@@ -14,12 +14,12 @@ pada saat klik checkout beberapa kali, database tidak update, tapi create
 callback midtrans masih gagal
 
 
-
+ 
 
 admin
-- logo
+- logo (done)
+- rapihkan daftar lokasi pada detail iklan client (done)
 - statistik dashboard admin
-- rapihkan daftar lokasi pada detail iklan client
 - menu verifikator (lebih ke arah mobile)
 
 user
