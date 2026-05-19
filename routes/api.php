@@ -16,6 +16,7 @@ Route::post('/midtrans/callback', [KampanyeIklanController::class, 'callback']);
 Route::prefix('device')->middleware('device.auth')->group(function () {
     Route::get('/sync', [DeviceController::class, 'sync']);
     Route::post('/heartbeat', [DeviceController::class, 'heartbeat']);
+    Route::post('/impressions/batch', [DeviceController::class, 'uploadImpressions']);
 });
 
 Route::get('/asset/{asset_id}', [AssetController::class, 'download'])->name('asset.download');

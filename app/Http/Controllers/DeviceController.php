@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Impresion;
+use App\Models\KampanyeIklan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -126,6 +128,45 @@ class DeviceController extends Controller
             'app_version' => $request->app_version,
             'last_seen_at' => now(),
         ]);
+
+        return response()->json([
+            'ok' => true
+        ]);
+    }
+
+    public function uploadImpressions(Request $request)
+    {
+        $board = $request->attributes->get('board');
+
+        $rows = $request->rows ?? [];
+
+        foreach ($rows as $row) {
+
+            $campaign = KampanyeIklan::where(
+                'asset_id',
+                $row['asset_id']
+            )->first();
+
+            if (!$campaign) {
+                continue;
+            }
+
+            Impresion::create([
+
+                'board_id' => $board->id,
+
+                'kampanye_iklan_id' => $campaign->id,
+
+                'batch_id' => $request->batch_id,
+
+                'minute_utc' => $row['minute_utc'],
+
+                'play_count' => $row['play_count'] ?? 0,
+
+                'people_count' => $row['people_count'] ?? 0,
+
+            ]);
+        }
 
         return response()->json([
             'ok' => true

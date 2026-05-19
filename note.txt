@@ -1,29 +1,9 @@
-table iklan
-- nama campaign
-- deskripsi iklan
-- file (video/gambar)
-- pilih lokasi
-- tanghal mulai
-- tanggal selesai
-
-
-
-
-
-pada saat klik checkout beberapa kali, database tidak update, tapi create
-callback midtrans masih gagal
-
-
- 
-
-admin
-- logo (done)
-- rapihkan daftar lokasi pada detail iklan client (done)
-- statistik dashboard admin
-- menu verifikator (lebih ke arah mobile)
-
-user
-- tombol buat iklan mengarah ke wa
-- isi konten pada tab akun
-- redesign untuk dashboard pada tampilan desktop
-- tutorial pop up
+dashboard monitoring
+online/offline board
+screenshot preview
+live stream monitoring
+schedule per jam
+playlist priority
+fallback offline mode
+auto cleanup cache
+OTA update player.
