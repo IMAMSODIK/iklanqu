@@ -136,40 +136,56 @@ class DeviceController extends Controller
 
     public function uploadImpressions(Request $request)
     {
-        $board = $request->attributes->get('board');
+        try {
 
-        $rows = $request->rows ?? [];
+            $board = $request->attributes->get('board');
 
-        foreach ($rows as $row) {
+            $rows = $request->rows ?? [];
 
-            $campaign = KampanyeIklan::where(
-                'asset_id',
-                $row['asset_id']
-            )->first();
+            foreach ($rows as $row) {
 
-            if (!$campaign) {
-                continue;
+                $campaign = KampanyeIklan::where(
+                    'asset_id',
+                    $row['asset_id']
+                )->first();
+
+                if (!$campaign) {
+                    continue;
+                }
+
+                Impresion::create([
+
+                    'board_id' => $board->id,
+
+                    'kampanye_iklan_id' => $campaign->id,
+
+                    'batch_id' => $request->batch_id,
+
+                    'minute_utc' => $row['minute_utc'],
+
+                    'play_count' => $row['play_count'] ?? 0,
+
+                    'people_count' => $row['people_count'] ?? 0,
+
+                ]);
             }
 
-            Impresion::create([
-
-                'board_id' => $board->id,
-
-                'kampanye_iklan_id' => $campaign->id,
-
-                'batch_id' => $request->batch_id,
-
-                'minute_utc' => $row['minute_utc'],
-
-                'play_count' => $row['play_count'] ?? 0,
-
-                'people_count' => $row['people_count'] ?? 0,
-
+            return response()->json([
+                'ok' => true
             ]);
-        }
+        } catch (\Exception $e) {
 
-        return response()->json([
-            'ok' => true
-        ]);
+            return response()->json([
+
+                'error' => true,
+
+                'message' => $e->getMessage(),
+
+                'line' => $e->getLine(),
+
+                'file' => $e->getFile()
+
+            ], 500);
+        }
     }
 }
