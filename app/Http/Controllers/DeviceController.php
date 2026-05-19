@@ -43,7 +43,7 @@ class DeviceController extends Controller
                 )
 
                 ->where(
-                    'board_kampanye_iklan.end_at',
+                    'board_kampanye_iklans.end_at',
                     '>=',
                     now()
                 )
