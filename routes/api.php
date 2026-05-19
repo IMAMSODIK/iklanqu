@@ -14,4 +14,5 @@ Route::post('/midtrans/callback', [KampanyeIklanController::class, 'callback']);
 
 Route::prefix('device')->middleware('device.auth')->group(function () {
     Route::get('/sync', [DeviceController::class, 'sync']);
+    Route::post('/heartbeat', [DeviceController::class, 'heartbeat']);
 });
