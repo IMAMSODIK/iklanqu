@@ -13,16 +13,16 @@ class DeviceController extends Controller
 
             $board = $request->attributes->get('board');
 
-            $items = DB::table('board_kampanye_iklan')
+            $items = DB::table('board_kampanye_iklans')
                 ->join(
                     'kampanye_iklans',
                     'kampanye_iklans.id',
                     '=',
-                    'board_kampanye_iklan.kampanye_iklan_id'
+                    'board_kampanye_iklans.kampanye_iklan_id'
                 )
 
                 ->where(
-                    'board_kampanye_iklan.board_id',
+                    'board_kampanye_iklans.board_id',
                     $board->id
                 )
 
@@ -37,7 +37,7 @@ class DeviceController extends Controller
                 )
 
                 ->where(
-                    'board_kampanye_iklan.start_at',
+                    'board_kampanye_iklans.start_at',
                     '<=',
                     now()
                 )
