@@ -32,7 +32,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('buat');
     Route::get('/dashboard/lokasi', [DashboardController::class, 'lokasi'])->name('lokasi');
     Route::get('/dashboard/riwayat', [DashboardController::class, 'riwayat'])->name('riwayat');
+
     Route::get('/dashboard/pantau', [DashboardController::class, 'pantau'])->name('pantau');
+    Route::get('/api/pantau/realtime', [DashboardController::class, 'pantauRealtime']);
+    
     Route::get('/dashboard/akun', [DashboardController::class, 'akun'])->name('akun');
     Route::post('/dashboard/tutorial/selesai', [DashboardController::class, 'tutorialSelesai'])->name('akun');
 

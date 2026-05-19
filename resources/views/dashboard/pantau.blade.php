@@ -11,48 +11,134 @@
         @include('dashboard_layouts.header')
 
         <div class="content-area" id="content-area">
-            <!-- Halaman Daftar Lokasi -->
+
+            <!-- Halaman Pantau -->
             <div class="page" id="page-pantau">
+
                 <div class="page-header">
                     <div class="page-title">Pantau Iklan</div>
-                    <div class="page-subtitle">Kinerja iklan real-time</div>
+                    <div class="page-subtitle">
+                        Monitoring impresi iklan realtime
+                    </div>
                 </div>
+
+                <!-- SUMMARY -->
                 <div class="card">
+
+                    <div class="card-item">
+                        <div class="item-icon">📺</div>
+
+                        <div class="item-info">
+                            <h4>Total Penayangan</h4>
+                            <p id="total-play-count">0 kali diputar</p>
+                        </div>
+                    </div>
+
+                    <div class="card-item">
+                        <div class="item-icon">👥</div>
+
+                        <div class="item-info">
+                            <h4>Total Viewer</h4>
+                            <p id="total-people-count">0 orang melihat</p>
+                        </div>
+                    </div>
+
                     <div class="card-item">
                         <div class="item-icon">📊</div>
+
                         <div class="item-info">
-                            <h4>Kampanye Ramadhan</h4>
-                            <p>Impresi: 45.200 • Klik: 2.340</p>
+                            <h4>Total Impresi</h4>
+                            <p id="total-impression">0 impresi</p>
                         </div>
-                        <span style="color: #2563eb; font-weight: 600;">5.2%</span>
                     </div>
-                    <div class="card-item">
-                        <div class="item-icon">📈</div>
-                        <div class="item-info">
-                            <h4>Promo Akhir Pekan</h4>
-                            <p>Impresi: 28.900 • Klik: 1.456</p>
-                        </div>
-                        <span style="color: #2563eb; font-weight: 600;">5.0%</span>
-                    </div>
-                    <div class="card-item">
-                        <div class="item-icon">🔥</div>
-                        <div class="item-info">
-                            <h4>Produk Terbaru</h4>
-                            <p>Impresi: 67.800 • Klik: 4.120</p>
-                        </div>
-                        <span style="color: #10b981; font-weight: 600;">6.1%</span>
-                    </div>
+
                 </div>
-                <div class="card" style="background: white;">
-                    <p style="font-weight: 600;">Total pengeluaran bulan ini: Rp 2.450.000</p>
+
+                <!-- LIST KAMPANYE -->
+                <div class="card" id="campaign-list">
+
+                    <div
+                        style="
+                    padding: 20px;
+                    text-align: center;
+                    color: #999;
+                ">
+                        Memuat data realtime...
+                    </div>
+
                 </div>
+
             </div>
+
         </div>
 
         @include('dashboard_layouts.nav')
     </div>
 
     @include('dashboard_layouts.script')
+    <script>
+        async function loadPantauRealtime() {
+            try {
+                const response = await fetch('/pantau/realtime');
+                const result = await response.json();
+
+                if (!result.success) {
+                    return;
+                }
+
+                const data = result.data;
+                document.getElementById('total-play-count').innerHTML = `${data.total_play_count.toLocaleString()} kali diputar`;
+                document.getElementById('total-people-count').innerHTML = `${data.total_people_count.toLocaleString()} orang melihat`;
+                document.getElementById('total-impression').innerHTML = `${data.total_impression.toLocaleString()} impresi`;
+
+                let html = '';
+
+                data.campaigns.forEach(item => {
+                    html += `
+                        <div class="card-item">
+
+                            <div class="item-icon">
+                                📺
+                            </div>
+
+                            <div class="item-info">
+
+                                <h4>
+                                    ${item.nama}
+                                </h4>
+
+                                <p>
+                                    Diputar:
+                                    ${item.play_count.toLocaleString()}
+                                    • Viewer:
+                                    ${item.people_count.toLocaleString()}
+                                </p>
+
+                            </div>
+
+                            <span
+                                style="
+                                    color: #2563eb;
+                                    font-weight: 600;
+                                "
+                            >
+                                ${item.impression.toLocaleString()}
+                            </span>
+
+                        </div>
+                    `;
+                });
+
+                document.getElementById('campaign-list').innerHTML = html;
+            } catch (e) {
+                console.log(e);
+            }
+        }
+        loadPantauRealtime();
+        setInterval(() => {
+            loadPantauRealtime();
+        }, 5000);
+    </script>
 </body>
 
 </html>
