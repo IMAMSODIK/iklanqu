@@ -141,29 +141,64 @@ class DeviceController extends Controller
 
             $board = $request->attributes->get('board');
 
-            $rows = $request->rows ?? [];
+            if (!$board) {
+                return response()->json([
+                    'error' => true,
+                    'message' => 'Board not found'
+                ], 400);
+            }
+
+            $rows = $request->input('rows', []);
+
+            if (!is_array($rows) || count($rows) === 0) {
+                return response()->json([
+                    'ok' => true,
+                    'message' => 'No data to process'
+                ]);
+            }
 
             foreach ($rows as $row) {
 
-                $campaign = KampanyeIklan::where(
-                    'asset_id',
-                    $row['asset_id']
-                )->first();
+                if (!isset($row['asset_id'])) {
+                    continue;
+                }
+
+                $campaign = KampanyeIklan::where('asset_id', $row['asset_id'])->first();
 
                 if (!$campaign) {
                     continue;
                 }
 
-                Impresion::create([
-                    'board_id' => $board->id,
-                    'kampanye_iklan_id' => $campaign->id,
-                    'batch_id' => $request->batch_id,
-                    'minute_utc' => Carbon::parse(
-                        $row['minute_utc']
-                    )->format('Y-m-d H:i:s'),
-                    'play_count' => $row['play_count'] ?? 0,
-                    'people_count' => $row['people_count'] ?? 0,
-                ]);
+                /**
+                 * NORMALISASI TIME
+                 * dibulatkan ke menit (anti spam per detik)
+                 */
+                $minute = Carbon::parse($row['minute_utc'])
+                    ->setSecond(0)
+                    ->format('Y-m-d H:i:00');
+
+                /**
+                 * UPSERT / AGGREGATION ROW
+                 */
+                $impression = Impresion::firstOrCreate(
+                    [
+                        'board_id' => $board->id,
+                        'kampanye_iklan_id' => $campaign->id,
+                        'batch_id' => $request->batch_id,
+                        'minute_utc' => $minute,
+                    ],
+                    [
+                        'play_count' => 0,
+                        'people_count' => 0,
+                    ]
+                );
+
+                /**
+                 * AKUMULASI DATA (BUKAN OVERWRITE)
+                 */
+                $impression->increment('play_count', (int) ($row['play_count'] ?? 0));
+
+                $impression->increment('people_count', (int) ($row['people_count'] ?? 0));
             }
 
             return response()->json([
@@ -172,15 +207,10 @@ class DeviceController extends Controller
         } catch (\Exception $e) {
 
             return response()->json([
-
                 'error' => true,
-
                 'message' => $e->getMessage(),
-
                 'line' => $e->getLine(),
-
                 'file' => $e->getFile()
-
             ], 500);
         }
     }
