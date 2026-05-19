@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Impresion;
 use App\Models\KampanyeIklan;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -154,19 +155,14 @@ class DeviceController extends Controller
                 }
 
                 Impresion::create([
-
                     'board_id' => $board->id,
-
                     'kampanye_iklan_id' => $campaign->id,
-
                     'batch_id' => $request->batch_id,
-
-                    'minute_utc' => $row['minute_utc'],
-
+                    'minute_utc' => Carbon::parse(
+                        $row['minute_utc']
+                    )->format('Y-m-d H:i:s'),
                     'play_count' => $row['play_count'] ?? 0,
-
                     'people_count' => $row['people_count'] ?? 0,
-
                 ]);
             }
 
