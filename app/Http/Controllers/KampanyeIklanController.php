@@ -68,7 +68,7 @@ class KampanyeIklanController extends Controller
                     'tanggal_selesai' => $board['tanggal_selesai'],
                 ]);
 
-                DB::table('board_kampanye_iklan')->insert([
+                DB::table('board_kampanye_iklans')->insert([
                     'board_id' => $boardModel->id,
                     'kampanye_iklan_id' => $campaign->id,
                     'start_at' => Carbon::parse($board['tanggal_mulai'])->startOfDay(),
