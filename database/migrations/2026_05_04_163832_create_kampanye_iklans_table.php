@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('kampanye_iklans', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id');
+            $table->uuid('asset_id')->nullable()->unique();
             $table->string('name');
             $table->text('description')->nullable();
             $table->string('media')->nullable();

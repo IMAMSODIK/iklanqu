@@ -32,4 +32,15 @@ class Board extends Model
     {
         return $this->belongsTo(Lokasi::class);
     }
+
+    public function kampanyes()
+    {
+        return $this->belongsToMany(KampanyeIklan::class, 'board_kampanye_iklan')
+            ->withPivot(['urutan', 'start_at', 'end_at']);
+    }
+
+    public function playlistItems()
+    {
+        return $this->hasMany(BoardKampanyeIklan::class);
+    }
 }

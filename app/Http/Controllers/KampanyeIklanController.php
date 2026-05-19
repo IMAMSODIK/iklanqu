@@ -53,7 +53,7 @@ class KampanyeIklanController extends Controller
                 'is_active' => false,
             ]);
 
-            foreach ($boards as $board) {
+            foreach ($boards as $index => $board) {
                 $boardModel = Board::findOrFail($board['board_id']);
                 $start = Carbon::parse($board['tanggal_mulai']);
                 $end = Carbon::parse($board['tanggal_selesai']);
@@ -66,6 +66,16 @@ class KampanyeIklanController extends Controller
                     'lokasi_id' => $boardModel->lokasi_id,
                     'tanggal_mulai' => $board['tanggal_mulai'],
                     'tanggal_selesai' => $board['tanggal_selesai'],
+                ]);
+
+                DB::table('board_kampanye_iklan')->insert([
+                    'board_id' => $boardModel->id,
+                    'kampanye_iklan_id' => $campaign->id,
+                    'start_at' => Carbon::parse($board['tanggal_mulai'])->startOfDay(),
+                    'end_at' => Carbon::parse($board['tanggal_selesai'])->endOfDay(),
+                    'urutan' => $index,
+                    'created_at' => now(),
+                    'updated_at' => now(),
                 ]);
             }
 
