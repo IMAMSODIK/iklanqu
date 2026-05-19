@@ -11,4 +11,9 @@ class Impresion extends Model
     use HasFactory;
 
     protected $guarded = ['id'];
+
+    public function kampanye()
+    {
+        return $this->belongsTo(KampanyeIklan::class, 'kampanye_iklan_id');
+    }
 }

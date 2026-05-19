@@ -50,4 +50,9 @@ class KampanyeIklan extends Model
     {
         return $this->belongsToMany(Board::class, 'board_kampanye_iklan');
     }
+
+    public function impresions()
+    {
+        return $this->hasMany(Impresion::class, 'kampanye_iklan_id');
+    }
 }
