@@ -110,8 +110,6 @@
                                 <p>
                                     Diputar:
                                     ${item.play_count.toLocaleString()}
-                                    • Viewer:
-                                    ${item.people_count.toLocaleString()}
                                 </p>
 
                             </div>
@@ -122,7 +120,7 @@
                                     font-weight: 600;
                                 "
                             >
-                                ${item.impression.toLocaleString()}
+                                Viewer: ${item.people_count.toLocaleString()}
                             </span>
 
                         </div>
