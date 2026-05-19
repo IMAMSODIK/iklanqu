@@ -138,14 +138,16 @@ class DeviceController extends Controller
     public function uploadImpressions(Request $request)
     {
         try {
-
             $board = $request->attributes->get('board');
 
             $rows = $request->input('rows', []);
+            $batchId = $request->input('batch_id', uniqid('batch_'));
+
+            DB::beginTransaction();
 
             foreach ($rows as $row) {
 
-                if (!isset($row['asset_id'])) {
+                if (!isset($row['asset_id'], $row['minute_utc'])) {
                     continue;
                 }
 
@@ -155,39 +157,33 @@ class DeviceController extends Controller
                     continue;
                 }
 
-                /**
-                 * NORMALISASI TIME (WAJIB SAMA FORMAT)
-                 */
-                $minute = Carbon::parse($row['minute_utc'])
-                    ->setSecond(0)
-                    ->format('Y-m-d H:i:00');
+                $minuteUtc = Carbon::parse($row['minute_utc'])
+                    ->format('Y-m-d H:i:00'); // penting: normalize per menit
 
-                /**
-                 * FIND OR CREATE TANPA batch_id
-                 * (INI KUNCI FIX UTAMA)
-                 */
-                $impression = Impresion::firstOrCreate(
+                // UPSERT LOGIC (INI KUNCI)
+                Impresion::updateOrCreate(
                     [
                         'board_id' => $board->id,
                         'kampanye_iklan_id' => $campaign->id,
-                        'minute_utc' => $minute,
+                        'batch_id' => $batchId,
+                        'minute_utc' => $minuteUtc,
                     ],
                     [
-                        'play_count' => 0,
-                        'people_count' => 0,
+                        'play_count' => DB::raw('COALESCE(play_count,0) + ' . (int) ($row['play_count'] ?? 0)),
+                        'people_count' => (int) ($row['people_count'] ?? 0),
                     ]
                 );
-
-                /**
-                 * AKUMULASI DATA
-                 */
-                $impression->increment('play_count', (int) ($row['play_count'] ?? 0));
-
-                $impression->increment('people_count', (int) ($row['people_count'] ?? 0));
             }
 
-            return response()->json(['ok' => true]);
+            DB::commit();
+
+            return response()->json([
+                'ok' => true,
+                'batch_id' => $batchId
+            ]);
         } catch (\Exception $e) {
+
+            DB::rollBack();
 
             return response()->json([
                 'error' => true,
