@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IklanQu - Iklan provider modern</title>
+    <title>Iklanin.id - Iklan provider modern</title>
     <link rel="shortcut icon" href="{{ asset('landing_assets/images/favicon.png') }}">
     <link rel="stylesheet" href="{{ asset('landing_assets/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('landing_assets/css/meanmenu.css') }}">
@@ -168,7 +168,7 @@
                                 fill="black" />
                         </svg>
 
-                        <a href="mailto:support@iklanqu.com" class="ms-1">support@iklanqu.com</a>
+                        <a href="mailto:support@iklanin.id" class="ms-1">support@iklanin.id</a>
                     </li>
                     <li class="ms-4"><svg width="16" height="15" viewBox="0 0 16 15" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
@@ -353,9 +353,9 @@
                                 </h1>
                                 <p data-animation="slideInRight" data-duration="2s" data-delay=".7s" class="mt-20">
                                     Pasarkan Produk dan Jasa Anda Bersama Kami.
-                                    Dengan iklanqu.id Biaya Murah, Iklan Cepat dan Hasil Tepat
+                                    Dengan iklanin.id Biaya Murah, Iklan Cepat dan Hasil Tepat
                                     <br>
-                                    iklanqu.id The Best Partner of Your Bussines
+                                    iklanin.id The Best Partner of Your Bussines
                                 </p>
                                 <a data-animation="slideInRight" data-duration="2s" data-delay=".9s" href="/login"
                                     class="btn-one mt-60">Mulai Beriklan! <i
@@ -406,7 +406,7 @@
                             <h3 class="wow fadeInUp" data-wow-delay="200ms" data-wow-duration="1500ms">Partner
                                 Advertising Screen Anda</h3>
                             <p class="wow fadeInUp" data-wow-delay="400ms" data-wow-duration="1500ms">
-                                <b>Iklanqu.id</b>
+                                <b>iklanin.id</b>
                                 adalah platform periklanan digital yang menyediakan layanan Outdoor Advertising Screen
                                 untuk membantu bisnis menampilkan iklan mereka di layar digital strategis dengan cara
                                 yang lebih mudah, cepat, dan efisien.
@@ -1062,10 +1062,10 @@
                     <a href="/" class="logo mb-30">
                         <img src="{{ asset('landing_assets/images/logo/logo.png') }}" alt="image">
                     </a>
-                    <p>iklanqu.id The Best Partner of Your Bussines</p>
+                    <p>iklanin.id The Best Partner of Your Bussines</p>
                     <div class="social-icon">
                         <a href="instagram.com"><i class="fa-brands fa-instagram"></i></a>
-                        <a href="mailto:support@iklanqu.com"><i class="fa fa-envelope"></i></a>
+                        <a href="mailto:support@iklanin.id"><i class="fa fa-envelope"></i></a>
                         <a href="tiktok.com"><i class="fa-brands fa-tiktok"></i></a>
                     </div>
                 </div>
@@ -1128,7 +1128,7 @@
                     class="d-flex gap-1 flex-wrap align-items-center justify-content-md-between justify-content-center">
                     <p class="wow fadeInDown" data-wow-delay="00ms" data-wow-duration="1500ms">&copy; All Copyright
                         2024
-                        by <a href="#0">IklanQu.id</a></p>
+                        by <a href="#0">iklanin.id</a></p>
                     <ul class="d-flex align-items-center gap-4 wow fadeInDown" data-wow-delay="200ms"
                         data-wow-duration="1500ms">
                         <li><a href="#0">Terms & Condition</a></li>
