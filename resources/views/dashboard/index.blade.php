@@ -514,7 +514,8 @@
                 <div class="create-ad-card">
                     <h3>Iklan Cepat, Hasil Tepat dan Biaya Murah</h3>
                     <p><b>iklanqu.id</b> <i>The Best Partner For Your Bussines</i></p>
-                    <button class="create-ad-button" onclick="alert('Mulai membuat iklan')">
+                    <button class="create-ad-button"
+                        onclick="window.location.href='https://wa.me/6282145397049?text=Halo%20saya%20ingin%20membuat%20iklan'">
                         <span>+</span> Buat Iklan Sekarang
                     </button>
                 </div>
@@ -909,16 +910,16 @@
 
         document.getElementById('clearSchedule').addEventListener('click', function() {
 
-                if (!currentRow) return;
-                currentRow.querySelector('.jadwal-text').innerText = 'Belum dipilih';
-                currentRow.querySelector('.durasi-text').innerText = '-';
-                currentRow.querySelector('.harga-text').innerText = '-';
+            if (!currentRow) return;
+            currentRow.querySelector('.jadwal-text').innerText = 'Belum dipilih';
+            currentRow.querySelector('.durasi-text').innerText = '-';
+            currentRow.querySelector('.harga-text').innerText = '-';
 
-                tanggalMulai.value = '';
-                tanggalSelesai.value = '';
-                totalHariText.innerText = '0 Hari';
-                totalHargaText.innerText ='Rp 0';
-            });
+            tanggalMulai.value = '';
+            tanggalSelesai.value = '';
+            totalHariText.innerText = '0 Hari';
+            totalHargaText.innerText = 'Rp 0';
+        });
     </script>
 
     <script>
@@ -970,7 +971,8 @@
 
                 document.getElementById('detailInvoice').innerText = result.invoice;
 
-                document.getElementById('detailTotal').innerText = 'Rp ' + parseInt(result.total).toLocaleString('id-ID');
+                document.getElementById('detailTotal').innerText = 'Rp ' + parseInt(result.total)
+                    .toLocaleString('id-ID');
                 orderModal.classList.add('active');
             } catch (error) {
                 alert('Terjadi kesalahan');
