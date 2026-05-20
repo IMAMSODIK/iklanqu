@@ -35,7 +35,7 @@ class LokasiController extends Controller
                 'nama' => 'required|string|max:255',
                 'alamat' => 'required|string',
                 'link_maps' => 'nullable|string|max:500',
-                'gambar' => 'required|image|mimes:jpg,jpeg,png|max:2048'
+                'gambar' => 'required|image|mimes:jpg,jpeg,png|max:10240'
             ]);
 
             $path = null;
