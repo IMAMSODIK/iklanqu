@@ -402,6 +402,7 @@
             }
         }
     </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 </head>
 
 <body>
@@ -719,6 +720,7 @@
     </script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 
     <script>
         // ---------- FILE UPLOAD HANDLER dengan preview ----------
@@ -911,21 +913,36 @@
         tanggalMulai.addEventListener('change', calculateTotal);
         tanggalSelesai.addEventListener('change', calculateTotal);
 
-        document.getElementById('saveSchedule')
-            .addEventListener('click', function() {
-                if (!currentRow) return;
-                const start = tanggalMulai.value;
-                const end = tanggalSelesai.value;
+        document.getElementById('saveSchedule').addEventListener('click', function() {
+            if (!currentRow) return;
 
-                currentRow.dataset.tanggal_mulai = start;
-                currentRow.dataset.tanggal_selesai = end;
-                currentRow.dataset.total = totalHargaText.innerText.replace(/\D/g, '');
-                currentRow.querySelector('.jadwal-text').innerText = start + ' s/d ' + end;
-                currentRow.querySelector('.durasi-text').innerText = totalHariText.innerText;
-                currentRow.querySelector('.harga-text').innerText = totalHargaText.innerText;
+            const start = tanggalMulai.value;
+            const end = tanggalSelesai.value;
 
-                modal.classList.remove('active');
-            });
+            currentRow.dataset.tanggal_mulai = start;
+            currentRow.dataset.tanggal_selesai = end;
+            currentRow.dataset.total = totalHargaText.innerText.replace(/\D/g, '');
+
+            currentRow.querySelector('.jadwal-text').innerText =
+                start + ' s/d ' + end;
+
+            currentRow.querySelector('.durasi-text').innerText =
+                totalHariText.innerText;
+
+            currentRow.querySelector('.harga-text').innerText =
+                totalHargaText.innerText;
+
+            modal.classList.remove('active');
+
+            Toastify({
+                text: "Jadwal berhasil disimpan",
+                duration: 3000,
+                gravity: "top",
+                position: "right",
+                close: true,
+                stopOnFocus: true
+            }).showToast();
+        });
 
         document.getElementById('clearSchedule').addEventListener('click', function() {
 
