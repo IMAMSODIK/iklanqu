@@ -115,31 +115,45 @@
                                         <td>
 
                                             @if ($item->media)
-                                                <a href="{{ asset($item->media) }}" target="_blank"
-                                                    class="btn btn-info btn-sm">
+                                        <td>
 
-                                                    Lihat Media
-                                                </a>
-                                            @endif
+                                            <button class="btn btn-primary btn-sm btn-lihat-media"
+                                                data-media="{{ asset($item->media) }}">
 
-                                            <button class="btn btn-success btn-sm btn-verifikasi"data-id="{{ $item->id }}">
+                                                <i class="fa fa-image"></i>
+                                                Lihat Media
+
+                                            </button>
+
+                                            <button class="btn btn-success btn-sm btn-verifikasi"
+                                                data-id="{{ $item->id }}">
+
                                                 <i class="fa fa-check"></i>
                                                 Verifikasi
+
                                             </button>
 
                                         </td>
+                                @endif
 
-                                    </tr>
+                                <button class="btn btn-success btn-sm btn-verifikasi"data-id="{{ $item->id }}">
+                                    <i class="fa fa-check"></i>
+                                    Verifikasi
+                                </button>
 
-                                @empty
+                                </td>
 
-                                    <tr>
-                                        <td colspan="7" class="text-center text-muted py-5">
+                                </tr>
 
-                                            Tidak ada iklan menunggu verifikasi
+                            @empty
 
-                                        </td>
-                                    </tr>
+                                <tr>
+                                    <td colspan="7" class="text-center text-muted py-5">
+
+                                        Tidak ada iklan menunggu verifikasi
+
+                                    </td>
+                                </tr>
                                 @endforelse
 
                             </tbody>
@@ -165,6 +179,7 @@
                                     <th>Status</th>
                                     <th>Total</th>
                                     <th>Diverifikasi</th>
+                                    <th>Aksi</th>
                                 </tr>
                             </thead>
 
@@ -201,6 +216,18 @@
                                             {{ $item->updated_at->format('d M Y H:i') }}
                                         </td>
 
+                                        <td>
+
+                                            <button class="btn btn-primary btn-sm btn-lihat-media"
+                                                data-media="{{ asset($item->media) }}">
+
+                                                <i class="fa fa-image"></i>
+                                                Lihat Media
+
+                                            </button>
+
+                                        </td>
+
                                     </tr>
 
                                 @empty
@@ -218,6 +245,32 @@
                     </div>
 
                 </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Modal Media -->
+    <div class="modal fade" id="mediaModal" tabindex="-1" aria-hidden="true">
+
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+
+            <div class="modal-content">
+
+                <div class="modal-header">
+
+                    <h5 class="modal-title">
+                        Preview Media
+                    </h5>
+
+                    <button type="button" class="btn-close" data-bs-dismiss="modal">
+                    </button>
+
+                </div>
+
+                <div class="modal-body text-center" id="mediaContainer"></div>
 
             </div>
 

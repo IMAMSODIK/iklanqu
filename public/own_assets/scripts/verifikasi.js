@@ -102,3 +102,39 @@ $(document).on('click', '.btn-verifikasi', function () {
     });
 
 });
+
+$(document).on('click', '.btn-lihat-media', function () {
+
+    const media = $(this).data('media');
+
+    let content = '';
+
+    if (
+        media.endsWith('.mp4') ||
+        media.endsWith('.webm') ||
+        media.endsWith('.ogg')
+    ) {
+
+        content = `
+                <video controls
+                       class="w-100 rounded"
+                       style="max-height:75vh">
+                    <source src="${media}">
+                </video>
+            `;
+
+    } else {
+
+        content = `
+                <img src="${media}"
+                     class="img-fluid rounded shadow"
+                     style="max-height:75vh;object-fit:contain;">
+            `;
+
+    }
+
+    $('#mediaContainer').html(content);
+
+    $('#mediaModal').modal('show');
+
+});
