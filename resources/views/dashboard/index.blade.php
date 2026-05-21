@@ -407,12 +407,8 @@
 
     <style>
         .schedule-badge {
-            position: absolute;
-            top: -8px;
-            right: -8px;
             min-width: 24px;
             height: 24px;
-            padding: 0 6px;
             border-radius: 999px;
             background: #ef4444;
             color: white;
@@ -588,10 +584,11 @@
                         <input type="hidden" name="boards" id="boardsInput">
                         <div class="action-buttons">
                             <button type="submit" class="btn-submit" id="btnSubmitCampaign">
-                                <span class="btn-text">Simpan Campaign</span>
-
-                                <span class="schedule-badge" id="scheduleBadge">
-                                    0
+                                <span class="btn-text">
+                                    Simpan Campaign
+                                    <span class="schedule-badge" id="scheduleBadge">
+                                        0
+                                    </span>
                                 </span>
                             </button>
                         </div>
