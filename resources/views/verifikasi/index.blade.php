@@ -113,35 +113,24 @@
                                         </td>
 
                                         <td>
-
                                             @if ($item->media)
-                                        <td>
+                                                <button class="btn btn-primary btn-sm btn-lihat-media"
+                                                    data-media="{{ $item->media }}">
 
-                                            <button class="btn btn-primary btn-sm btn-lihat-media"
-                                                data-media="{{ $item->media }}">
+                                                    <i class="fa fa-image"></i>
+                                                    Lihat Media
 
-                                                <i class="fa fa-image"></i>
-                                                Lihat Media
+                                                </button>
 
-                                            </button>
+                                                <button class="btn btn-success btn-sm btn-verifikasi"
+                                                    data-id="{{ $item->id }}">
 
-                                            <button class="btn btn-success btn-sm btn-verifikasi"
-                                                data-id="{{ $item->id }}">
+                                                    <i class="fa fa-check"></i>
+                                                    Verifikasi
 
-                                                <i class="fa fa-check"></i>
-                                                Verifikasi
-
-                                            </button>
-
+                                                </button>
+                                            @endif
                                         </td>
-                                @endif
-
-                                <button class="btn btn-success btn-sm btn-verifikasi"data-id="{{ $item->id }}">
-                                    <i class="fa fa-check"></i>
-                                    Verifikasi
-                                </button>
-
-                                </td>
 
                                 </tr>
 
