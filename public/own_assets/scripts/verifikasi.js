@@ -1,13 +1,13 @@
 
-$('#tableVerifikasi').DataTable({
-    responsive: true,
-    autoWidth: false
-});
+// $('#tableVerifikasi').DataTable({
+//     responsive: true,
+//     autoWidth: false
+// });
 
-$('#tableHistory').DataTable({
-    responsive: true,
-    autoWidth: false
-});
+// $('#tableHistory').DataTable({
+//     responsive: true,
+//     autoWidth: false
+// });
 
 $(document).on('click', '.btn-verifikasi', function () {
     const button = $(this);

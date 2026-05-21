@@ -122,12 +122,9 @@
                                                 </a>
                                             @endif
 
-                                            <button class="btn btn-success btn-sm btn-verifikasi"
-                                                data-id="{{ $item->id }}">
-
+                                            <button class="btn btn-success btn-sm btn-verifikasi"data-id="{{ $item->id }}">
                                                 <i class="fa fa-check"></i>
                                                 Verifikasi
-
                                             </button>
 
                                         </td>
@@ -207,12 +204,9 @@
                                     </tr>
 
                                 @empty
-
                                     <tr>
                                         <td colspan="6" class="text-center text-muted py-5">
-
                                             Belum ada history verifikasi
-
                                         </td>
                                     </tr>
                                 @endforelse
