@@ -42,7 +42,7 @@ $(document).on('click', '.btn-verifikasi', function () {
             url: `/verifikasi/${id}`,
             type: 'POST',
             data: {
-                _token: '{{ csrf_token() }}'
+                _token: $('meta[name="csrf-token"]').attr('content'),
             },
 
             success: function (result) {
