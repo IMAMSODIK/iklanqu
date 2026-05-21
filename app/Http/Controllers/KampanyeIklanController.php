@@ -165,7 +165,6 @@ class KampanyeIklanController extends Controller
             ]);
 
             $payment->campaign->update([
-                'is_active' => true,
                 'payment_status' => 'paid',
                 'paid_at' => now(),
                 'payment_method' => $request->payment_type
