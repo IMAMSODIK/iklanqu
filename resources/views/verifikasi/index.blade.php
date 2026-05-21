@@ -113,36 +113,34 @@
                                         </td>
 
                                         <td>
-                                            @if ($item->media)
-                                                <button class="btn btn-primary btn-sm btn-lihat-media"
-                                                    data-media="{{ $item->media }}">
+                                            <button class="btn btn-primary btn-sm btn-lihat-media"
+                                                data-media="{{ $item->media }}">
 
-                                                    <i class="fa fa-image"></i>
-                                                    Lihat Media
+                                                <i class="fa fa-image"></i>
+                                                Lihat Media
 
-                                                </button>
+                                            </button>
 
-                                                <button class="btn btn-success btn-sm btn-verifikasi"
-                                                    data-id="{{ $item->id }}">
+                                            <button class="btn btn-success btn-sm btn-verifikasi"
+                                                data-id="{{ $item->id }}">
 
-                                                    <i class="fa fa-check"></i>
-                                                    Verifikasi
+                                                <i class="fa fa-check"></i>
+                                                Verifikasi
 
-                                                </button>
-                                            @endif
+                                            </button>
                                         </td>
 
-                                </tr>
+                                    </tr>
 
-                            @empty
+                                @empty
 
-                                <tr>
-                                    <td colspan="7" class="text-center text-muted py-5">
+                                    <tr>
+                                        <td colspan="7" class="text-center text-muted py-5">
 
-                                        Tidak ada iklan menunggu verifikasi
+                                            Tidak ada iklan menunggu verifikasi
 
-                                    </td>
-                                </tr>
+                                        </td>
+                                    </tr>
                                 @endforelse
 
                             </tbody>
