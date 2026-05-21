@@ -118,7 +118,7 @@
                                         <td>
 
                                             <button class="btn btn-primary btn-sm btn-lihat-media"
-                                                data-media="{{ asset($item->media) }}">
+                                                data-media="{{ $item->media }}">
 
                                                 <i class="fa fa-image"></i>
                                                 Lihat Media
@@ -219,7 +219,7 @@
                                         <td>
 
                                             <button class="btn btn-primary btn-sm btn-lihat-media"
-                                                data-media="{{ asset($item->media) }}">
+                                                data-media="{{ $item->media }}">
 
                                                 <i class="fa fa-image"></i>
                                                 Lihat Media
