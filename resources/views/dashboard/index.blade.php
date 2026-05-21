@@ -407,8 +407,12 @@
 
     <style>
         .schedule-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
             min-width: 24px;
             height: 24px;
+            padding: 0 6px;
             border-radius: 999px;
             background: #ef4444;
             color: white;
@@ -584,11 +588,10 @@
                         <input type="hidden" name="boards" id="boardsInput">
                         <div class="action-buttons">
                             <button type="submit" class="btn-submit" id="btnSubmitCampaign">
-                                <span class="btn-text">
-                                    Simpan Campaign
-                                    <span class="schedule-badge" id="scheduleBadge">
-                                        0
-                                    </span>
+                                <span class="btn-text">Simpan Campaign</span>
+
+                                <span class="schedule-badge" id="scheduleBadge">
+                                    0
                                 </span>
                             </button>
                         </div>
@@ -1010,28 +1013,16 @@
             currentRow.dataset.tanggal_mulai = start;
             currentRow.dataset.tanggal_selesai = end;
             currentRow.dataset.total = totalHargaText.innerText.replace(/\D/g, '');
-
-            currentRow.querySelector('.jadwal-text').innerText =
-                start + ' s/d ' + end;
-
-            currentRow.querySelector('.durasi-text').innerText =
-                totalHariText.innerText;
-
-            currentRow.querySelector('.harga-text').innerText =
-                totalHargaText.innerText;
-
+            currentRow.querySelector('.jadwal-text').innerText = start + ' s/d ' + end;
+            currentRow.querySelector('.durasi-text').innerText = totalHariText.innerText;
+            currentRow.querySelector('.harga-text').innerText = totalHargaText.innerText;
             modal.classList.remove('active');
 
-            // animasi tombol
             const submitBtn = document.getElementById('btnSubmitCampaign');
-
             submitBtn.classList.remove('success-animate');
-
             void submitBtn.offsetWidth;
-
             submitBtn.classList.add('success-animate');
 
-            // update badge
             updateScheduleBadge();
         });
 
