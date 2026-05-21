@@ -119,14 +119,14 @@ $(document).on('click', '.btn-lihat-media', function () {
                 <video controls
                        class="w-100 rounded"
                        style="max-height:75vh">
-                    <source src="${media}">
+                    <source src="../../storage/${media}">
                 </video>
             `;
 
     } else {
 
         content = `
-                <img src="${media}"
+                <img src="../../storage/${media}"
                      class="img-fluid rounded shadow"
                      style="max-height:75vh;object-fit:contain;">
             `;
