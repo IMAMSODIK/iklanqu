@@ -74,6 +74,16 @@
                 </li>
 
                 <li class="sidebar-list">
+                    <a class="sidebar-link sidebar-title" href="/verifikasi">
+                        <i class="fa fa-check-circle text-white"></i>
+                        <span>Verifikasi Iklan</span>
+                        <div class="according-menu">
+                            <i class="fa fa-angle-right"></i>
+                        </div>
+                    </a>
+                </li>
+
+                <li class="sidebar-list">
                     <a class="sidebar-link sidebar-title" href="/client">
                         <i class="fa fa-users text-white"></i>
                         <span>Daftar Client</span>

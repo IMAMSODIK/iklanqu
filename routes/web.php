@@ -10,6 +10,7 @@ use App\Http\Controllers\LokasiController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RiwayatIklan;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VerifikasiIklanController;
 use App\Models\KampanyeIklan;
 use Illuminate\Support\Facades\Route;
 
@@ -62,6 +63,9 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/client/delete', [ClientController::class, 'delete']);
     Route::post('/client/activate', [ClientController::class, 'activate']);
     Route::get('/client/detail-iklan/{id}', [ClientController::class, 'detailIklan']);
+
+    Route::get('/verifikasi', [VerifikasiIklanController::class, 'index']);
+    Route::post('/verifikasi/{id}', [VerifikasiIklanController::class, 'verifikasi']);
 
     Route::post('/campaigns', [KampanyeIklanController::class, 'store'])->name('campaign.store');
 
