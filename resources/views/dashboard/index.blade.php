@@ -102,6 +102,8 @@
             cursor: pointer;
             transition: 0.2s;
             box-shadow: 0 4px 8px rgba(37, 99, 235, 0.2);
+            position: relative;
+            overflow: hidden;
         }
 
         .btn-submit:hover {
@@ -402,6 +404,67 @@
             }
         }
     </style>
+
+    <style>
+        .schedule-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            min-width: 24px;
+            height: 24px;
+            padding: 0 6px;
+            border-radius: 999px;
+            background: #ef4444;
+            color: white;
+            font-size: 12px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            transition: transform 0.25s ease;
+        }
+
+        .schedule-badge.bump {
+            animation: badgeBounce 0.5s ease;
+        }
+
+        .btn-submit.success-animate {
+            animation: buttonPulse 0.5s ease;
+        }
+
+        @keyframes badgeBounce {
+            0% {
+                transform: scale(1);
+            }
+
+            30% {
+                transform: scale(1.35);
+            }
+
+            60% {
+                transform: scale(0.9);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes buttonPulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.03);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+    </style>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 </head>
 
@@ -524,7 +587,13 @@
 
                         <input type="hidden" name="boards" id="boardsInput">
                         <div class="action-buttons">
-                            <button type="submit" class="btn-submit" id="btnSubmitCampaign">Simpan Campaign</button>
+                            <button type="submit" class="btn-submit" id="btnSubmitCampaign">
+                                <span class="btn-text">Simpan Campaign</span>
+
+                                <span class="schedule-badge" id="scheduleBadge">
+                                    0
+                                </span>
+                            </button>
                         </div>
                     </form>
                 </div>
@@ -910,6 +979,28 @@
 
         }
 
+        function updateScheduleBadge() {
+            let total = 0;
+
+            document.querySelectorAll('.table-row').forEach(row => {
+                const jadwal = row.querySelector('.jadwal-text').innerText;
+
+                if (jadwal !== 'Belum dipilih') {
+                    total++;
+                }
+            });
+
+            const badge = document.getElementById('scheduleBadge');
+
+            badge.innerText = total;
+
+            badge.classList.remove('bump');
+
+            void badge.offsetWidth;
+
+            badge.classList.add('bump');
+        }
+
         tanggalMulai.addEventListener('change', calculateTotal);
         tanggalSelesai.addEventListener('change', calculateTotal);
 
@@ -934,14 +1025,17 @@
 
             modal.classList.remove('active');
 
-            Toastify({
-                text: "Jadwal berhasil disimpan",
-                duration: 3000,
-                gravity: "top",
-                position: "right",
-                close: true,
-                stopOnFocus: true
-            }).showToast();
+            // animasi tombol
+            const submitBtn = document.getElementById('btnSubmitCampaign');
+
+            submitBtn.classList.remove('success-animate');
+
+            void submitBtn.offsetWidth;
+
+            submitBtn.classList.add('success-animate');
+
+            // update badge
+            updateScheduleBadge();
         });
 
         document.getElementById('clearSchedule').addEventListener('click', function() {
