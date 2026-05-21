@@ -103,7 +103,7 @@
             transition: 0.2s;
             box-shadow: 0 4px 8px rgba(37, 99, 235, 0.2);
             position: relative;
-            overflow: hidden;
+            overflow: visible;
         }
 
         .btn-submit:hover {
