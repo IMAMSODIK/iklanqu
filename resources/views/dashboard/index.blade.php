@@ -154,7 +154,6 @@
         }
     </style>
 
-
     {{-- lokasi style --}}
     <style>
         .locations-section {
@@ -381,6 +380,26 @@
         .btn-save {
             background: #0f172a;
             color: white;
+        }
+    </style>
+
+    <style>
+        .spinner {
+            width: 14px;
+            height: 14px;
+            border: 2px solid white;
+            border-top: 2px solid transparent;
+            border-radius: 50%;
+            display: inline-block;
+            animation: spin 0.8s linear infinite;
+            margin-right: 6px;
+            vertical-align: middle;
+        }
+
+        @keyframes spin {
+            100% {
+                transform: rotate(360deg);
+            }
         }
     </style>
 </head>
@@ -926,10 +945,23 @@
         const form = document.getElementById('campaignForm');
         const orderModal = document.getElementById('orderModal');
         const closeOrderModal = document.getElementById('closeOrderModal');
+        const submitButton = form.querySelector('button[type="submit"]');
 
         let currentSnapToken = null;
+
         form.addEventListener('submit', async function(e) {
             e.preventDefault();
+
+            // simpan teks asli tombol
+            const originalButtonText = submitButton.innerHTML;
+
+            // aktifkan loading
+            submitButton.disabled = true;
+            submitButton.innerHTML = `
+            <span class="spinner"></span>
+            Loading...
+        `;
+
             const boards = [];
 
             document.querySelectorAll('.table-row').forEach(row => {
@@ -964,6 +996,11 @@
 
                 if (!result.success) {
                     alert(result.message);
+
+                    // kembalikan tombol normal
+                    submitButton.disabled = false;
+                    submitButton.innerHTML = originalButtonText;
+
                     return;
                 }
 
@@ -971,12 +1008,18 @@
 
                 document.getElementById('detailInvoice').innerText = result.invoice;
 
-                document.getElementById('detailTotal').innerText = 'Rp ' + parseInt(result.total)
-                    .toLocaleString('id-ID');
+                document.getElementById('detailTotal').innerText =
+                    'Rp ' + parseInt(result.total).toLocaleString('id-ID');
+
                 orderModal.classList.add('active');
+
             } catch (error) {
                 alert('Terjadi kesalahan');
             }
+
+            // kembalikan tombol normal
+            submitButton.disabled = false;
+            submitButton.innerHTML = originalButtonText;
         });
 
         closeOrderModal.addEventListener('click', function() {
@@ -989,6 +1032,7 @@
 
         document.getElementById('btnCheckout').addEventListener('click', function() {
             orderModal.classList.remove('active');
+
             snap.pay(currentSnapToken, {
                 onSuccess: function(result) {
                     window.location.reload();
