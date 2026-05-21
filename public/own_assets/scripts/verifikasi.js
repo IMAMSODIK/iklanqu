@@ -9,44 +9,41 @@ $('#tableHistory').DataTable({
     autoWidth: false
 });
 
-document.querySelectorAll('.btn-verifikasi').forEach(button => {
+$(document).on('click', '.btn-verifikasi', function () {
+    const button = $(this);
+    const id = button.data('id');
 
-    button.addEventListener('click', async function () {
+    if (!confirm('Apakah yakin ingin memverifikasi iklan ini?')) {
+        return;
+    }
 
-        const id = this.dataset.id;
+    const originalText = button.html();
 
-        if (!confirm('Verifikasi iklan ini?')) {
-            return;
-        }
+    button.prop('disabled', true);
 
-        const originalText = this.innerHTML;
+    button.html(`
+            <span class="spinner-border spinner-border-sm"></span>
+            Loading...
+        `);
 
-        this.disabled = true;
+    $.ajax({
+        url: `/verifikasi/${id}`,
+        type: 'POST',
+        data: {
+            _token: $('meta[name="csrf-token"]').attr('content'),
+        },
 
-        this.innerHTML = `
-                <span class="spinner-border spinner-border-sm"></span>
-                Loading...
-            `;
-
-        try {
-
-            const response = await fetch(`/verifikasi/${id}`, {
-                method: 'POST',
-                headers: {
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                    'Accept': 'application/json'
-                }
-            });
-
-            const result = await response.json();
+        success: function (result) {
 
             if (result.success) {
 
-                const row = document.getElementById(`row-${id}`);
+                const row = $(`#row-${id}`);
 
-                row.style.transition = 'all 0.3s ease';
-                row.style.opacity = '0';
-                row.style.transform = 'translateX(20px)';
+                row.css({
+                    transition: 'all 0.3s ease',
+                    opacity: '0',
+                    transform: 'translateX(20px)'
+                });
 
                 setTimeout(() => {
                     row.remove();
@@ -56,20 +53,21 @@ document.querySelectorAll('.btn-verifikasi').forEach(button => {
 
                 alert(result.message);
 
-                this.disabled = false;
-                this.innerHTML = originalText;
+                button.prop('disabled', false);
+                button.html(originalText);
 
             }
 
-        } catch (error) {
+        },
+
+        error: function () {
 
             alert('Terjadi kesalahan');
 
-            this.disabled = false;
-            this.innerHTML = originalText;
+            button.prop('disabled', false);
+            button.html(originalText);
 
         }
-
     });
 
 });
