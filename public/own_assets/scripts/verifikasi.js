@@ -1,4 +1,14 @@
 
+$('#tableVerifikasi').DataTable({
+    responsive: true,
+    autoWidth: false
+});
+
+$('#tableHistory').DataTable({
+    responsive: true,
+    autoWidth: false
+});
+
 document.querySelectorAll('.btn-verifikasi').forEach(button => {
 
     button.addEventListener('click', async function () {

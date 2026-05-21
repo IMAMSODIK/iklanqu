@@ -58,7 +58,7 @@
 
                     <div class="table-responsive">
 
-                        <table class="table table-bordered align-middle">
+                        <table class="table table-bordered align-middle" id="tableVerifikasi">
 
                             <thead class="table-light">
                                 <tr>
@@ -158,7 +158,7 @@
 
                     <div class="table-responsive">
 
-                        <table class="table table-bordered align-middle">
+                        <table class="table table-bordered align-middle" id="tableHistory">
 
                             <thead class="table-light">
                                 <tr>
