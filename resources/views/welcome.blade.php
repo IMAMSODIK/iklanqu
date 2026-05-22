@@ -139,6 +139,10 @@
             color: #F6711F;
             margin-top: 5px;
         }
+
+        .logo-radius {
+            border-radius: 20px;
+        }
     </style>
 </head>
 
@@ -261,7 +265,7 @@
     <!-- Sidebar area start here -->
     <div id="targetElement" class="sidebar-area sidebar__hide">
         <div class="sidebar__overlay"></div>
-        <a href="/" class="logo mb-40">
+        <a href="/" class="logo mb-40 logo-radius">
             <img src="{{ asset('landing_assets/images/logo/logo.png') }}" alt="logo">
         </a>
         <div class="sidebar__search mb-30">
@@ -400,7 +404,7 @@
                     <div class="col-xl-6">
                         <div class="section-header mb-40">
                             <h5 class="wow fadeInUp" data-wow-delay="00ms" data-wow-duration="1500ms">
-                                <img class="me-1" src="{{ asset('landing_assets/images/logo/logo.png') }}"
+                                <img class="me-1 logo-radius" src="{{ asset('landing_assets/images/logo/logo.png') }}"
                                     width="150px" alt="icon">
                             </h5>
                             <h3 class="wow fadeInUp" data-wow-delay="200ms" data-wow-duration="1500ms">Partner
@@ -483,9 +487,9 @@
                                         </a>
                                     </li>
                                 </ul>
-                                <h3><a href="/login" class="primary-hover">Beriklan diPapan Iklan 55 Inci</a>
+                                <h3><a href="/login" class="primary-hover">Beriklan diPapan Iklan 55 dan 65 inch</a>
                                 </h3>
-                                <div class="price">Rp 20.000 / Hari / Lokasi</div>
+                                <div class="price">Rp 35.000 / Hari / Lokasi</div>
                                 <a class="mt-25 read-more-btn" href="/login">Pesan Sekarang <i
                                         class="fa-regular fa-arrow-right-long"></i></a>
                             </div>
@@ -518,7 +522,12 @@
                                 </ul>
                                 <h3><a href="/login" class="primary-hover">Pembuatan Konten Iklan Digital</a>
                                 </h3>
-                                <div class="price">Mulai dari Rp 500.000</div>
+                                <div class="price">
+                                    Mulai dari Rp 100.000
+                                    <small class="d-block text-muted mt-1">
+                                        *S&K berlaku
+                                    </small>
+                                </div>
                                 <a class="mt-25 read-more-btn" href="/login">Pesan Sekarang <i
                                         class="fa-regular fa-arrow-right-long"></i></a>
                             </div>
@@ -552,7 +561,7 @@
                                     </li>
 
                                 </ul>
-                                <h3><a href="/login" class="primary-hover">Sewa Papan Iklan 55 Inci</a>
+                                <h3><a href="/login" class="primary-hover">Sewa Papan Iklan 55 dan 65 Inci</a>
                                 </h3>
                                 <div class="price">Rp 750.000 / Hari</div>
                                 <a class="mt-25 read-more-btn" href="/login">Pesan Sekarang <i
@@ -1059,7 +1068,7 @@
         <div class="container">
             <div class="footer__wrp pt-100 pb-100">
                 <div class="footer__item item-big wow fadeInUp" data-wow-delay="00ms" data-wow-duration="1500ms">
-                    <a href="/" class="logo mb-30">
+                    <a href="/" class="logo mb-30 logo-radius">
                         <img src="{{ asset('landing_assets/images/logo/logo.png') }}" alt="image">
                     </a>
                     <p>iklanin.id The Best Partner of Your Bussines</p>
